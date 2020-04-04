@@ -1,0 +1,237 @@
+from additionalscripts.process_info import Process
+import subprocess
+
+LSOF_COLUMNS = 11
+NETSTAT_INTERNET_COLUMNS = 10
+NETSTAT_UNIX_COLUMNS = 8
+PS_COLUMNS = 10
+TRACE_COMM_COLUMNS = 1
+
+'''
+this class represent a list of process and collects each process information from the os 
+'''
+
+
+class AllProcesses(object):
+
+    def __init__(self):
+        self._processDic = {}
+
+    '''
+    this func will enable and activate all collectors , put info in a single process object
+    and print all sub objects of this list
+    :return the whole object 
+    '''
+
+    def collect_all_info(self):
+        self.ps_reader()
+        self.netstat_reader()
+        self.parse_pid_env()
+        self.parse_lsof_command()
+        #self.print_object()
+        return self.get_all_process()
+
+    '''
+    this func will print all processes info from the system
+    [pid,user,cmdline,cpu,memeory,tty,stat,start,time,[internet_network],[unix_network],[file descriptors]]
+    '''
+
+    def print_object(self):
+        try:
+            for pid in self._processDic:
+                self._processDic.get(pid).print_pid()
+        except KeyError as error:
+            raise KeyError(error)
+        except Exception as e:
+            raise Exception("problem while printing %s" % str(e))
+
+    '''
+       this part will parse 'ps -aux' command  out put to  10 coulmns 
+       ["'USER", 'PID', '%CPU', '%MEM', 'VSZ', 'RSS', 'TTY', 'STAT', 'START', 'TIME', "COMMAND'"]
+    '''
+
+    def ps_reader(self):
+        try:
+            output = self.command_exec("ps -aux")
+            for row in output:
+                pid = int(row.split(None, PS_COLUMNS)[1])
+                self._processDic.update({pid: Process(pid)})
+                fields = len(row.split(None, PS_COLUMNS))
+                if self._processDic.get(pid, None):
+                    self._processDic.get(pid).set_user(row.split(None, fields)[0])
+                    self._processDic.get(pid).set_cpu(row.split(None, fields)[PS_COLUMNS - 8])
+                    self._processDic.get(pid).set_mem(row.split(None, fields)[PS_COLUMNS - 7])
+                    self._processDic.get(pid).set_tty(row.split(None, fields)[PS_COLUMNS - 4])
+                    self._processDic.get(pid).set_stat(row.split(None, fields)[PS_COLUMNS - 3])
+                    self._processDic.get(pid).set_start(row.split(None, fields)[PS_COLUMNS - 2])
+                    self._processDic.get(pid).set_time(row.split(None, fields)[PS_COLUMNS - 1])
+                    self._processDic.get(pid).set_cmdline(" ".join(row.split(None, fields)[PS_COLUMNS:]))
+
+        except KeyError as error:
+            raise KeyError(error)
+
+        except Exception as e:
+            raise Exception("problem while ps_read %s" % (str(e)))
+
+    '''
+    this func parse the out put of 'netstat -nalp' command to
+    first part - Active internet connection
+    secend part -Active UNIX domain sockets
+    '''
+
+    def netstat_reader(self):
+        try:
+            output = self.command_exec("netstat -napl")
+            second_part_flag = 0
+            for row in output[1:]:
+                if "Active UNIX domain" in row or "Proto" in row:
+                    second_part_flag = 1
+                elif second_part_flag == 0:
+                    self.netstat_active_domain(row)
+                else:
+                    self.netstat_unix_domain(row)
+        except KeyError as error:
+            raise error
+        except TypeError as tp:
+            raise tp
+        except Exception as e:
+            raise Exception("problem while using netstat reader func %s" % (str(e)))
+
+    '''
+    netsat secend part -Active UNIX domain sockets
+    [Proto ,RefCnt Flags, Type , State , I-Node  ,PID/Program name , Path]
+    
+    '''
+
+    def netstat_unix_domain(self, row):
+        try:
+            fields = len(row.split(None, NETSTAT_UNIX_COLUMNS))
+            if "/" in row:
+                if fields < NETSTAT_UNIX_COLUMNS:
+                    pid = int((row.split(None, fields)[fields - 1]).split("/")[0])
+                    if self._processDic.get(pid, None):
+                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 1:])
+                else:
+                    pid = int((row.split(None, fields)[fields - 2]).split("/")[0])
+                    if self._processDic.get(pid, None):
+                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 2:])
+
+        except KeyError as error:
+            raise KeyError(error)
+        except Exception as e:
+            raise Exception("problem while usinf netat unix domain %s" % str(e),row)
+
+    '''
+    netstat first part parse - Active internet connection
+    [Proto ,Recv-Q ,Send-Q ,Local Address ,Foreign Address , State ,PID/Program name]
+    '''
+
+    def netstat_active_domain(self, row):
+        try:
+            fields = len(row.split(None, NETSTAT_INTERNET_COLUMNS))
+            if "/" in row:
+                if "--type=" in row or ": r" in row:
+                    pid = int((row.split(None, fields)[fields - 2]).split("/")[0])
+                    if self._processDic.get(pid, None):
+                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 2:])
+                else:
+                    #pid = int((row.split(None, fields)[fields - 1]).split("/")[0])
+                    pid = int((row.split(None, fields)[fields -1]).split("/")[0])
+                    if self._processDic.get(pid, None):
+                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 1:])
+
+        except KeyError as error:
+            raise error
+        except Exception as e:
+            raise Exception("problem in netstat active domains:{},in row:{}".format(str(e), row))
+
+    '''
+    this func parse the /proc/[pid]/env file for each process and add it to the process object
+    '''
+
+    def parse_pid_env(self):
+        for pid in self._processDic.keys():
+            if self.is_accessible("/proc/{}/environ".format(pid)):
+                try:
+                    f = open("/proc/{}/environ".format(pid), 'r')
+                    pid_env = f.read()
+                    if pid_env != "" and self._processDic.get(pid, None):
+                        self._processDic.get(pid).set_env(pid_env)
+                    if self._processDic.get(pid, None):
+                        f.close()
+                    else:
+                        raise ValueError("None value in single process object")
+                except IOError:
+                    raise IOError.args
+
+    '''
+    this funx will parse the information from the 'lsof -nPR' command to find all process file descriptors in use and 
+    put it in the spicific process object
+    '''
+
+    def parse_lsof_command(self):
+        try:
+            output = self.command_exec("lsof -nRP")
+            for row in output[2:]:
+                # ignore command warnings
+                if 'lsof:' not in row:
+                    pid = int(row.split(None, LSOF_COLUMNS)[1])
+                    split_row = row.split(None, LSOF_COLUMNS)
+                    split_row_len = len(split_row)
+                    fd = [split_row[split_row_len - 6], split_row[split_row_len - 5], split_row[split_row_len - 4],
+                          split_row[split_row_len - 3], split_row[split_row_len - 2], split_row[split_row_len - 1]]
+                    if pid in self._processDic:
+                        self._processDic.get(pid).set_list_of_file_descript(fd)
+        except KeyError as error:
+            raise error
+        except Exception as e:
+            raise e
+
+
+
+    '''
+    get all pids 
+    '''
+
+    def get_pids(self):
+        return self._processDic.keys()
+
+    '''
+    this func will execute os commands
+    '''
+
+    '''
+    this func returns the all process list object
+    '''
+    def get_all_process(self):
+        return self._processDic
+
+    @staticmethod
+    def command_exec(command):
+        try:
+            parsed_command = command.split(" ")
+            cmd = subprocess.check_output(parsed_command, stderr=subprocess.STDOUT, timeout=10)
+            output_divided = cmd.decode('utf-8').splitlines()
+            return output_divided[1:]
+        except KeyError as error:
+            raise error
+        except Exception as e:
+            raise e
+
+    """
+    Check if the file or directory at `path` can
+    be accessed by the program using `mode` open flags.
+    """
+
+    @staticmethod
+    def is_accessible(path, mode='r'):
+        try:
+            f = open(path, mode)
+            f.close()
+        except IOError:
+            return False
+        return True
+
+
+newpro = AllProcesses()
+newpro.collect_all_info()
