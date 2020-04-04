@@ -100,7 +100,7 @@ class AllProcesses(object):
     '''
     netsat secend part -Active UNIX domain sockets
     [Proto ,RefCnt Flags, Type , State , I-Node  ,PID/Program name , Path]
-
+    .
     '''
 
     def netstat_unix_domain(self, row):
