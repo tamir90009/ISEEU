@@ -1,7 +1,7 @@
 
 '''
 
-this class represents a dingle process object with full info collected.
+this class represents a dingle process object with full info collected
 '''
 class Process(object):
 

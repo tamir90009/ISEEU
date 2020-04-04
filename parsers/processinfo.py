@@ -24,7 +24,7 @@ class ProcessInfoParser(Parser):
                     print(processlist[pid]['_networking_internet'])
 
         except Exception as e:
-            raise Exception("problem in parse process info :{}.".format(str(e)))
+            raise Exception("problem in parse process info :{}".format(str(e)))
 
 
-pp=ProcessInfoParser().parse('/tmp/process_info.json')
+pp=ProcessInfoParser().parse('/tmp/process_info2.json')
