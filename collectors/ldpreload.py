@@ -7,10 +7,8 @@ class LDPreloadCollector(Collector):
     @staticmethod
     def compil_syscall_detect(script_path, output_path):
         try:
-            output, error = subprocess.Popen(["gcc", "-o", output_path, script_path])
-            if error:
-                raise OSError(error)
-        except OSError:
+            cmd = subprocess.check_output(["gcc", "-o", output_path, script_path])
+        except Exception as e:
             raise Exception("there was an error compiling" % script_path)
 
     @staticmethod
@@ -21,7 +19,7 @@ class LDPreloadCollector(Collector):
             raise e
         try:
             compiled_file = dst_path + "/syscall_detect"
-            LDPreloadCollector.compilSyscallDetect("stuff/syscall_detect.c", compiled_file)
+            LDPreloadCollector.compil_syscall_detect("stuff/syscall_detect.c", compiled_file)
         except Exception as e:
             raise e
         try:
@@ -29,5 +27,5 @@ class LDPreloadCollector(Collector):
             output = output.decode('utf-8')
         except Exception as e:
             raise e
-        with open(dst_path + "/check_result") as outFile:
+        with open(dst_path + "/check_result", "w") as outFile:
             outFile.write(output)
