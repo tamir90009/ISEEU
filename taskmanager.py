@@ -28,7 +28,7 @@ class TaskManager(object):
         except AttributeError:
             raise Exception("Couldn't find %sCollector in module %s" % (task_name, task_name.lower()))
         try:
-            task_collector.collect(output_path + "/" + task_name)
+            task_collector.collect(output_path + "\\" + task_name)
         except Exception as e:
             raise Exception("collector -" + str(e))
 
