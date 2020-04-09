@@ -3,7 +3,8 @@ from parsers.parser import Parser
 
 class LibraryPathParser(Parser):
 
-    def parse(self, data_file_path):
+    @staticmethod
+    def parse(data_file_path):
         try:
             with open(data_file_path, "r") as f:
                 data = f.readlines()
