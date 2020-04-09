@@ -19,7 +19,7 @@ class LDPreloadCollector(Collector):
             raise e
         try:
             compiled_file = dst_path + "/syscall_detect"
-            LDPreloadCollector.compil_syscall_detect("stuff/syscall_detect.c", compiled_file)
+            LDPreloadCollector.compil_syscall_detect("additionalscripts/syscall_detect.c", compiled_file)
         except Exception as e:
             raise e
         try:
