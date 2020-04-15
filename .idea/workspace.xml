@@ -19,7 +19,28 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e81095c-f7c5-4e06-8f50-2dad5f2da40d" name="Default Changelist" comment="" />
+    <list default="true" id="8e81095c-f7c5-4e06-8f50-2dad5f2da40d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/additionalscripts/write_process_analytic.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/cmdline_exfilitration" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/deleted bin" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/giving_file_runing_perm_not_root" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/hide_parm_process_cmdline" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/insmod_in_cmdline" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/is_suid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/lsof_irc" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/root_not_init" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analytices/why_network" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analyzers/processinfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/ISEEU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ISEEU.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/all_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/all_processes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/process_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/process_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collectors/processinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/processinfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/parsers/processinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsers/processinfo.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,15 +63,40 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/analytices" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/analytices" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/additionalscripts" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.main">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="vboxcontroller" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="ISEEU" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -74,6 +120,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.vboxcontroller" />
       </list>
     </recent_temporary>
@@ -118,12 +165,13 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="finish writing vboxcontroller.py functions and fix bugs" />
@@ -132,29 +180,41 @@
     <option name="LAST_COMMIT_MESSAGE" value="taskmanager.py bug fix" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="711" y="354" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586802085822">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="711" y="354" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1056@65.24.1855.1056" timestamp="1586802085822" />
     <state x="67" y="288" width="1843" height="528" key="#xdebugger.XInspectDialog" timestamp="1586440040431">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="67" y="288" width="1843" height="528" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586440040431" />
+    <state x="613" y="125" key="CommitChangelistDialog2" timestamp="1586937148258">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="613" y="125" key="CommitChangelistDialog2/65.24.1855.1056@65.24.1855.1056" timestamp="1586937148258" />
     <state x="824" y="476" key="Github.Dialog.Accounts.Choose" timestamp="1586466815342">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="824" y="476" key="Github.Dialog.Accounts.Choose/67.27.1853.1053@67.27.1853.1053" timestamp="1586466815342" />
-    <state width="915" height="278" key="GridCell.Tab.0.bottom" timestamp="1586466864517">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="270" key="GridCell.Tab.0.bottom" timestamp="1586937030637">
+      <screen x="65" y="24" width="1855" height="1056" />
     </state>
+    <state width="1830" height="270" key="GridCell.Tab.0.bottom/65.24.1855.1056@65.24.1855.1056" timestamp="1586937030637" />
     <state width="915" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
-    <state width="915" height="278" key="GridCell.Tab.0.center" timestamp="1586466864517">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="270" key="GridCell.Tab.0.center" timestamp="1586937030636">
+      <screen x="65" y="24" width="1855" height="1056" />
     </state>
+    <state width="1830" height="270" key="GridCell.Tab.0.center/65.24.1855.1056@65.24.1855.1056" timestamp="1586937030636" />
     <state width="915" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
-    <state width="915" height="278" key="GridCell.Tab.0.left" timestamp="1586466864516">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="270" key="GridCell.Tab.0.left" timestamp="1586937030636">
+      <screen x="65" y="24" width="1855" height="1056" />
     </state>
+    <state width="1830" height="270" key="GridCell.Tab.0.left/65.24.1855.1056@65.24.1855.1056" timestamp="1586937030636" />
     <state width="915" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864516" />
-    <state width="915" height="278" key="GridCell.Tab.0.right" timestamp="1586466864517">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state width="1830" height="270" key="GridCell.Tab.0.right" timestamp="1586937030636">
+      <screen x="65" y="24" width="1855" height="1056" />
     </state>
+    <state width="1830" height="270" key="GridCell.Tab.0.right/65.24.1855.1056@65.24.1855.1056" timestamp="1586937030636" />
     <state width="915" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
     <state width="915" height="344" key="GridCell.Tab.1.bottom" timestamp="1586466718446">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -180,9 +240,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="874" y="420" width="609" height="264" key="MultipleFileMergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586466401731" />
-    <state x="482" y="187" key="SettingsEditor" timestamp="1586440273891">
-      <screen x="67" y="27" width="1853" height="1053" />
+    <state x="480" y="184" key="SettingsEditor" timestamp="1586518041428">
+      <screen x="65" y="24" width="1855" height="1056" />
     </state>
+    <state x="480" y="184" key="SettingsEditor/65.24.1855.1056@65.24.1855.1056" timestamp="1586518041428" />
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1586440273891" />
     <state x="593" y="300" width="600" height="477" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1586466399376">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -200,6 +261,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="684" y="164" width="618" height="777" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1586460754399" />
+    <state x="689" y="342" key="git4idea.merge.GitPullDialog" timestamp="1586937029214">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="689" y="342" key="git4idea.merge.GitPullDialog/65.24.1855.1056@65.24.1855.1056" timestamp="1586937029214" />
     <state x="718" y="384" width="540" height="337" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1586515981914">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
