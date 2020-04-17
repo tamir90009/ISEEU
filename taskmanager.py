@@ -18,11 +18,12 @@ class TaskManager(object):
 
     @staticmethod
     def __execute_task(task_name, output_path=None):
+        to_datasender_path = output_path + "/to_datasender"
         # collect
         try:
             task_collector_module = importlib.import_module("collectors." + task_name.lower())
         except ModuleNotFoundError:
-            raise Exception("Couldn't find collector name %s" % (task_name))
+            raise Exception("Couldn't find collector name %s" % task_name)
         try:
             task_collector = getattr(task_collector_module, task_name + "Collector")
         except AttributeError:
@@ -36,7 +37,7 @@ class TaskManager(object):
         try:
             task_parser_module = importlib.import_module("parsers." + task_name.lower())
         except ModuleNotFoundError:
-            raise Exception("Couldn't find parser name %s" % (task_name))
+            raise Exception("Couldn't find parser name %s" % task_name)
         try:
             task_parser = getattr(task_parser_module, task_name + "Parser")
         except AttributeError:
@@ -49,18 +50,17 @@ class TaskManager(object):
         try:
             task_analyzer_module = importlib.import_module("analyzers." + task_name.lower())
         except ModuleNotFoundError:
-            raise Exception("Couldn't find analyzer name %s" % (task_name))
+            raise Exception("Couldn't find analyzer name %s" % task_name)
         try:
             task_analyzer = getattr(task_analyzer_module, task_name + "Analyzer")
         except AttributeError:
             raise Exception("Couldn't find %sAnalyzer in module %s" % (task_name, task_name.lower()))
         try:
-            analyzed_data = task_analyzer.analyze(parsed_data)
+            analyzed_data = task_analyzer.analyze(parsed_data, to_datasender_path)
         except Exception as e:
             raise e
         # senddata
         # todo:add send data
-
 
         print("finish " + task_name)
         return True
@@ -68,12 +68,11 @@ class TaskManager(object):
     def execute_all_tasks(self, output_path):
 
         failed = []
-        if not os.path.exists(output_path):
-            os.mkdir(output_path)
+        os.makedirs(output_path + "/to_datasender", exist_ok=True)
         results = {}
         with ThreadPoolExecutor(max_workers=3) as executor:
             for task in self._tasks:
-                results[task] = executor.submit(self.__execute_task,task,output_path)
+                results[task] = executor.submit(self.__execute_task, task, output_path)
 
             for task in results:
                 try:

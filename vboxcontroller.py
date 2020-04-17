@@ -157,3 +157,15 @@ class VBoxController(object):
                                      "--device", "0", "--type", "hdd", "--medium", hard_drive_path])
         except Exception as e:
             raise Exception("VBoxController there was a problem to import new machine %s %s" % (vmname, str(e)))
+    @staticmethod
+    def close_all():
+        for i in VBoxController.free_nbd:
+            try:
+                subprocess.check_output(["qemu-nbd", "-d", i])
+            except Exception as e:
+                raise Exception("Fail to umount qemu-nbd %s %s" % (str(e)))
+        try:
+            subprocess.check_output(["modprobe", "-r", "nbd"])
+        except Exception as e:
+            raise Exception("Fail to modprobe -r nbd %s" % (str(e)))
+
