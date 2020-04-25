@@ -27,7 +27,7 @@ class ProcessInfoAnalyzer(Analyzer):
                     process_data[pid].update({"suspicious":suspicious})
                     to_json[pid] = process_data[pid]
                 json.dump(to_json, fp, indent=4)
-                #TODO:call func that send it to file server and giveit the json path
+                #TODO:call func that send it to file server and give it the json path
 
         except Exception as e:
             raise Exception("problem in reading analytic  info - analyzer :{}".format(str(e)))

@@ -1,0 +1,50 @@
+from analyzers.analyzer import Analyzer
+import os
+import socket
+import json
+
+WHITELIST=['/etc/init.d/thermald', '/etc/init.d/irqbalance', '/etc/init.d/clamav-freshclam', '/etc/init.d/alsa-utils'\
+                , '/etc/init.d/lightdm', '/etc/init.d/mountnfs-bootclean.sh', '/etc/init.d/reboot', \
+              '/etc/init.d/keyboard-setup', '/etc/init.d/rsync', '/etc/init.d/kerneloops', \
+              '/etc/init.d/checkroot-bootclean.sh', '/etc/init.d/apache2', '/etc/init.d/avahi-daemon', \
+              '/etc/init.d/acpid', '/etc/init.d/vmware', '/etc/init.d/vmware-USBArbitrator', '/etc/init.d/.depend.stop',\
+              '/etc/init.d/rc', '/etc/init.d/gdm3', '/etc/init.d/hwclock.sh', '/etc/init.d/grub-common', \
+              '/etc/init.d/network-manager', '/etc/init.d/x11-common', '/etc/init.d/umountfs', '/etc/init.d/umountnfs.sh',\
+              '/etc/init.d/unattended-upgrades', '/etc/init.d/hostname.sh', '/etc/init.d/resolvconf', '/etc/init.d/cron',\
+              '/etc/init.d/.depend.start', '/etc/init.d/cgproxy', '/etc/init.d/mountall.sh', '/etc/init.d/dbus',\
+              '/etc/init.d/mountdevsubfs.sh', '/etc/init.d/udev', '/etc/init.d/bluetooth', '/etc/init.d/apache-htcacheclean',\
+              '/etc/init.d/bootmisc.sh', '/etc/init.d/networking', '/etc/init.d/console-setup', '/etc/init.d/README',\
+              '/etc/init.d/checkfs.sh', '/etc/init.d/cgmanager', '/etc/init.d/dns-clean', '/etc/init.d/rcS', \
+              '/etc/init.d/mountkernfs.sh', '/etc/init.d/rsyslog', '/etc/init.d/anacron', '/etc/init.d/vmware-workstation-server',\
+              '/etc/init.d/virtualbox', '/etc/init.d/checkroot.sh', '/etc/init.d/killprocs', '/etc/init.d/mountnfs.sh',\
+              '/etc/init.d/mountall-bootclean.sh', '/etc/init.d/brltty', '/etc/init.d/plymouth', '/etc/init.d/skeleton',\
+              '/etc/init.d/rc.local', '/etc/init.d/saned', '/etc/init.d/procps', '/etc/init.d/whoopsie',\
+              '/etc/init.d/urandom', '/etc/init.d/ondemand', '/etc/init.d/uuidd', '/etc/init.d/ufw', '/etc/init.d/apport',\
+              '/etc/init.d/sendsigs', '/etc/init.d/halt', '/etc/init.d/apparmor', '/etc/init.d/pppd-dns', '/etc/init.d/cups-browsed',\
+              '/etc/init.d/speech-dispatcher', '/etc/init.d/single', '/etc/init.d/cups', '/etc/init.d/plymouth-log', \
+              '/etc/init.d/umountroot', '/etc/init.d/.depend.boot', '/etc/init.d/kmod','/etc/init.d/agent-atomation']
+DEST = '/tmp'
+
+class AutoRunPathsAnalyzer(Analyzer):
+
+    '''
+    this func will get the autorunpaths from the parser in a list and send the data to file attribute check and write
+    to json (which will be send to ES)
+    '''
+    @staticmethod
+    def analyze(paths, dest_path=DEST):
+        try:
+
+            relevent_paths = [x for x in paths if x not in WHITELIST]
+
+            # TODO: return relevent_paths to noa's attr func
+            with open(os.path.join(dest_path, "{}_auto_run_paths.json".format(socket.gethostname())), "w") as fp:
+                to_json = {}
+                i=0
+                for path in relevent_paths:
+                    to_json[i] = path
+                    i+=1
+                json.dump(to_json, fp, indent=4)
+
+        except Exception as e:
+            print("problem in autorunpaths analyzer - analyze :",e)
