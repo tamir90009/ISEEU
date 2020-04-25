@@ -86,3 +86,5 @@ class TaskManager(object):
         print("finish all")
         if failed:
             print("failed with %s" % (",".join(failed)))
+        with open(output_path + "/finish", "w") as f:
+            f.write("finish")

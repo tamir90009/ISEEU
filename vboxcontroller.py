@@ -66,7 +66,7 @@ class VBoxController(object):
         except Exception as e:
             raise Exception("Fail to get vm drive name %s" % (str(e)))
 
-    def mount_files_from_machine(self, vmname, mount_path=None):
+    def mount_files_from_machine(self, vmname, mount_path=None, read_only=False):
         # mount methodology came from https://www.cyrill-gremaud.ch/mount-virtualbox-image-drive-on-ubuntu-vdi/
         if not mount_path:
             mount_path = "/mnt/" + vmname
@@ -106,7 +106,10 @@ class VBoxController(object):
             except Exception as e:
                 raise e
         try:
-            subprocess.check_output(["mount", partition_to_mount[0], mount_path])
+            if read_only:
+                subprocess.check_output(["mount", "-o", "ro,noload", partition_to_mount[0], mount_path])
+            else:
+                subprocess.check_output(["mount", partition_to_mount[0], mount_path])
         except Exception as e:
             raise Exception("fail to mount %s to %s %s" % (partition_to_mount[0], mount_path, str(e)))
 
