@@ -9,7 +9,7 @@ class ProcessInfoCollector(Collector):
     @staticmethod
     def collect(dst_path):
         try:
-            with open(dst_path,"w") as fp:
+            with open("{}.json".format(dst_path),"w") as fp:
                 to_json={}
                 all_process = AllProcesses()
                 process_list = all_process.collect_all_info()
@@ -20,7 +20,7 @@ class ProcessInfoCollector(Collector):
 
 
         except Exception as e:
-            raise Exception("problem in collect process info :{}.".format(str(e)))
+            raise Exception("problem in collect process info :{}".format(str(e)))
 
-pp=ProcessInfoCollector.collect("/tmp/process_info.json")
+# pp=ProcessInfoCollector.collect("/tmp/process_info")
 

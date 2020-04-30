@@ -7,6 +7,10 @@ class Process(object):
 
     def __init__(self, pid):
         self._pid = pid
+        self._ppid = ""
+        self._parent_cmdline = ""
+        self._pgid = ""
+        self._psid = ""
         self._mem = 0
         self._cpu = 0
         self._user = ""
@@ -19,6 +23,56 @@ class Process(object):
         self._list_of_file_descript = []
         self._networking_unix = []
         self._networking_internet = []
+
+
+    '''
+    ppid param setter
+    '''
+    def set_ppid(self, ppid):
+        self._ppid = ppid
+
+    '''
+    ppid param getter
+    '''
+    def get_ppid(self):
+        return self._ppid
+
+    '''
+    parent_cmdline param setter
+    '''
+    def set_parent_cmdline(self, parent_cmdline):
+        self._parent_cmdline = parent_cmdline
+
+    '''
+    parent_cmdline param getter
+    '''
+    def get_parent_cmdline(self):
+        return self._parent_cmdline
+
+    '''
+    pgid param setter
+    '''
+    def set_pgid(self, pgid):
+        self._pgid = pgid
+
+    '''
+    pgid param getter
+    '''
+    def get_pgid(self):
+        return self._pgid
+
+    '''
+    psid param setter
+    '''
+    def set_psid(self, psid):
+        self._psid = psid
+
+    '''
+    psid param getter
+    '''
+    def get_psid(self):
+        return self._psid
+
 
 
     '''
@@ -211,7 +265,7 @@ class Process(object):
         return self
 
     def print_pid(self):
-        print(self.get_pid(), self.get_user(), self.get_cmdline(), self.get_cpu(), self.get_mem(), self.get_tty(),
+        print(self.get_pid(),self.get_ppid(),self.get_pgid(),self.get_psid(),self.get_user(), self.get_cmdline(), self.get_cpu(), self.get_mem(), self.get_tty(),
               self.get_stat(), self.get_start(), self.get_time(), self.get_networking_internet(),
               self.get_networking_unix(), self.get_list_of_file_descript())
 
