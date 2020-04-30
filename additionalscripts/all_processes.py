@@ -25,6 +25,7 @@ class AllProcesses(object):
 
     def collect_all_info(self):
         self.ps_reader()
+        self.ps_relations()
         self.netstat_reader()
         self.parse_pid_env()
         self.parse_lsof_command()
@@ -72,6 +73,27 @@ class AllProcesses(object):
 
         except Exception as e:
             raise Exception("problem while ps_read %s" % (str(e)))
+
+
+    '''
+    this func will add each process the parent  process, process group id , and process session id
+    '''
+    def ps_relations(self):
+        try:
+            output = self.command_exec("ps -fj")
+            for row in output:
+                pid = int(row.split(None, PS_COLUMNS)[1])
+                fields = len(row.split(None, PS_COLUMNS))
+                if self._processDic.get(pid, None):
+                    #print("parent:",row.split(None, fields)[2] ,"child:",pid)
+                    parent_cmdline = self._processDic.get(int(row.split(None, fields)[2])).get_cmdline()
+                    self._processDic.get(pid).set_parent_cmdline(parent_cmdline)
+                    self._processDic.get(pid).set_ppid(int(row.split(None, fields)[2]))
+                    self._processDic.get(pid).set_pgid(int(row.split(None, fields)[3]))
+                    self._processDic.get(pid).set_psid(int(row.split(None, fields)[4]))
+        except Exception as e:
+            raise Exception("problem while using process relation reader func %s" % (str(e)))
+
 
     '''
     this func parse the out put of 'netstat -nalp' command to

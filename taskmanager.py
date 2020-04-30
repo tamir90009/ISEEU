@@ -1,5 +1,6 @@
 import importlib
 import os
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 
 class TaskManager(object):
@@ -16,7 +17,7 @@ class TaskManager(object):
             raise Exception("Task already in the task manager")
 
     @staticmethod
-    def __execute_task(task_name, output_path):
+    def __execute_task(task_name, output_path=None):
         # collect
         try:
             task_collector_module = importlib.import_module("collectors." + task_name.lower())
@@ -27,9 +28,9 @@ class TaskManager(object):
         except AttributeError:
             raise Exception("Couldn't find %sCollector in module %s" % (task_name, task_name.lower()))
         try:
-            collect(output_path + "\\" + task_name)
+            task_collector.collect(output_path + "/" + task_name)
         except Exception as e:
-            raise e
+            raise Exception("collector -" + str(e))
 
         # parse
         try:
@@ -41,7 +42,7 @@ class TaskManager(object):
         except AttributeError:
             raise Exception("Couldn't find %sParser in module %s" % (task_name, task_name.lower()))
         try:
-            parsed_data = task_parser.parse(output_path + "\\" + task_name)
+            parsed_data = task_parser.parse(output_path + "/" + task_name)
         except Exception as e:
             raise e
         # analyze
@@ -69,14 +70,19 @@ class TaskManager(object):
         failed = []
         if not os.path.exists(output_path):
             os.mkdir(output_path)
-        for task in self._tasks:
-            try:
-                self.__execute_task(task,output_path)
-            except KeyboardInterrupt:
-                exit()
-            except Exception as e:
-                print(f"\033[91m"+ task + ": " + str(e) + f"\033[0m")
-                failed.append(task)
+        results = {}
+        with ThreadPoolExecutor(max_workers=3) as executor:
+            for task in self._tasks:
+                results[task] = executor.submit(self.__execute_task,task,output_path)
+
+            for task in results:
+                try:
+                    results[task].result()
+                except KeyboardInterrupt:
+                    exit()
+                except Exception as e:
+                    print(f"\033[91m" + task + ": " + str(e) + f"\033[0m")
+                    failed.append(task)
 
         print("finish all")
         if failed:

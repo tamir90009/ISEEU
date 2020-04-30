@@ -1,0 +1,21 @@
+{
+    "_analytic_name": "why_network",
+    "_comment": "this analytic try to find network from editing commands",
+    "_pid": null,
+    "_ppid": null,
+    "_pgid": null,
+    "_psid": null,
+    "_mem": null,
+    "_cpu": null,
+    "_user": null,
+    "_tty": null,
+    "_stat": null,
+    "_start": null,
+    "_time": null,
+    "_cmdline": "(ls|cat|nano|ps)",
+    "_env": null,
+    "_list_of_file_descript": null,
+    "_networking_unix": "(NOT)1.0.0.127",
+    "_networking_internet": "(NOT)1.0.0.127",
+    "_operator": "AND"
+}

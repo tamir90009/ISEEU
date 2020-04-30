@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e81095c-f7c5-4e06-8f50-2dad5f2da40d" name="Default Changelist" comment="taskmanager.py bug fix">
+      <change afterPath="$PROJECT_DIR$/analyzers/autorunpaths.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/analyzers/binarylist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/collectors/autorunpaths.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/collectors/binarylist.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/parsers/autorunpaths.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/parsers/binarylist.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analyzers/processinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/analyzers/processinfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collectors/processinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/processinfo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="MERGE" />
+  </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="0164597b-f26b-4ac7-960b-44e34935d05e" />
+  </component>
+  <component name="ProjectId" id="1aJ3Cy6NTl2hhGfQqH0VQFxgSEN" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/analytices" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/analytices" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/additionalscripts" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.binarylist">
+    <configuration name="autorunpaths (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/parsers" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/parsers/autorunpaths.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="autorunpaths" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/collectors" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/collectors/autorunpaths.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="binarylist" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/collectors" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/collectors/binarylist.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="write_process_analytic" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ISEEU" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/additionalscripts" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/additionalscripts/write_process_analytic.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.binarylist" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.autorunpaths (1)" />
+        <item itemvalue="Python.autorunpaths" />
+        <item itemvalue="Python.write_process_analytic" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8e81095c-f7c5-4e06-8f50-2dad5f2da40d" name="Default Changelist" comment="" />
+      <created>1586439745222</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586439745222</updated>
+    </task>
+    <task id="LOCAL-00001" summary="finish writing vboxcontroller.py functions and fix bugs">
+      <created>1586466097063</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586466097063</updated>
+    </task>
+    <task id="LOCAL-00002" summary="merge with master">
+      <created>1586466489925</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586466489925</updated>
+    </task>
+    <task id="LOCAL-00003" summary="taskmanager.py bug fix">
+      <created>1586466771579</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1586466771579</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add process info analyzer - write info+ suspicus flag to json">
+      <created>1587133964691</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1587133964691</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finish writing vboxcontroller.py functions and fix bugs" />
+    <MESSAGE value="merge with master" />
+    <MESSAGE value="taskmanager.py bug fix" />
+    <MESSAGE value="add process info analyzer - write info+ suspicus flag to json" />
+    <option name="LAST_COMMIT_MESSAGE" value="add process info analyzer - write info+ suspicus flag to json" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="711" y="354" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586802085822">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="711" y="354" key="#com.intellij.fileTypes.FileTypeChooser/65.24.1855.1056@65.24.1855.1056" timestamp="1586802085822" />
+    <state x="67" y="288" width="1843" height="528" key="#xdebugger.XInspectDialog" timestamp="1586440040431">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="67" y="288" width="1843" height="528" key="#xdebugger.XInspectDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586440040431" />
+    <state x="613" y="125" key="CommitChangelistDialog2" timestamp="1587133964544">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="613" y="125" key="CommitChangelistDialog2/65.24.1855.1056@65.24.1855.1056" timestamp="1587133964544" />
+    <state x="823" y="446" key="Github.Dialog.Accounts.Choose" timestamp="1587134247850">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="823" y="446" key="Github.Dialog.Accounts.Choose/65.24.1855.1056@65.24.1855.1056" timestamp="1587134247850" />
+    <state x="824" y="476" key="Github.Dialog.Accounts.Choose/67.27.1853.1053@67.27.1853.1053" timestamp="1586466815342" />
+    <state width="1832" height="288" key="GridCell.Tab.0.bottom" timestamp="1587826927064">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state width="1832" height="288" key="GridCell.Tab.0.bottom/65.24.1855.1056@65.24.1855.1056" timestamp="1587826927064" />
+    <state width="915" height="278" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
+    <state width="1832" height="288" key="GridCell.Tab.0.center" timestamp="1587826927064">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state width="1832" height="288" key="GridCell.Tab.0.center/65.24.1855.1056@65.24.1855.1056" timestamp="1587826927064" />
+    <state width="915" height="278" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
+    <state width="1832" height="288" key="GridCell.Tab.0.left" timestamp="1587826927064">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state width="1832" height="288" key="GridCell.Tab.0.left/65.24.1855.1056@65.24.1855.1056" timestamp="1587826927064" />
+    <state width="915" height="278" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864516" />
+    <state width="1832" height="288" key="GridCell.Tab.0.right" timestamp="1587826927064">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state width="1832" height="288" key="GridCell.Tab.0.right/65.24.1855.1056@65.24.1855.1056" timestamp="1587826927064" />
+    <state width="915" height="278" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586466864517" />
+    <state width="915" height="344" key="GridCell.Tab.1.bottom" timestamp="1586466718446">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="915" height="344" key="GridCell.Tab.1.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1586466718446" />
+    <state width="915" height="344" key="GridCell.Tab.1.center" timestamp="1586466718446">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="915" height="344" key="GridCell.Tab.1.center/67.27.1853.1053@67.27.1853.1053" timestamp="1586466718446" />
+    <state width="915" height="344" key="GridCell.Tab.1.left" timestamp="1586466718446">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="915" height="344" key="GridCell.Tab.1.left/67.27.1853.1053@67.27.1853.1053" timestamp="1586466718446" />
+    <state width="915" height="344" key="GridCell.Tab.1.right" timestamp="1586466718446">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="915" height="344" key="GridCell.Tab.1.right/67.27.1853.1053@67.27.1853.1053" timestamp="1586466718446" />
+    <state x="157" y="103" width="1482" height="872" key="MergeDialog" timestamp="1586466401729">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="157" y="103" width="1482" height="872" key="MergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586466401729" />
+    <state x="874" y="420" width="609" height="264" key="MultipleFileMergeDialog" timestamp="1586466401731">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="874" y="420" width="609" height="264" key="MultipleFileMergeDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586466401731" />
+    <state x="480" y="184" key="SettingsEditor" timestamp="1586518041428">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="480" y="184" key="SettingsEditor/65.24.1855.1056@65.24.1855.1056" timestamp="1586518041428" />
+    <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1586440273891" />
+    <state x="593" y="300" width="600" height="477" key="Vcs.Multiple.Commit.Info.Dialog.Key" timestamp="1586466399376">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="593" y="300" width="600" height="477" key="Vcs.Multiple.Commit.Info.Dialog.Key/67.27.1853.1053@67.27.1853.1053" timestamp="1586466399376" />
+    <state x="587" y="286" width="800" height="528" key="Vcs.Push.Dialog.v2" timestamp="1587134191772">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="587" y="286" key="Vcs.Push.Dialog.v2/65.24.1855.1056@65.24.1855.1056" timestamp="1587134191772" />
+    <state x="588" y="288" width="800" height="528" key="Vcs.Push.Dialog.v2/67.27.1853.1053@67.27.1853.1053" timestamp="1586466781606" />
+    <state width="926" height="527" key="XDebugger.FullValuePopup" timestamp="1586444698240">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="926" height="527" key="XDebugger.FullValuePopup/67.27.1853.1053@67.27.1853.1053" timestamp="1586444698240" />
+    <state x="662" y="376" key="com.intellij.ide.util.TipDialog" timestamp="1587489130011">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="662" y="376" key="com.intellij.ide.util.TipDialog/65.24.1855.1056@65.24.1855.1056" timestamp="1587489130010" />
+    <state x="774" y="468" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1587808123000">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="774" y="468" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/65.24.1855.1056@65.24.1855.1056" timestamp="1587808123000" />
+    <state x="684" y="164" width="618" height="777" key="find.popup" timestamp="1586460754399">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="684" y="164" width="618" height="777" key="find.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1586460754399" />
+    <state x="689" y="342" key="git4idea.merge.GitPullDialog" timestamp="1587808227357">
+      <screen x="65" y="24" width="1855" height="1056" />
+    </state>
+    <state x="689" y="342" key="git4idea.merge.GitPullDialog/65.24.1855.1056@65.24.1855.1056" timestamp="1587808227357" />
+    <state x="718" y="384" width="540" height="337" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1586515981914">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="718" y="384" width="540" height="337" key="vcs.readOnlyHandler.ReadOnlyStatusDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1586515981914" />
+  </component>
+</project>
