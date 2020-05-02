@@ -6,7 +6,7 @@ class LogParser(Parser):
     # this func parse the auth.log and syslog data and add it to data dictionary with 'auth' as key
     # and 'syslog' as key and return the dictionary
     @staticmethod
-    def parse(self, dst_path):
+    def parse(dst_path):
         data = {'auth': parse_log(dst_path, 'auth.log'), 'syslog': parse_log(dst_path, 'syslog')}
         return data
 

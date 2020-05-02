@@ -1,6 +1,7 @@
 from collectors.collector import Collector
 import os
 import subprocess
+from pathlib import Path
 import shutil
 import pwd
 
@@ -26,8 +27,7 @@ class FileMetadataCollector(Collector):
             except Exception as e:
                 raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(f, str(e)))
 
-            # write the data to file in destination
-            with open('{}/files_meta_data/{}'.format(dst_path, subject), 'a') as current_file:
+            with open('{}/files_meta_data/{}'.format(dst_path, subject), "a+") as current_file:
                 current_file.write('{}\n'.format(d))
 
 def get_permissions(file_path):

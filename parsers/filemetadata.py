@@ -8,7 +8,7 @@ class FileMetadataParser(Parser):
 
     # this func parse all the data from the file in destination into dictionary and return it
     @staticmethod
-    def parse(self, dst_path):
+    def parse(dst_path):
         files = glob.glob('{}/files_meta_data'.format(dst_path))
         data = {}
         for f in files:

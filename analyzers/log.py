@@ -3,12 +3,13 @@ import json
 import re
 import socket
 
+DEST = '/tmp'
 
 class LogAnalyzer(Analyzer):
 
     # this run over the parsed logs data, run analytics on the data to check if it suspicious and save it as json file
     @staticmethod
-    def analyze(self, dst_path, logs_data):
+    def analyze(logs_data, dst_path=DEST):
         try:
             auth_log_data = auth_log_anlyzer(logs_data['auth'])
             syslog_data = syslog_anlyzer(logs_data['syslog'])
@@ -23,6 +24,7 @@ class LogAnalyzer(Analyzer):
 def auth_log_anlyzer(data):
     logs = data
     for ln in data.keys():
+        ln = int(ln)
         try:
             if 'authentication failure' in logs[ln]['message']:
                 if 'suspicious' in logs[ln].keys():

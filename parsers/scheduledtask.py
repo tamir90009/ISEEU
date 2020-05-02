@@ -9,7 +9,7 @@ class ScheduledTaskParser(Parser):
 
     # this func parse the crontab files that in the destination, write the parsed data to dictionary and return it
     @staticmethod
-    def parse(self, dst_path):
+    def parse(dst_path):
         files = []
         data = []
         cron_tabs = {}
@@ -54,5 +54,5 @@ class ScheduledTaskParser(Parser):
                     count += 1
             except Exception as e:
                 raise Exception("problem in parcing the data from crontab file of:{} - parser: {}".format(file, str(e)))
-        FileMetadataCollector.collect(files, 'scheduled_tasks')
+        FileMetadataCollector.collect(dst_path, files, 'scheduled_tasks')
         return cron_tabs

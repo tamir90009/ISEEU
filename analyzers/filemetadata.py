@@ -6,7 +6,7 @@ class FileMetaDataAnalyzer(Analyzer):
 
     # this func save the parsed meta data and save it as json file
     @staticmethod
-    def analyze(self, dst_path, files_meta_data):
+    def analyze(dst_path, files_meta_data):
         try:
             analyzed_data = attr_check(files_meta_data)
             for subject in analyzed_data.keys():
