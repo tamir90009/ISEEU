@@ -1,16 +1,16 @@
 from analyzers.analyzer import Analyzer
 import json
-
+import socket
 
 class FileMetaDataAnalyzer(Analyzer):
 
     # this func save the parsed meta data and save it as json file
     @staticmethod
-    def analyze(self, dst_path, files_meta_data, analytic_folder_path):
+    def analyze(self, dst_path, files_meta_data):
         try:
             analyzed_data = attr_check(files_meta_data)
             for subject in analyzed_data.keys():
-                with open('{}/{}/files_meta_data/{}.json'.format(dst_path, analytic_folder_path, subject), 'w') as jf:
+                with open('{}/{}_files_meta_data/{}.json'.format(dst_path, socket.gethostname(),  subject), 'w') as jf:
                     json.dump(analyzed_data[subject], jf)
         except Exception as e:
             raise Exception("problem in writing analytic data of file_meta_data - analyzer :{}".format(str(e)))

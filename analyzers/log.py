@@ -1,19 +1,20 @@
 from analyzers.analyzer import Analyzer
 import json
 import re
+import socket
 
 
 class LogAnalyzer(Analyzer):
 
     # this run over the parsed logs data, run analytics on the data to check if it suspicious and save it as json file
     @staticmethod
-    def analyze(self, dst_path, logs_data, analytic_folder_path):
+    def analyze(self, dst_path, logs_data):
         try:
             auth_log_data = auth_log_anlyzer(logs_data['auth'])
             syslog_data = syslog_anlyzer(logs_data['syslog'])
-            with open('{}/{}/auth_log.json'.format(dst_path, analytic_folder_path), 'w') as jf:
+            with open('{}/{}_auth_log.json'.format(dst_path, socket.gethostname()), 'w') as jf:
                 json.dump(auth_log_data, jf)
-            with open('{}/{}/syslog.json'.format(dst_path, analytic_folder_path), 'w') as jf:
+            with open('{}/{}_syslog.json'.format(dst_path, socket.gethostname()), 'w') as jf:
                 json.dump(syslog_data, jf)
         except Exception as e:
             raise Exception("problem in writing analytic data of logs_data - analyzer: {}".format(str(e)))
