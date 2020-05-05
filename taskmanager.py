@@ -82,7 +82,11 @@ class TaskManager(object):
         os.makedirs(output_path + "/to_datasender", exist_ok=True)
         results = {}
         with ThreadPoolExecutor(max_workers=3) as executor:
+            FilesMetaData = False
             for task in self._tasks:
+                if task == "FilesMetaData":
+                    FilesMetaData = True
+                    continue
                 results[task] = executor.submit(self.__execute_task, task, output_path)
 
             for task in results:
@@ -93,7 +97,14 @@ class TaskManager(object):
                 except Exception as e:
                     print(f"\033[91m" + task + ": " + str(e) + f"\033[0m")
                     failed.append(task)
-
+            if FilesMetaData:
+                try:
+                    self.__execute_task("FilesMetaData", output_path)
+                except KeyboardInterrupt:
+                    exit()
+                except Exception as e:
+                    print(f"\033[91m" + task + ": " + str(e) + f"\033[0m")
+                    failed.append(task)
         print("finish all")
         if failed:
             print("failed with %s" % (",".join(failed)))
