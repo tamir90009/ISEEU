@@ -1,5 +1,6 @@
 from parsers.parser import Parser
 
+
 class HiddenFilesParser(Parser):
 
     @staticmethod

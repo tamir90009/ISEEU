@@ -1,13 +1,11 @@
 import subprocess as sub
+from collectors.collector import Collector
 
-RKHUNTER = 'RKH'
 
-class RKHunter:
+class RKHunterCollector(Collector):
 
-    def __init__(self):
-        self.header = RKHUNTER
-
-    def rkhunter_scan(self):
+    @staticmethod
+    def collect(dst_path):
         try:
             p = sub.Popen(["rkhunter -c"], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE, shell=True)
             out, err = p.communicate()
@@ -15,6 +13,8 @@ class RKHunter:
                 if "not found" in str(err):
                     raise Exception("rkhunter not installed")
             if out:
-                self.parser(self.header, out)
+                with open("{}.json".format(dst_path), "w") as fp:
+                    fp.write('\n'.join(out.decode('utf-8')))
         except Exception as e:
             raise Exception(e)
+

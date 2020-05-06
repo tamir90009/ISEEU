@@ -1,12 +1,11 @@
-#import paramiko
-
 import paramiko
 
 try:
     with open('delivery.conf','r') as conf:
         config = eval(conf.read())
-except:
-    raise Exception("conf file not found")
+except Exception as e:
+    raise Exception("conf file not found " + e)
+
 
 def datasend(localpath,remotepath):
     try:

@@ -6,6 +6,7 @@ import socket
 
 DEST = r'/temp'
 
+
 class RKHunterAnalyzer(Analyzer):
 
     @staticmethod

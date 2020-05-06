@@ -1,41 +1,33 @@
 import os
 import string
+from collectors.collector import Collector
 
-
+#files to exlude:
 #global unfamiliar chars for hidden files search:
 UNFAMILIARSTRINGS = string.punctuation + ' '
 #HOMEPATH = r"/home"
+PATH = r'/'
 
-class HiddenFiles:
 
-    def __init__(self):
-        self._hidden_files = {}
+class HiddenFilesCollector(Collector):
 
-#Finding Hidden files founction, By defual search from home:
-    def find_hidden(self,path="/home"):
+    @staticmethod
+    #Finding Hidden files founction, By defual search from home:
+    def collect(dst_path):
         try:
             hidden_files = {}
-            #Recurseive search on file system:
-
-            for root, dictonaries, filenames in os.walk(path):
+            # Recurseive search on file system:
+            for root, dictonaries, filenames in os.walk(PATH):
                 for filename in filenames:
-                    #Classifaing files that start with unfimiliar char:
                     if filename[0] in UNFAMILIARSTRINGS:
-                        #Movine the files from the same directory into a list:
+                        # Movine the files from the same directory into a list:
                         if root not in [*hidden_files]:
-                            hidden_files.update({root:[filename]})
+                            hidden_files.update({root : [filename]})
                         else:
                             hidden_files[root].append(filename)
-
-
-            #Returning the hidden files values
-            self._hidden_files = hidden_files
-
+            # Returning the hidden files values
+            with open("{}.json".format(dst_path), "w") as fp:
+                fp.write('\n'.join(hidden_files))
         except:
             raise Exception("Error: Uknown Path")
-
-    def print(self):
-
-        for key in [*self._hidden_files]:
-            print("dict: {0} , files:{1}".format(key,self._hidden_files[key]))
 

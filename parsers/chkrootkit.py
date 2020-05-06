@@ -5,6 +5,7 @@ CHKROOTKITPAT1 = r'\S{2,}'
 CHKROOTKITPAT2 = r'\s{1,}'
 CHKROOTKITPAT3 = r'\S{1,}'
 
+
 class CHKRootkitParser(Parser):
 
     @staticmethod

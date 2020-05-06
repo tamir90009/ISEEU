@@ -8,8 +8,9 @@ DEST = r'/temp'
 try:
     File = open(r'exclude.txt','r')
     exclude = File.read().replace(r"\n","").replace(r'/home/test',r'/home/{0}'.format(os.getlogin()))
-except:
-    raise Exception("Exclude file not exist")
+except Exception as e:
+    raise Exception("Exclude file not exist " + e)
+
 
 class HiddenFilesAnalyzer(Analyzer):
 

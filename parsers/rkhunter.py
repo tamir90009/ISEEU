@@ -4,6 +4,7 @@ import re
 PATHPATTERN = r'(\/[A-z]{0,}\/{0,1}?){1,}'
 STATUSPATTERN = r'm[A-Z]([A-z]){1,}(\s{0,}[A-z]{1,}){0,}' # need to remove the first letter [1:]
 
+
 class RKHunterParser(Parser):
 
     @staticmethod
