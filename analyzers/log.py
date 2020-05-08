@@ -5,13 +5,14 @@ import socket
 
 DEST = '/tmp'
 
+
 class LogAnalyzer(Analyzer):
 
     # this run over the parsed logs data, run analytics on the data to check if it suspicious and save it as json file
     @staticmethod
     def analyze(logs_data, dst_path=DEST):
         try:
-            auth_log_data = auth_log_anlyzer(logs_data['auth'])
+            auth_log_data = auth_log_analyzer(logs_data['auth'])
             syslog_data = syslog_anlyzer(logs_data['syslog'])
             with open('{}/{}_auth_log.json'.format(dst_path, socket.gethostname()), 'w') as jf:
                 json.dump(auth_log_data, jf)
@@ -21,7 +22,7 @@ class LogAnalyzer(Analyzer):
             raise Exception("problem in writing analytic data of logs_data - analyzer: {}".format(str(e)))
 
 
-def auth_log_anlyzer(data):
+def auth_log_analyzer(data):
     logs = data
     for ln in data.keys():
         ln = int(ln)
@@ -31,11 +32,11 @@ def auth_log_anlyzer(data):
                     continue
                 else:
                     data_check = {}
-                    for i in range(ln, ln+10):
+                    for i in range(ln, ln + 10):
                         if i in data.keys():
                             data_check[i] = logs[i]
                     analyzed_data = failure(data_check)
-                    for i in range(ln, ln+10):
+                    for i in range(ln, ln + 10):
                         if i in analyzed_data.keys():
                             logs[i] = analyzed_data[i]
                 continue
@@ -113,5 +114,3 @@ def failure(logs):
     except Exception as e:
         raise Exception("problem in analyze failure authentications in auth.log - analyzer: {}".format(str(e)))
     return return_log
-
-

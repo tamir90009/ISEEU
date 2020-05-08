@@ -15,7 +15,7 @@ def parse_log(dst_path, log_name):
     parsed_log = {}
     count = 1
     try:
-        with open('{}/{}'.format(dst_path, log_name)) as current_file:
+        with open('{}/{}'.format(dst_path, log_name), "r") as current_file:
             log_lines = current_file.readlines()
     except Exception as e:
         raise Exception("problem in reading the log: {} - parser: {}".format(log_name, str(e)))
