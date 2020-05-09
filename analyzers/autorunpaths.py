@@ -62,10 +62,6 @@ class AutoRunPathsAnalyzer(Analyzer):
     @staticmethod
     def write_to_files(paths,dest_path,name):
         try:
-            #relevent_paths = [x for x in paths if x not in WHITELIST]
-
-            #dst_path_metadata = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
-            #with open(os.path.join(dest_path, "AutoRunPaths.txt"), "w") as fp:
             with open(os.path.join(dest_path,name), "w") as fp:
                 to_json = {}
                 i = 0

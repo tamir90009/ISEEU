@@ -45,4 +45,4 @@ class BinaryListAnalyzer(Analyzer):
                 json.dump(to_json, fp, indent=4)
 
         except Exception as e:
-            print("problem in binarylist analyzer -write to files , path:{},error:{} ".format(os.path.join(dst_path,name),e))
+            print("problem in binarylist analyzer -write to files, path:{},error:{} ".format(os.path.join(dst_path,name),e))
