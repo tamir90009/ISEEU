@@ -1,0 +1,21 @@
+{
+    "_analytic_name": "giving_file_runing_perm_not_root",
+    "_comment": "this analytic tries to find process with low permissions that try to run other files",
+    "_pid": null,
+    "_ppid": null,
+    "_pgid": null,
+    "_psid": null,
+    "_mem": null,
+    "_cpu": null,
+    "_user": "(NOT)root",
+    "_tty": null,
+    "_stat": null,
+    "_start": null,
+    "_time": null,
+    "_cmdline": "(chmod x|chmod 7)",
+    "_env": null,
+    "_list_of_file_descript": null,
+    "_networking_unix": null,
+    "_networking_internet": null,
+    "_operator": "AND"
+}

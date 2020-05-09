@@ -1,0 +1,21 @@
+{
+    "_analytic_name": "lsof_irc",
+    "_comment": "this analytic will check lsof output (process file descriprot) for use of irc port - 6000-7000",
+    "_pid": null,
+    "_ppid": null,
+    "_pgid": null,
+    "_psid": null,
+    "_mem": null,
+    "_cpu": null,
+    "_user": "(NOT)root",
+    "_tty": null,
+    "_stat": null,
+    "_start": null,
+    "_time": null,
+    "_cmdline": null,
+    "_env": null,
+    "_list_of_file_descript": ":(666[0-9]|7000)",
+    "_networking_unix": null,
+    "_networking_internet": null,
+    "_operator": "AND"
+}

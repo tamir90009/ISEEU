@@ -1,0 +1,21 @@
+{
+    "_analytic_name": "cmdline_exfilitration",
+    "_comment": "this analytic try to find exfilitration from commandline",
+    "_pid": null,
+    "_ppid": null,
+    "_pgid": null,
+    "_psid": null,
+    "_mem": null,
+    "_cpu": null,
+    "_user": null,
+    "_tty": null,
+    "_stat": null,
+    "_start": null,
+    "_time": null,
+    "_cmdline": ".*(export .*HOST|export .*PORT).*",
+    "_env": null,
+    "_list_of_file_descript": null,
+    "_networking_unix": null,
+    "_networking_internet": null,
+    "_operator": "AND"
+}
