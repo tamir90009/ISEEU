@@ -84,7 +84,7 @@ class AnalyticWriter(object):
 
 
         except Exception as e:
-            print("problem in user input for an analytic , func - get info from user :{}".format(e))
+            print("problem in user input for an analytic ,func - get info from user :{}".format(e))
 
         try:
             self.write_analytic_json(dest_path)

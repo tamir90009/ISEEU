@@ -8,7 +8,7 @@ PS_COLUMNS = 10
 TRACE_COMM_COLUMNS = 1
 
 '''
-this class represent a list of process and collects each process information from the os 
+this class represent a list of process and collects each process information from the os .
 '''
 
 

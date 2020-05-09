@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="25dcd379-f4be-45b7-9c15-a4863edd79fb" name="Default Changelist" comment=". configuration not important">
-      <change beforePath="$PROJECT_DIR$/.idea/ISEEU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ISEEU.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analyzers/autorunpaths.py" beforeDir="false" afterPath="$PROJECT_DIR$/analyzers/autorunpaths.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analyzers/binarylist.py" beforeDir="false" afterPath="$PROJECT_DIR$/analyzers/binarylist.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="25dcd379-f4be-45b7-9c15-a4863edd79fb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/additionalscripts/agent-automation" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/agent-automation" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/all_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/all_processes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/offlineautomation.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/offlineautomation.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/process_info.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/process_info.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/syscall_detect.c" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/syscall_detect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/additionalscripts/write_process_analytic.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/write_process_analytic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/cmdline_exfilitration" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/cmdline_exfilitration" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/deleted bin" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/deleted bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/giving_file_runing_perm_not_root" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/giving_file_runing_perm_not_root" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/hide_parm_process_cmdline" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/hide_parm_process_cmdline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/insmod_in_cmdline" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/insmod_in_cmdline" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/is_suid" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/is_suid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/lsof_irc" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/lsof_irc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/analytices/root_not_init" beforeDir="false" afterPath="$PROJECT_DIR$/analytices/root_not_init" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,14 +226,22 @@
       <option name="project" value="LOCAL" />
       <updated>1589030889540</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="binarylist +autorun paths analyzers - write output to metadata and es">
+      <created>1589031392295</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1589031392295</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="collectors, parsers, analyzers of logs, files meta data and shecduled tasks" />
     <MESSAGE value=". configuration not important" />
     <MESSAGE value="binary list +aurorunpaths - analyzer -addition - write file for es and for meta data separately" />
-    <option name="LAST_COMMIT_MESSAGE" value="binary list +aurorunpaths - analyzer -addition - write file for es and for meta data separately" />
+    <MESSAGE value="binarylist +autorun paths analyzers - write output to metadata and es" />
+    <option name="LAST_COMMIT_MESSAGE" value="binarylist +autorun paths analyzers - write output to metadata and es" />
   </component>
   <component name="WindowStateProjectService">
     <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1588263968837">
@@ -236,10 +252,10 @@
       <screen x="65" y="24" width="1855" height="1056" />
     </state>
     <state x="671" y="146" key="#main/65.24.1855.1056@65.24.1855.1056" timestamp="1589030547767" />
-    <state x="599" y="128" width="777" height="843" key="CommitChangelistDialog2" timestamp="1589031248919">
+    <state x="599" y="128" width="777" height="843" key="CommitChangelistDialog2" timestamp="1589031392213">
       <screen x="65" y="24" width="1855" height="1056" />
     </state>
-    <state x="599" y="128" key="CommitChangelistDialog2/65.24.1855.1056@65.24.1855.1056" timestamp="1589031248919" />
+    <state x="599" y="128" key="CommitChangelistDialog2/65.24.1855.1056@65.24.1855.1056" timestamp="1589031392213" />
     <state x="600" y="131" width="777" height="843" key="CommitChangelistDialog2/67.27.1853.1053@67.27.1853.1053" timestamp="1588264441264" />
     <state x="243" y="116" width="1482" height="872" key="DiffContextDialog" timestamp="1588263789970">
       <screen x="67" y="27" width="1853" height="1053" />
@@ -249,10 +265,10 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="771" y="331" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1588263968504" />
-    <state x="828" y="466" key="Github.Dialog.Accounts.Choose" timestamp="1589030980155">
+    <state x="828" y="466" key="Github.Dialog.Accounts.Choose" timestamp="1589031492069">
       <screen x="65" y="24" width="1855" height="1056" />
     </state>
-    <state x="828" y="466" key="Github.Dialog.Accounts.Choose/65.24.1855.1056@65.24.1855.1056" timestamp="1589030980155" />
+    <state x="828" y="466" key="Github.Dialog.Accounts.Choose/65.24.1855.1056@65.24.1855.1056" timestamp="1589031492069" />
     <state width="916" height="288" key="GridCell.Tab.0.bottom" timestamp="1589031104435">
       <screen x="65" y="24" width="1855" height="1056" />
     </state>
@@ -286,10 +302,10 @@
     </state>
     <state x="480" y="184" key="SettingsEditor/65.24.1855.1056@65.24.1855.1056" timestamp="1589030557807" />
     <state x="482" y="187" key="SettingsEditor/67.27.1853.1053@67.27.1853.1053" timestamp="1588263955259" />
-    <state x="592" y="264" key="Vcs.Push.Dialog.v2" timestamp="1589031069815">
+    <state x="592" y="264" key="Vcs.Push.Dialog.v2" timestamp="1589031412363">
       <screen x="65" y="24" width="1855" height="1056" />
     </state>
-    <state x="592" y="264" key="Vcs.Push.Dialog.v2/65.24.1855.1056@65.24.1855.1056" timestamp="1589031069814" />
+    <state x="592" y="264" key="Vcs.Push.Dialog.v2/65.24.1855.1056@65.24.1855.1056" timestamp="1589031412363" />
     <state x="790" y="269" width="397" height="566" key="VcsDiffUtil.ChangesDialog" timestamp="1588264255502">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
