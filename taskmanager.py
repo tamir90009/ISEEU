@@ -61,19 +61,18 @@ class TaskManager(object):
         except Exception as e:
             raise e
         # senddata
-        # todo:add send data
-        try:
-            task_data_sender_module = importlib.import_module("datasenders." + task_name.lower())
-        except ModuleNotFoundError:
-            raise Exception("Couldn't find data sender name %s" % task_name)
-        try:
-            task_data_sender = getattr(task_data_sender_module, task_name + "DataSender")
-        except AttributeError:
-            raise Exception("Couldn't find %sAnalyzer in module %s" % (task_name, task_name.lower()))
-        try:
-            task_data_sender.sendData(to_datasender_path)
-        except Exception as e:
-            raise e
+        # try:
+        #     task_data_sender_module = importlib.import_module("datasenders." + task_name.lower())
+        # except ModuleNotFoundError:
+        #     raise Exception("Couldn't find data sender name %s" % task_name)
+        # try:
+        #     task_data_sender = getattr(task_data_sender_module, task_name + "DataSender")
+        # except AttributeError:
+        #     raise Exception("Couldn't find %DataSender in module %s" % (task_name, task_name.lower()))
+        # try:
+        #     task_data_sender.sendData(to_datasender_path)
+        # except Exception as e:
+        #     raise e
 
         print("finish " + task_name)
         return True
