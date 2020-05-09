@@ -1,0 +1,28 @@
+#! /bin/sh
+# /etc/init.d/agent-automation
+### BEGIN INIT INFO
+# Provides: agent-automation
+# Required-Start: $all
+# Required-Stop:
+# Default-Start: 2 3 4 5
+# Default-Stop:
+# Short-Description: agent automation
+### END INIT INFO 
+case "$1" in
+  start)
+    echo "Starting agent-automation"
+    # run application you want to start
+    echo "hello" > /home/test/Desktop/hello23322.txt
+    ;;
+  stop)
+    echo "Stopping agent-automation"
+    # kill application you want to stop
+    echo "bye" > /home/test/Desktop/hello22.txt
+    ;;
+  *)
+    echo "Usage: /etc/init.d/agent-automation{start|stop}"
+    exit 1
+    ;;
+esac
+ 
+exit 0
