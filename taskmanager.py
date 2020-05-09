@@ -19,6 +19,7 @@ class TaskManager(object):
     @staticmethod
     def __execute_task(task_name, output_path=None):
         to_datasender_path = output_path + "/to_datasender"
+        os.makedirs(to_datasender_path, exist_ok=True)
         # collect
         try:
             task_collector_module = importlib.import_module("collectors." + task_name.lower())
