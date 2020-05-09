@@ -1,9 +1,22 @@
+from crontab import CronTab
 from vboxcontroller import VBoxController
 import os
 from shutil import copyfile, copytree
 import subprocess
 from time import sleep
 
+
+def add_to_cron(args):
+    try:
+        username = os.getenv("USER")
+        cron = CronTab(user=username)
+        main_path = os.path.abspath(__file__)
+        job = cron.new(command=main_path + " " + args)
+        job.minute.on(0)
+        job.hour.on(8)
+        cron.write()
+    except Exception as e:
+        raise e
 
 def insert_agent_to_vm(vm_name, agent_folder_path, mount_path=None, controller=None, path_in_machine="/tmp/agent"):
     try:
