@@ -25,6 +25,7 @@ class ProcessInfoAnalyzer(Analyzer):
                 for pid in process_data:
                     suspicious = ProcessInfoAnalyzer.run_analytic_on_pid(process_data,analytic_folder_path,pid)
                     process_data[pid].update({"suspicious":suspicious})
+                    print("here")
                     to_json[pid] = process_data[pid]
                 json.dump(to_json, fp, indent=4)
                 #TODO:call func that send it to file server and give it the json path
