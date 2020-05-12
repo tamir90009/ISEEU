@@ -245,7 +245,7 @@ class Process(object):
     def get_networking_unix(self):
         return self._networking_unix
     '''
-    networking param setter
+    networking param setter 
     '''
 
 

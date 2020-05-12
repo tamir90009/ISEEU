@@ -95,7 +95,7 @@ class AnalyticWriter(object):
             print(es)
 
     '''
-    this func will write the analytic the user want to add to a yml file for the program to parse
+    this func will write the analytic the user want to add to a yml file for the program to parse 
     '''
     def write_analytic_json(self,dst_path = ANALYTICS_PATH):
         try:

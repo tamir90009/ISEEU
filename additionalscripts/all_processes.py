@@ -224,7 +224,7 @@ class AllProcesses(object):
 
 
     '''
-    this func will execute os commands
+    this func will execute os commands 
     '''
     @staticmethod
     def command_exec(command):
