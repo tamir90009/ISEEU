@@ -248,15 +248,6 @@ class Process(object):
     networking param setter
     '''
 
-    def set_networking(self, networking):
-        self._networking = networking
-
-    '''
-    networking param getter
-    '''
-
-    def get_networking(self):
-        return self._networking
 
     def get_pid(self):
         return self._pid
@@ -265,7 +256,7 @@ class Process(object):
         return self
 
     def print_pid(self):
-        print(self.get_pid(),self.get_ppid(),self.get_pgid(),self.get_psid(),self.get_user(), self.get_cmdline(), self.get_cpu(), self.get_mem(), self.get_tty(),
-              self.get_stat(), self.get_start(), self.get_time(), self.get_networking_internet(),
-              self.get_networking_unix(), self.get_list_of_file_descript())
+        funcs = [func for func in dir(Process) if func.startswith("get")]
+        for func in funcs:
+            print(getattr(self,func)(),end=" ")
 

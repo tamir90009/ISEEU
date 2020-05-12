@@ -1,5 +1,8 @@
 import argparse
 import json
+import os
+
+
 '''
 this class writes analytics and a cli option to help the user with the writting one
 '''
@@ -96,14 +99,9 @@ class AnalyticWriter(object):
     '''
     def write_analytic_json(self,dst_path = ANALYTICS_PATH):
         try:
-            with open("{}/{}".format(dst_path,self._analytic_name), "w") as fp:
+            with open(os.path.join(dst_path,self._analytic_name),"w") as fp:
                 to_json  = self.__dict__
                 json.dump(to_json, fp, indent=4)
         except Exception as e:
             raise Exception("problem in dumping new analytic to file :{}.".format(str(e)))
 
-
-
-# #if you want to run from command line please un-comment it
-# newan = AnalyticWriter()
-# newan.get_info_from_user("/tmp/analytics")
