@@ -15,8 +15,7 @@ class SystemInfoParser(Parser):
     def parse(input_path):
         try:
             with open("{}.json".format(input_path), 'r') as fp:
-                systeminfo = json.load(fp)
-                return systeminfo
+                return json.load(fp)
 
         except Exception as e:
             raise Exception("problem in parse process info :{}".format(str(e)))

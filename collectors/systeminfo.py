@@ -12,7 +12,7 @@ class SystemInfoCollector(Collector):
     this func will collect system information
     as an input it will get a  destination path for the out put
     dosent return any thing
-    it will write the collected data to the path
+    it will write the collected data to the path 
     '''
     @staticmethod
     def collect(dst_path):

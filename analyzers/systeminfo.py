@@ -48,7 +48,7 @@ class SystemInfoAnalyzer(Analyzer):
     are os default 
     as in input it det a dic that contains list of dictionary from system info collector 
     and returns the nue updated system_data with whitlested values
-    field is the field that we compare by (between system object and information about the object -  like "user_name")
+    field is the field that we compare by (between system object and information about the object -  like "user_name") 
     '''
 
     @staticmethod
