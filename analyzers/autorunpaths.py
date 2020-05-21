@@ -43,16 +43,16 @@ class AutoRunPathsAnalyzer(Analyzer):
     '''
 
     @staticmethod
-    def analyze(paths, dest_path = DEST):
+    def analyze(paths, dest_path=DEST):
         try:
             relevent_paths = [x for x in paths if x not in WHITELIST]
-            #for es
+            #writea to ES
             AutoRunPathsAnalyzer.write_to_files(dest_path ,dest_path,"{}_auto_run_paths.json".format(socket.gethostname()))
 
-            #for meta data check
+            #writes for meta data check
             dst_path_metadata = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
             os.makedirs(dst_path_metadata,exist_ok=True)
-            AutoRunPathsAnalyzer.write_to_files(relevent_paths,dst_path_metadata , "AutoRunPaths.txt")
+            AutoRunPathsAnalyzer.write_to_files(relevent_paths, dst_path_metadata, "AutoRunPaths.txt")
 
 
         except Exception as e:

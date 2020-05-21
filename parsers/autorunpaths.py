@@ -6,7 +6,7 @@ class AutoRunPathsParser(Parser):
 
     '''
 
-    this func will read the autorun paths collector autoput in to a list and send it to the analyzer
+    this func will read the auto run paths collector output in to a list and send it to the analyzer
     '''
     @staticmethod
     def parse(input_path):
