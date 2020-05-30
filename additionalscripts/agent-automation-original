@@ -12,7 +12,7 @@ case "$1" in
   start)
     echo "Starting agent-automation"
     # run application you want to start
-    # python3 /tmp/agent/agent dfsf
+    # python3 insert_here
     echo "bye" > /home/hello22.txt
     ;;
   stop)

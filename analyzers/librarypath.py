@@ -1,3 +1,4 @@
+from socket import socket
 from analyzers.analyzer import Analyzer
 
 
@@ -7,8 +8,9 @@ class LibraryPathAnalyzer(Analyzer):
     def analyze(parsed_data, output_path):
         if parsed_data is None:
             return
-        output_dict = {}
+        output_list = []
         for i in parsed_data:
-            output_dict[i] = {"suspicious": True}
+            output_list.append({"path": i, "suspicious": True})
 
-        LibraryPathAnalyzer.write_json(output_dict, output_path + "/librarypath")
+        host_name = socket.gethostname()
+        LibraryPathAnalyzer.write_json(output_list, output_path + "/%s_librarypath" % host_name)
