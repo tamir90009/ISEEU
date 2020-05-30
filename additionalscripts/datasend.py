@@ -32,7 +32,7 @@ class MySFTPClient(paramiko.SFTPClient):
             pass
 
 
-def datasend(localpath,remotepath):
+def datasend(localpath):
 
     try:
         # Connecting over Port and ip with data from config file
@@ -43,23 +43,20 @@ def datasend(localpath,remotepath):
         # Directory transport:
         try:
             try:
-                sftp.mkdir(remotepath, ignore_existing=True)
-                sftp.put_dir(localpath, remotepath)
-            except:
                 sftp.mkdir(conf["remote"], ignore_existing=True)
-                sftp.put_dir(conf["local"], conf["remote"])
+                sftp.put_dir(localpath, conf["remote"])
+            except Exception as e:
+                raise Exception("error while sending a dir " + e)
             sftp.close()
         # File transport
         except:
             sftp = transport.open_sftp_client()
             try:
-                remote_file = os.path.join(remotepath,localpath.split("/")[-1])
-                sftp.put(localpath,remote_file)
-            except:
-                remote_file = os.path.join(conf["remote"],conf["local"].split("/")[-1])
-                sftp.put(conf["local"], remote_file)
+                remote_file = os.path.join(conf["remote"], localpath.split("/")[-1])
+                sftp.put(localpath, remote_file)
+            except Exception as e:
+                raise Exception("error while sending file " + e)
             sftp.close()
-
     except Exception as e:
         raise Exception("Error with setting transport " + e)
 

@@ -20,8 +20,8 @@ class ClamAVAnalyzer(Analyzer):
                     if not ('not found' in path['status'].lower() or path['status'].lower() == 'ok'
                             or 'none' in path['status'].lower() or 'checking' in path['status'].lower()):
                         to_json[i] = path
+                        fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-                fp.write(json.dumps(to_json))
-            datasend("./{}_clamav.json".format(socket.gethostname()),"/home/elk/Temp/output")
+            datasend("./{}_clamav.json".format(socket.gethostname()))
         except Exception as e:
             raise Exception("problem in clamav analyzer - analyze :", e)

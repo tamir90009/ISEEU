@@ -25,9 +25,9 @@ class HiddenFilesAnalyzer(Analyzer):
                 for hidden_file in paths:
                     if hidden_file not in exclude:
                         to_json[i] = hidden_file
+                        fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-                fp.write(json.dumps(to_json))
-            datasend("./{}_hidden_files.json".format(socket.gethostname()), "/home/elk/Temp/output")
+            datasend("./{}_hidden_files.json".format(socket.gethostname()))
 
         except Exception as e:
             print("problem in hidden files analyzer - analyze :", e)
