@@ -12,7 +12,6 @@ class MalDetAnalyzer(Analyzer):
     @staticmethod
     def analyze(paths, dest_path=DEST):
         try:
-
             with open(os.path.join(dest_path, "{}_maldet.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
                 i = 0
