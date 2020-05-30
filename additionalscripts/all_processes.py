@@ -156,7 +156,6 @@ class AllProcesses(object):
                     if self._processDic.get(pid, None):
                         self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 2])
                 else:
-                    #pid = int((row.split(None, fields)[fields - 1]).split("/")[0])
                     pid = int((row.split(None, fields)[fields -1]).split("/")[0])
                     if self._processDic.get(pid, None):
                         self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 1])

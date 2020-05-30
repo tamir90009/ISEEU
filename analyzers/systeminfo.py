@@ -37,7 +37,8 @@ class SystemInfoAnalyzer(Analyzer):
             with open(os.path.join(dest_path, "{}_system_info.json".format(socket.gethostname())), "w") as fp:
                 system_data = SystemInfoAnalyzer.check_if_os_default(system_data,'users','user_name')
                 system_data = SystemInfoAnalyzer.check_if_os_default(system_data, 'groups','group_name')
-                json.dump(system_data, fp, indent=4)
+                #json.dump(system_data, fp, indent=4)
+                json.dump(system_data, fp)
                 # TODO:call func that send it to file server and give it the json path
 
         except Exception as e:

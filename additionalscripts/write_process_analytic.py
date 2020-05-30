@@ -36,7 +36,7 @@ class AnalyticWriter(object):
     '''
     collect the information from the user for a single analytic and put it in self
     '''
-    def get_info_from_user(self,dest_path = ANALYTICS_PATH):
+    def get_info_from_user(self, dest_path = ANALYTICS_PATH):
         parser = argparse.ArgumentParser(description="please enter value only to the \
         fields you want in the analytic in PYTHON REGEX , if your analytic include a check - if  one of the fields is empty please \
          put a "" (empty string) value to it,  for logical NOT please add '(NOT)' and then your regex expression")

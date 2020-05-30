@@ -34,7 +34,7 @@ class BinaryListCollector(Collector):
         try:
             bins = []
             for f in listdir(dir):
-                bin.append(os.path.join(dir, f))
+                bins.append(os.path.join(dir, f))
             return bins
         except Exception as e:
             print("problem in get_files_in_dir in binarylist - collector:", e)
