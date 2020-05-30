@@ -1,0 +1,22 @@
+{
+    "_analytic_name": "root_not_init",
+    "_comment": "checks every root process that is not under init",
+    "_pid": null,
+    "_ppid": "(NOT)1",
+    "_pgid": null,
+    "_psid": null,
+    "_mem": null,
+    "_cpu": null,
+    "_user": "root",
+    "_tty": null,
+    "_stat": null,
+    "_start": null,
+    "_time": null,
+    "_cmdline": null,
+    "_env": null,
+    "_list_of_file_descript": null,
+    "_networking_unix": null,
+    "_networking_internet": null,
+    "_operator": "AND"
+}
+

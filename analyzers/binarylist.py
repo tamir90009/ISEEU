@@ -21,7 +21,7 @@ class BinaryListAnalyzer(Analyzer):
             # write for Meta data examination
             dst_path_meta_data = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
             os.makedirs(dst_path_meta_data, exist_ok=True)
-            BinaryListAnalyzer.write_to_files(paths,dst_path_meta_data, "BinaryList.txt")
+            BinaryListAnalyzer.write_to_files(paths, dst_path_meta_data, "BinaryList.txt")
 
 
         except Exception as e:
@@ -41,8 +41,8 @@ class BinaryListAnalyzer(Analyzer):
                 i = 0
                 for path in paths:
                     to_json[i] = path
+                    fp.write(json.dumps(to_json[i]) + '\n')
                     i += 1
-                json.dump(to_json, fp, indent=4)
 
         except Exception as e:
             print("problem in binarylist analyzer -write to files, path:{},error:{} ".format(os.path.join(dst_path,name),e))
