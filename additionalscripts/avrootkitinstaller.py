@@ -14,9 +14,15 @@ def install():
         except Exception as e:
             raise ("error with get_apt " + e)
         if not os.path.exists('maldetect-current.tar.gz'):
-            sub.Popen('wget "http://www.rfxn.com/downloads/maldetect-current.tar.gz"',stdin=sub.PIPE,shell=True)
+            try:
+                sub.Popen('wget "http://www.rfxn.com/downloads/maldetect-current.tar.gz"',stdin=sub.PIPE,shell=True)
+            except Exception as e:
+                raise Exception("Problem getting maldet " + e)
         time.sleep(5)
-        sub.Popen('tar zxvf maldetect-current.tar.gz', stdin=sub.PIPE, shell=True)
+        try:
+            sub.Popen('tar zxvf maldetect-current.tar.gz', stdin=sub.PIPE, shell=True)
+        except Exception as e:
+            raise Exception("problem while extracting mal det " + e)
         time.sleep(5)
         p = sub.Popen('ls', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
                       shell=True)
@@ -29,8 +35,7 @@ def install():
                 c = sub.Popen('./{0}/install.sh'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
                               , shell=True)
                 out,err = c.communicate()
-                print(out)
-                print(err)
+
     except Exception as e:
         raise ("error while trying to install maldetect " + e)
 
