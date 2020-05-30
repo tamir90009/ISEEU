@@ -73,10 +73,40 @@ def on_machine(args):
     except Exception as e:
         raise e
 
+
+def print_error_and_exit(msg, error=''):
+    print(f"\033[91m" + msg + str(error) + f"\033[0m")
+    exit(1)
+
+def write_elastic_conf(args):
+    if ':' in args.elastic:
+        es_ip, es_port = args.elastic_ip.split(':')
+    else:
+        es_ip = args.elastic
+        es_port = '9200'
+    if not args.elastic_path:
+        print("elastic path is missing")
+        exit(1)
+    remote_path = args.elastic_path
+    if not args.elastic_username_password:
+        print("elastic username and password is missing")
+        exit(1)
+    user_name, password = args.elastic_username_password.split(':')
+    try:
+        elastic_json = {'ip': es_ip, 'port': es_port, 'user': user_name, 'pass': password, 'remote': remote_path}
+        with open('delivery.conf', 'w') as fp:
+            json.dump(elastic_json, fp)
+    except Exception as e:
+        raise e
+
+
 def main():
     args = argparse_func()
     if args.crontab:
-        offlineautomation.add_to_cron(args.crontab_flags)
+        try:
+            offlineautomation.add_to_cron(args.crontab_flags)
+        except Exception as e:
+            print_error_and_exit("error occurred while add to cron: ", e)
     # TODO: run on image
 
     if args.new_analytic:
@@ -100,38 +130,17 @@ def main():
             for task in args.run_specific.replace(' ', '').split(','):
                 task_manager.add_task(task)
             
-        if args.elastic:
-            if ':' in args.elastic:
-                es_ip, es_port = args.elastic_ip.split(':')
-            else:
-                es_ip = args.elastic
-                es_port = '9200'
-            if not args.elastic_path:
-                print("elastic path is missing")
-                exit(1)
-            remote_path = args.elastic_path
-            if not args.elastic_username_password:
-                print("elastic username and password is missing")
-                exit(1)
-            user_name, password = args.elastic_username_password.split(':')
-            try:
-                elastic_json = {'ip': es_ip, 'port': es_port,  'user': user_name, 'pass': password, 'remote': remote_path}
-                with open('delivery.conf', 'w') as fp:
-                    json.dump(elastic_json, fp)
-            except Exception as e:
-                raise e
-            #print('dslkfjl')
+        if args.elastic_ip:
+            write_elastic_conf(args)
 
         else:
-            print('elastic info is missing')
-            exit(1)
+            print_error_and_exit('elastic info is missing')
 
         if args.output_path:
             task_manager.execute_all_tasks(args.output_path, args.threads)
 
         else:
-            print('output path is missing')
-            exit(1)
+            print_error_and_exit('output path is missing')
 
 
 if __name__ == '__main__':
