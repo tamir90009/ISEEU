@@ -1,8 +1,9 @@
 from collectors.collector import Collector
 from os import listdir
 
-AUTO_PATHS_MODIFY  = ["/boot/grub/grub.cfg" , "/etc/X11/xinit/xinitrc" , "~/.bashrc","/etc/bash.bashrc" , "~/.bash_profile"]
+AUTO_PATHS_MODIFY = ["/boot/grub/grub.cfg", "/etc/X11/xinit/xinitrc", "~/.bashrc", "/etc/bash.bashrc", "~/.bash_profile"]
 AUTO_PATHS_DIRS = ["/etc/init.d/"]
+HOME_DIR = "~/"
 
 class AutoRunPathsCollector(Collector):
 
@@ -21,7 +22,7 @@ class AutoRunPathsCollector(Collector):
                 fp.write('\n'.join(AUTO_PATHS_MODIFY))
 
         except Exception as e:
-            print("problem in autorunpath collector - collect:",e)
+            print("problem in autorunpath collector - collect:{}".format(e))
 
 
     '''
@@ -34,7 +35,7 @@ class AutoRunPathsCollector(Collector):
                 for f in listdir(dir):
                     AUTO_PATHS_MODIFY.append("{}{}".format(dir, f))
         except Exception as e:
-            print("problem in get_files_in_dir in autorunpaths - collector:",e)
+            print("problem in get_files_in_dir in autorunpaths - collector:{}".format(e))
 
     '''
     this func get user profiles auto run files
@@ -44,13 +45,13 @@ class AutoRunPathsCollector(Collector):
         try:
             users_list = AutoRunPathsCollector.users()
             for file in AUTO_PATHS_MODIFY:
-                if "~/" in file:
+                if HOME_DIR in file:
                     for u in users_list:
                         user_file = file.replace("~", u)
                         AUTO_PATHS_MODIFY.append(user_file)
                     AUTO_PATHS_MODIFY.remove(file)
         except Exception as e:
-            print("problem in get_file_per_user in autorunpaths - collector:",e)
+            print("problem in get_file_per_user in autorunpaths - collector:{}".format(e))
 
     '''
     this func maps the users home directory list
@@ -64,7 +65,7 @@ class AutoRunPathsCollector(Collector):
                     users_homes.append("/home/{}".format(f))
             return users_homes
         except Exception as e:
-            print("problem in users list in autorunpath -collector:",e)
+            print("problem in users list in autorunpath -collector:{}".format(e))
 
 
 

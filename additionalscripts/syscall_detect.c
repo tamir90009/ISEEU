@@ -169,7 +169,7 @@ int main()
             else if(afterSubstr(buffer, "00000000 00:00 0") == NULL)
             {
                 // Something has been preloaded by ld.so
-                printf("LD_PRELOAD detected through memory maps\n");
+                printf("LD_PRELOAD detected through memory maps.\n");
                 break;
             }
         }

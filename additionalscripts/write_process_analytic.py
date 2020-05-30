@@ -1,5 +1,8 @@
 import argparse
 import json
+import os
+
+
 '''
 this class writes analytics and a cli option to help the user with the writting one
 '''
@@ -33,7 +36,7 @@ class AnalyticWriter(object):
     '''
     collect the information from the user for a single analytic and put it in self
     '''
-    def get_info_from_user(self,dest_path = ANALYTICS_PATH):
+    def get_info_from_user(self, dest_path = ANALYTICS_PATH):
         parser = argparse.ArgumentParser(description="please enter value only to the \
         fields you want in the analytic in PYTHON REGEX , if your analytic include a check - if  one of the fields is empty please \
          put a "" (empty string) value to it,  for logical NOT please add '(NOT)' and then your regex expression")
@@ -61,49 +64,6 @@ class AnalyticWriter(object):
 
         args = parser.parse_args()
         # print(args.network,"what")
-        self.insert_values_from_arguments(args)
-        # try:
-        #     self._comment = args.comment
-        #     self._analytic_name = args.name
-        #     self._pid = args.pid
-        #     self._ppid = args.ppid
-        #     self._pgid = args.pgid
-        #     self._psid = args.psid
-        #     self._mem = args.memory
-        #     self._cpu = args.cpu
-        #     self._user = args.user
-        #     self._tty = args.tty
-        #     self._stat = args.stat
-        #     self._start = args.start
-        #     self._time = args.time
-        #     self._cmdline = args.cmdline
-        #     self._env = args.environ
-        #     self._networking_unix = args.networking_unix
-        #     self._networking_internet = args.networking_internet
-        #     self._list_of_file_descript = args.file_descriptor
-        #     self._operator = args.operator
-        #
-        #
-        # except Exception as e:
-        #     print("problem in user input for an analytic , func - get info from user :{}".format(e))
-
-        try:
-            self.write_analytic_json(dest_path)
-        except Exception as es:
-            print(es)
-
-    '''
-    this func will write the analytic the user want to add to a yml file for the program to parse
-    '''
-    def write_analytic_json(self, dst_path=ANALYTICS_PATH):
-        try:
-            with open("{}/{}".format(dst_path,self._analytic_name), "w") as fp:
-                to_json  = self.__dict__
-                json.dump(to_json, fp, indent=4)
-        except Exception as e:
-            raise Exception("problem in dumping new analytic to file :{}.".format(str(e)))
-
-    def insert_values_from_arguments(self, args):
         try:
             self._comment = args.comment
             self._analytic_name = args.name
@@ -127,8 +87,21 @@ class AnalyticWriter(object):
 
 
         except Exception as e:
-            print("problem in user input for an analytic , func - get info from user :{}".format(e))
+            print("problem in user input for an analytic ,func - get info from user :{}".format(e))
 
-# #if you want to run from command line please un-comment it
-# newan = AnalyticWriter()
-# newan.get_info_from_user("/tmp/analytics")
+        try:
+            self.write_analytic_json(dest_path)
+        except Exception as es:
+            print(es)
+
+    '''
+    this func will write the analytic the user want to add to a yml file for the program to parse 
+    '''
+    def write_analytic_json(self,dst_path = ANALYTICS_PATH):
+        try:
+            with open(os.path.join(dst_path,self._analytic_name),"w") as fp:
+                to_json  = self.__dict__
+                json.dump(to_json, fp, indent=4)
+        except Exception as e:
+            raise Exception("problem in dumping new analytic to file :{}.".format(str(e)))
+

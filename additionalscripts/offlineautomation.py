@@ -85,7 +85,7 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                 counter += 1
 
         #add the output agent path to be copy to the machine
-        #copytree(agent_folder_path, dst_path_by_host)
+        #copytree(agent_folder_path, dst_path_by_host).
         controller.stop(vm_name)
         raise Exception("all good")
     except Exception as e:

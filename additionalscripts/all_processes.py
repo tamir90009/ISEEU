@@ -8,7 +8,7 @@ PS_COLUMNS = 10
 TRACE_COMM_COLUMNS = 1
 
 '''
-this class represent a list of process and collects each process information from the os 
+this class represent a list of process and collects each process information from the os .
 '''
 
 
@@ -85,7 +85,6 @@ class AllProcesses(object):
                 pid = int(row.split(None, PS_COLUMNS)[1])
                 fields = len(row.split(None, PS_COLUMNS))
                 if self._processDic.get(pid, None):
-                    #print("parent:",row.split(None, fields)[2] ,"child:",pid)
                     parent_cmdline = self._processDic.get(int(row.split(None, fields)[2])).get_cmdline()
                     self._processDic.get(pid).set_parent_cmdline(parent_cmdline)
                     self._processDic.get(pid).set_ppid(int(row.split(None, fields)[2]))
@@ -98,7 +97,7 @@ class AllProcesses(object):
     '''
     this func parse the out put of 'netstat -nalp' command to
     first part - Active internet connection
-    secend part -Active UNIX domain sockets
+    second part -Active UNIX domain sockets
     '''
 
     def netstat_reader(self):
@@ -132,16 +131,16 @@ class AllProcesses(object):
                 if fields < NETSTAT_UNIX_COLUMNS:
                     pid = int((row.split(None, fields)[fields - 1]).split("/")[0])
                     if self._processDic.get(pid, None):
-                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 1:])
+                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 1])
                 else:
                     pid = int((row.split(None, fields)[fields - 2]).split("/")[0])
                     if self._processDic.get(pid, None):
-                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 2:])
+                        self._processDic.get(pid).set_networking_unix(row.split(None, fields)[:fields - 2])
 
         except KeyError as error:
             raise KeyError(error)
         except Exception as e:
-            raise Exception("problem while usinf netat unix domain %s" % str(e),row)
+            raise Exception("problem while using netat unix domain %s" % str(e),row)
 
     '''
     netstat first part parse - Active internet connection
@@ -155,12 +154,11 @@ class AllProcesses(object):
                 if "--type=" in row or ": r" in row:
                     pid = int((row.split(None, fields)[fields - 2]).split("/")[0])
                     if self._processDic.get(pid, None):
-                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 2:])
+                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 2])
                 else:
-                    #pid = int((row.split(None, fields)[fields - 1]).split("/")[0])
                     pid = int((row.split(None, fields)[fields -1]).split("/")[0])
                     if self._processDic.get(pid, None):
-                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 1:])
+                        self._processDic.get(pid).set_networking_internet(row.split(None, fields)[:fields - 1])
 
         except KeyError as error:
             raise error
@@ -187,8 +185,8 @@ class AllProcesses(object):
                     raise IOError.args
 
     '''
-    this funx will parse the information from the 'lsof -nPR' command to find all process file descriptors in use and 
-    put it in the spicific process object
+    this func will parse the information from the 'lsof -nPR' command to find all process file descriptors in use and 
+    put it in the specific process object
     '''
 
     def parse_lsof_command(self):
@@ -214,13 +212,8 @@ class AllProcesses(object):
     '''
     get all pids 
     '''
-
     def get_pids(self):
         return self._processDic.keys()
-
-    '''
-    this func will execute os commands
-    '''
 
     '''
     this func returns the all process list object
@@ -228,6 +221,10 @@ class AllProcesses(object):
     def get_all_process(self):
         return self._processDic
 
+
+    '''
+    this func will execute os commands 
+    '''
     @staticmethod
     def command_exec(command):
         try:
@@ -248,12 +245,8 @@ class AllProcesses(object):
     @staticmethod
     def is_accessible(path, mode='r'):
         try:
-            f = open(path, mode)
-            f.close()
+            with open(path,mode) as f:
+                f.read()
         except IOError:
             return False
         return True
-
-
-newpro = AllProcesses()
-newpro.collect_all_info()

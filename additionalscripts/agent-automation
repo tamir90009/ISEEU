@@ -7,7 +7,7 @@
 # Default-Start: 2 3 4 5
 # Default-Stop:
 # Short-Description: agent automation
-### END INIT INFO 
+### END INIT INFO .
 case "$1" in
   start)
     echo "Starting agent-automation"
