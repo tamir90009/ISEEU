@@ -35,6 +35,6 @@ class RKHunterParser(Parser):
                         else:
                             continue
                 except Exception as e:
-                    print(e)
+                    raise Exception("Rkhunter praser problem " + e)
             avoutput.close()
             return rkhunter_output

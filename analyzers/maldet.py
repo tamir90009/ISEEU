@@ -1,10 +1,10 @@
-
+from additionalscripts.datasend import datasend
 from analyzers.analyzer import Analyzer
 import json
 import os
 import socket
 
-DEST = r'/temp'
+DEST = "/home/elk/Temp/output"
 
 
 class MalDetAnalyzer(Analyzer):
@@ -12,7 +12,7 @@ class MalDetAnalyzer(Analyzer):
     @staticmethod
     def analyze(paths, dest_path=DEST):
         try:
-            # TODO: return paths to noa's attr func
+
             with open(os.path.join(dest_path, "{}_maldet.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
                 i = 0
@@ -21,6 +21,7 @@ class MalDetAnalyzer(Analyzer):
                             or 'none' in path['status'].lower() or 'checking' in path['status'].lower()):
                         to_json[i] = path
                         i += 1
-                json.dump(to_json, fp, indent=4)
+                fp.write(json.dumps(to_json))
+            datasend("./{}_maldet.json".format(socket.gethostname()), dest_path)
         except Exception as e:
-            print("problem in maldet analyzer - analyze :", e)
+            raise Exception("problem in maldet analyzer - analyze :", e)

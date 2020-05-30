@@ -11,9 +11,9 @@ class MalDetCollector(Collector):
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):
-                    raise Exception("maldet not installed")
+                    raise Exception("maldet not installed " + err)
             if out:
                 with open("{}.json".format(dst_path), "w") as fp:
                     fp.write('\n'.join(out.decode('utf-8')))
         except Exception as e:
-            raise Exception(e)
+            raise Exception("cant run maldet" + e)

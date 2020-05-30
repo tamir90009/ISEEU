@@ -1,8 +1,8 @@
 import subprocess as sub
 from collectors.collector import Collector
+import json
 
-
-class AVScanCollector(Collector):
+class ClamAVCollector(Collector):
 
     @staticmethod
     def collect(dst_path):
@@ -11,9 +11,9 @@ class AVScanCollector(Collector):
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):
-                    raise Exception("Chip not installed")
+                    raise Exception("Chip not installed " + err)
             if out:
                 with open("{}.json".format(dst_path), "w") as fp:
                     fp.write('\n'.join(out.decode('utf-8')))
         except Exception as e:
-            raise Exception("Cant run ClamScan")
+            raise Exception("Cant run ClamScan " + e)

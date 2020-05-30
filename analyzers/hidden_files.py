@@ -1,4 +1,4 @@
-
+from additionalscripts.datasend import datasend
 from analyzers.analyzer import Analyzer
 import json
 import os
@@ -18,7 +18,7 @@ class HiddenFilesAnalyzer(Analyzer):
     def analyze(paths, dest_path=DEST):
         try:
 
-            # TODO: return paths to noa's attr func
+
             with open(os.path.join(dest_path, "{}_hidden_files.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
                 i = 0
@@ -26,7 +26,8 @@ class HiddenFilesAnalyzer(Analyzer):
                     if hidden_file not in exclude:
                         to_json[i] = hidden_file
                         i += 1
-                json.dump(to_json, fp, indent=4)
+                fp.write(json.dumps(to_json))
+            datasend("./{}_hidden_files.json".format(socket.gethostname()), "/home/elk/Temp/output")
 
         except Exception as e:
             print("problem in hidden files analyzer - analyze :", e)
