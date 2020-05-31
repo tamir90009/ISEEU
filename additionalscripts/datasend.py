@@ -1,9 +1,10 @@
 import paramiko
 import os
 import json
+import os
 
 def configs():
-    try
+    try:
         with open('delivery.conf', 'r') as conf:
             config = json.load(conf)
             return config
@@ -32,7 +33,7 @@ class MySFTPClient(paramiko.SFTPClient):
             pass
 
 
-def datasend(localpath):
+def datasend(localpath, task_name):
 
     try:
         # Connecting over Port and ip with data from config file
@@ -40,23 +41,26 @@ def datasend(localpath):
         transport = paramiko.Transport((conf['ip'], int(conf['port'])))
         transport.connect(username=conf['user'], password=conf['pass'])
         sftp = MySFTPClient.from_transport(transport)
+        remote_path = os.path.join(conf["remote"], task_name)
         # Directory transport:
-        try:
+        if os.path.isdir(localpath):
             try:
-                sftp.mkdir(conf["remote"], ignore_existing=True)
-                sftp.put_dir(localpath, conf["remote"])
+                sftp.mkdir(remote_path, ignore_existing=True)
+                sftp.put_dir(localpath, remote_path)
             except Exception as e:
                 raise Exception("error while sending a dir " + e)
             sftp.close()
         # File transport
-        except:
+        elif os.path.isfile(localpath):
             sftp = transport.open_sftp_client()
             try:
-                remote_file = os.path.join(conf["remote"], localpath.split("/")[-1])
+                remote_file = os.path.join(remote_path, os.path.basename(localpath))
                 sftp.put(localpath, remote_file)
             except Exception as e:
                 raise Exception("error while sending file " + e)
             sftp.close()
+        else:
+            raise Exception("file not found")
     except Exception as e:
         raise Exception("Error with setting transport " + e)
 
