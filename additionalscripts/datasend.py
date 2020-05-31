@@ -2,13 +2,14 @@ import paramiko
 import json
 import os
 
+
 def configs():
     try:
-        with open('delivery.conf', 'r') as conf:
+        with open('additionalscripts/delivery.conf', 'r') as conf:
             config = json.load(conf)
             return config
     except Exception as e:
-        raise Exception("conf file not found " + e)
+        raise Exception("conf file not found " + str(e))
 
 
 class MySFTPClient(paramiko.SFTPClient):
@@ -27,12 +28,13 @@ class MySFTPClient(paramiko.SFTPClient):
     def mkdir(self, path, mode=511, ignore_existing=False):
         ''' Augments mkdir by adding an option to not fail if the folder exists  '''
         try:
-            super(MySFTPClient, self).mkdir(path, mode)
+            super(MySFTPClient, self).mkdir(path, mode=mode)
         except Exception as e:
             pass
 
 
 def datasend(localpath, task_name):
+
 
     try:
         # Connecting over Port and ip with data from config file
@@ -42,26 +44,27 @@ def datasend(localpath, task_name):
         sftp = MySFTPClient.from_transport(transport)
         remote_path = os.path.join(conf["remote"], task_name)
         # Directory transport:
-        if os.path.isdir(localpath):
-            try:
-                sftp.mkdir(remote_path, ignore_existing=True)
-                sftp.put_dir(localpath, remote_path)
-            except Exception as e:
-                raise Exception("error while sending a dir " + e)
-            sftp.close()
+        # if os.path.isdir(localpath):
+        #     try:
+        #         sftp.mkdir(remote_path, ignore_existing=True)
+        #         sftp.put_dir(localpath, remote_path)
+        #     except Exception as e:
+        #         raise Exception("error while sending a dir " + e)
+        #     sftp.close()
         # File transport
-        elif os.path.isfile(localpath):
-            sftp = transport.open_sftp_client()
+        if os.path.isfile(localpath):
+            # sftp = transport.open_sftp_client()
             try:
-                remote_file = os.path.join(remote_path, os.path.basename(localpath))
+                remote_file = os.path.join(remote_path, '_'.join(os.path.basename(localpath).split("_")[:-1]) + '.json')
+                sftp.mkdir(remote_path, ignore_existing=True)
                 sftp.put(localpath, remote_file)
             except Exception as e:
-                raise Exception("error while sending file " + e)
+                raise Exception("error while sending file " + str(e))
             sftp.close()
         else:
             raise Exception("file not found")
     except Exception as e:
-        raise Exception("Error with setting transport " + e)
+        raise Exception("Error with setting transport " + str(e))
 
 
 # # Can sent Dir/ File
