@@ -1,6 +1,7 @@
+import os
 from socket import socket
 from analyzers.analyzer import Analyzer
-
+from additionalscripts.datasend import datasend
 
 class LibraryPathAnalyzer(Analyzer):
 
@@ -13,4 +14,5 @@ class LibraryPathAnalyzer(Analyzer):
             output_list.append({"path": i, "suspicious": True})
 
         host_name = socket.gethostname()
-        LibraryPathAnalyzer.write_json(output_list, output_path + "/%s_librarypath" % host_name)
+        LibraryPathAnalyzer.write_json(output_list, os.path.join(output_path, "%s_librarypath.json" % host_name))
+        datasend(os.path.join(output_path, "%s_librarypath.json" % host_name), 'librarypath')
