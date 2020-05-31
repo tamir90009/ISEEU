@@ -3,8 +3,9 @@ import shutil
 
 
 class ScheduledTaskCollector(Collector):
-
-    # this func coping crontab's folder to destination
+    '''
+    this func coping crontab's folder to destination
+    '''
     @staticmethod
     def collect(dst_path):
         try:

@@ -1,5 +1,8 @@
 from analyzers.analyzer import Analyzer
+from os import listdir
+from os.path import isfile, join
 import json
+import re
 import os
 import socket
 from additionalscripts.datasend import datasend
@@ -32,11 +35,21 @@ class SystemInfoAnalyzer(Analyzer):
     def analyze(system_data, dest_path=DEST):
 
         try:
+            system_data = SystemInfoAnalyzer.check_if_os_default(system_data, 'users', 'user_name')
+            system_data = SystemInfoAnalyzer.check_if_os_default(system_data, 'groups', 'group_name')
             with open(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), "w") as fp:
-                system_data = SystemInfoAnalyzer.check_if_os_default(system_data,'users','user_name')
-                system_data = SystemInfoAnalyzer.check_if_os_default(system_data, 'groups','group_name')
-                json.dump(system_data, fp)
-                datasend(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), "systeminfo")
+                system_info = dict((k, system_data[k]) for k in ('architecture', 'host_name', 'kernel_version', 'distribution'))
+                fp.write(json.dumps(system_info)+'\n')
+            datasend(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), 'system_info')
+            with open(os.path.join(dest_path, "{}_groups.json".format(socket.gethostname())), "w") as fp:
+                for group in system_data['groups']:
+                    fp.write(json.dumps(group) + '\n')
+            datasend(os.path.join(dest_path, "{}_groups.json".format(socket.gethostname())), 'groups')
+            with open(os.path.join(dest_path, "{}_users.json".format(socket.gethostname())), "w") as fp:
+                for user in system_data['users']:
+                    fp.write(json.dumps(user) + '\n')
+            datasend(os.path.join(dest_path, "{}_users.json".format(socket.gethostname())), 'users')
+
         except Exception as e:
             raise Exception("problem in reading analytic  info - analyzer :{}".format(str(e)))
 
@@ -52,6 +65,7 @@ class SystemInfoAnalyzer(Analyzer):
     def check_if_os_default(system_data, object , field):
         try:
             for obj in system_data[object]:
+                # print(user['user_name'])
                 object_id = next((i for i, object in enumerate(system_data[object]) if
                                 object[field] == obj[field]), None)
                 if obj[field] in OS_WHITELIST:

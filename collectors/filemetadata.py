@@ -8,8 +8,10 @@ import glob
 
 class FileMetaDataCollector(Collector):
 
-    # this func gets the metadata of file using os.staf and the two
-    # other functions and save it to file in the destination
+    '''
+    this func gets the metadata of file using os.staf and the two
+    other functions and save it to file in the destination
+    '''
     @staticmethod
     def collect(dst_path):
         tasks_files = glob.glob("{}/MetaData/*.txt".format("/".join(dst_path.split('/')[:-1])))
@@ -18,27 +20,29 @@ class FileMetaDataCollector(Collector):
                 files_list = task.readlines()
             files_list = list(set(map(lambda x: x[:-1], files_list)))
             subject = tf.split("/")[-1][:-4]
-            for f in files_list:
-                d = {}
+            for file in files_list:
+                data = {}
                 try:
-                    st = os.stat(f)
-                    d["file_path"] = f
-                    d["permissions"] = get_permissions(f)
-                    d["owner"] = st.st_uid
-                    d["atime"] = st.st_atime
-                    d["mtime"] = st.st_mtime
-                    d["ctime"] = st.st_ctime
-                    d["size"] = st.st_size
-                    d["attr"] = get_attr(f)
+                    st = os.stat(file)
+                    data["file_path"] = file
+                    data["permissions"] = get_permissions(file)
+                    data["owner"] = st.st_uid
+                    data["atime"] = st.st_atime
+                    data["mtime"] = st.st_mtime
+                    data["ctime"] = st.st_ctime
+                    data["size"] = st.st_size
+                    data["attr"] = get_attr(file)
                 except Exception as e:
-                    raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(f, str(e)))
+                    raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
                 os.makedirs(dst_path, exist_ok=True)
                 with open('{}/{}'.format(dst_path, subject), "a+") as current_file:
-                    current_file.write('{}\n'.format(d))
+                    current_file.write('{}\n'.format(data))
 
 
 def get_permissions(file_path):
-    # this func gets the permissions of file using ls -l command and returns it
+    '''
+    this func gets the permissions of file using ls -l command and returns it
+    '''
     try:
         task = subprocess.Popen("ls -l {}".format(file_path),
                                 shell=True,
@@ -51,7 +55,9 @@ def get_permissions(file_path):
 
 
 def get_attr(file_path):
-    # this func gets the attributes of file using lsattr command and returns it
+    '''
+    this func gets the attributes of file using lsattr command and returns it
+    '''
     try:
         task = subprocess.Popen("lsattr -R {}".format(file_path),
                                 shell=True,

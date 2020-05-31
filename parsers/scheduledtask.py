@@ -1,5 +1,4 @@
 from parsers.parser import Parser
-#from collectors.filemetadata import FileMetadataCollector
 import glob
 import pretty_cron
 import re
@@ -8,7 +7,9 @@ import os
 
 class ScheduledTaskParser(Parser):
 
-    # this func parse the crontab files that in the destination, write the parsed data to dictionary and return it
+    '''
+    this func parse the crontab files that in the destination, write the parsed data to dictionary and return it
+    '''
     @staticmethod
     def parse(dst_path):
         files = []
@@ -20,9 +21,7 @@ class ScheduledTaskParser(Parser):
                 with open(file) as current_file:
                     crontab_list = current_file.readlines()
                 for i in crontab_list:
-                    if i[:1] == '#':
-                        pass
-                    elif i == '\n':
+                    if i[:1] == '#' or i == '\n':
                         pass
                     else:
                         data.append(i)
@@ -51,10 +50,14 @@ class ScheduledTaskParser(Parser):
                     count += 1
             except Exception as e:
                 raise Exception("problem in parcing the data from crontab file of:{} - parser: {}".format(file, str(e)))
-        #FileMetadataCollector.collect(dst_path, files, 'scheduled_tasks')
-        dst_path_meta_data = "{}/MetaData".format("/".join(dst_path.split('/')[:-1]))
-        os.makedirs(dst_path_meta_data, exist_ok=True)
-        for f in files:
-            with open('{}/ScheduledTasks.txt'.format(dst_path_meta_data), "a+") as meta_data_file:
-                meta_data_file.write('{}\n'.format(f))
+        try:
+            dst_path_meta_data = "{}/MetaData".format("/".join(dst_path.split('/')[:-1]))
+            os.makedirs(dst_path_meta_data, exist_ok=True)
+            for f in files:
+                with open('{}/ScheduledTasks.txt'.format(dst_path_meta_data), "a+") as meta_data_file:
+                    meta_data_file.write('{}\n'.format(f))
+            #FileMetaDataCollector.collect(dst_path, files, 'scheduled_tasks')
+            #FileMetaDataCollector.collect("/".join(dst_path.split('/')[:-1]))
+        except Exception as e:
+            raise Exception("problem in writing the data to file- parser: {}".format( str(e)))
         return cron_tabs

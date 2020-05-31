@@ -5,7 +5,10 @@ import os
 
 class LogCollector(Collector):
 
-    # this func coping the log files to destination
+    '''
+    this func gets dst_path, coping the relevant logs files using shutil.copyfile
+    to dst_path
+    '''
     @staticmethod
     def collect(dst_path):
         try:

@@ -6,7 +6,9 @@ import glob
 
 class FileMetaDataParser(Parser):
 
-    # this func parse all the data from the file in destination into dictionary and return it
+    '''
+    this func parse all the data from the file in destination into dictionary and return it
+    '''
     @staticmethod
     def parse(dst_path):
         files = glob.glob('{}/*'.format(dst_path))
