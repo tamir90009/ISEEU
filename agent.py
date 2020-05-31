@@ -29,11 +29,12 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
+    parser.add_argument('-inp', '--install', help='installation need to be done', required=False)
 
     # analytics args
     group.add_argument('-na', '--new_analytic', help='add analytic', action='store_true', required=False)
     parser.add_argument('-w', '--comment',
-                        help='write a comment for your analytic that explain what it checkes and why is that suspicious',
+                        help='write a comment for your analytic that explain what it checks and why is that suspicious',
                         required=False)
     parser.add_argument('-N', '--name', help='write a name for the analytic', required=False)
     parser.add_argument('-p', '--pid', help='write  a suspicious pid', required=False)
@@ -85,13 +86,16 @@ def write_elastic_conf(args):
         es_ip = args.elastic
         es_port = '9200'
     if not args.elastic_path:
-        print("elastic path is missing")
+        print_error_and_exit('elastic path is missing')
         exit(1)
     remote_path = args.elastic_path
     if not args.elastic_username_password:
-        print("elastic username and password is missing")
+        print_error_and_exit('elastic username and password is missing')
         exit(1)
-    user_name, password = args.elastic_username_password.split(':')
+    if ':' in args.elastic_username_password:
+        user_name, password = args.elastic_username_password.split(':')
+    else:
+        print_error_and_exit('elastic username and password need to be insert like username:pass')
     try:
         elastic_json = {'ip': es_ip, 'port': es_port, 'user': user_name, 'pass': password, 'remote': remote_path}
         with open('delivery.conf', 'w') as fp:
@@ -102,12 +106,15 @@ def write_elastic_conf(args):
 
 def main():
     args = argparse_func()
+    if args.install:
+        print_error_and_exit('whatt????')
+        #TODO: check how to install things.
+
     if args.crontab:
         try:
             offlineautomation.add_to_cron(args.crontab_flags)
         except Exception as e:
             print_error_and_exit("error occurred while add to cron: ", e)
-    # TODO: run on image
 
     if args.new_analytic:
         try:
