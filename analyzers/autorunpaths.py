@@ -2,6 +2,7 @@ from analyzers.analyzer import Analyzer
 import os
 import socket
 import json
+from additionalscripts.datasend import datasend
 
 DEST = '/tmp'
 
@@ -32,11 +33,7 @@ WHITELIST = ['/etc/init.d/thermald', '/etc/init.d/irqbalance', '/etc/init.d/clam
              '/etc/init.d/umountroot', '/etc/init.d/.depend.boot', '/etc/init.d/kmod', '/etc/init.d/agent-atomation']
 
 
-
 class AutoRunPathsAnalyzer(Analyzer):
-
-
-
     '''
     this func will get the autorunpaths from the parser in a list and send the data to file attribute check and write
     to json (which will be send to ES)
@@ -46,23 +43,24 @@ class AutoRunPathsAnalyzer(Analyzer):
     def analyze(paths, dest_path=DEST):
         try:
             relevent_paths = [x for x in paths if x not in WHITELIST]
-            #writes to ES
-            AutoRunPathsAnalyzer.write_to_files(relevent_paths ,dest_path,"{}_auto_run_paths.json".format(socket.gethostname()))
+            # writes to ES
+            AutoRunPathsAnalyzer.write_to_files(relevent_paths, dest_path,
+                                                "{}_autorunpaths.json".format(socket.gethostname()))
+            datasend(os.path.join(dest_path, "{}_autorunpaths.json".format(socket.gethostname())), "autorunpaths")
 
-            #writes for meta data check
+            # writes for meta data check
             dst_path_metadata = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
-            os.makedirs(dst_path_metadata,exist_ok=True)
+            os.makedirs(dst_path_metadata, exist_ok=True)
             AutoRunPathsAnalyzer.write_to_files(relevent_paths, dst_path_metadata, "AutoRunPaths.txt")
 
 
         except Exception as e:
             print("problem in autorunpaths analyzer - analyze :", e)
 
-
     @staticmethod
-    def write_to_files(paths,dest_path,name):
+    def write_to_files(paths, dest_path, name):
         try:
-            with open(os.path.join(dest_path,name), "w") as fp:
+            with open(os.path.join(dest_path, name), "w") as fp:
                 to_json = {}
                 i = 0
                 for path in paths:
@@ -71,4 +69,4 @@ class AutoRunPathsAnalyzer(Analyzer):
                     i += 1
 
         except Exception as e:
-            print("problem in autorunpaths analyzer  - write to files  : {} , dest path was :{}".format(e,dest_path))
+            print("problem in autorunpaths analyzer  - write to files  : {} , dest path was :{}".format(e, dest_path))

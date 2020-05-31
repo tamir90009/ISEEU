@@ -1,5 +1,4 @@
 import paramiko
-import os
 import json
 import os
 
@@ -65,7 +64,7 @@ def datasend(localpath, task_name):
         raise Exception("Error with setting transport " + e)
 
 
-# Can sent Dir/ File
-datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")
-datasend("/home/test/HH", "/home/elk/Temp/New")
+# # Can sent Dir/ File
+# datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")
+# datasend("/home/test/HH", "/home/elk/Temp/New")
 
