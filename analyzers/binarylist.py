@@ -25,7 +25,7 @@ class BinaryListAnalyzer(Analyzer):
             datasend(os.path.join(dest_path, "{}_binarylist.json".format(socket.gethostname())), "binarylist")
 
         except Exception as e:
-            print("problem in bianrylist analyzer - analyze :", e)
+            raise Exception("problem in bianrylist analyzer - analyze :", str(e))
 
     '''
     this func will write the paths list to a file which will the the metadata extractor monitors for deeper examination

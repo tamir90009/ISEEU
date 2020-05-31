@@ -194,7 +194,8 @@ class AllProcesses(object):
             output = self.command_exec("lsof -nRP")
             for row in output[2:]:
                 # ignore command warnings
-                if 'lsof:' not in row:
+                if 'lsof:' not in row and 'Output information may be incomplete.' not in row \
+                        and not row.startswith('COMMAND'):
                     pid = int(row.split(None, LSOF_COLUMNS)[1])
                     split_row = row.split(None, LSOF_COLUMNS)
                     split_row_len = len(split_row)
