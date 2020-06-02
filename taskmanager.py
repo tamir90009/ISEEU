@@ -58,17 +58,14 @@ class TaskManager(object):
         # analyze
         try:
             task_analyzer_module = importlib.import_module("analyzers." + task_name.lower())
-            print('1')
         except ModuleNotFoundError:
             raise Exception("Couldn't find analyzer name %s" % task_name)
         try:
             task_analyzer = getattr(task_analyzer_module, task_name + "Analyzer")
-            print('2')
         except AttributeError:
             raise Exception("Couldn't find %sAnalyzer in module %s" % (task_name, task_name.lower()))
         try:
             task_analyzer.analyze(parsed_data, to_datasender_path)
-            print('3')
         except Exception as e:
             raise Exception("%s analyzer - %s" % (task_name, str(e)))
         # senddata
