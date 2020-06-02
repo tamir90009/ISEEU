@@ -103,6 +103,6 @@ class ProcessInfoAnalyzer(Analyzer):
             return True
 
         except Exception as e:
-            raise Exception("problem in reading analytic  AND operator - analyzer :{} ,{}".format(str(e)),process_info)
+            raise Exception("problem in reading analytic  AND operator - analyzer :{} ,{}".format(str(e)), process_info)
 
 

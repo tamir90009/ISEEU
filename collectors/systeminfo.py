@@ -42,7 +42,7 @@ class SystemInfoCollector(Collector):
             with open("{}.json".format(dst_path), 'w') as outfile:
                 json.dump(data, outfile)
         except Exception as e:
-            print("problem in system info collector - collect :".format(e))
+            print("problem in system info collector - collect :".format(str(e)))
 
 
     '''
@@ -60,7 +60,7 @@ class SystemInfoCollector(Collector):
         except subprocess.CalledProcessError as e:
             raise Exception(e.output)
         except Exception as m:
-            raise Exception("problem in system info collector - collect subprocess :{}  ".format(m))
+            raise Exception("problem in system info collector - collect subprocess :{}  ".format(str(m)))
 
 
 pp = SystemInfoCollector()

@@ -69,4 +69,4 @@ class AutoRunPathsAnalyzer(Analyzer):
                     i += 1
 
         except Exception as e:
-            print("problem in autorunpaths analyzer  - write to files  : {} , dest path was :{}".format(e, dest_path))
+            print("problem in autorunpaths analyzer- write to files :{} , dest path was :{}".format(str(e), dest_path))

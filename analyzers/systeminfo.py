@@ -1,8 +1,5 @@
 from analyzers.analyzer import Analyzer
-from os import listdir
-from os.path import isfile, join
 import json
-import re
 import os
 import socket
 from additionalscripts.datasend import datasend

@@ -34,8 +34,6 @@ class MySFTPClient(paramiko.SFTPClient):
 
 
 def datasend(localpath, task_name):
-
-
     try:
         # Connecting over Port and ip with data from config file
         conf = configs()
@@ -67,7 +65,27 @@ def datasend(localpath, task_name):
         raise Exception("Error with setting transport " + str(e))
 
 
+'''
+this func will get an output dir - a dir that contains the output files - as an input
+as it wil send the whole directory to the ES 
+this function will not return value
+'''
+
+
+def send_folder_to_Sender(output_dir):
+    try:
+        for obj in os.listdir(output_dir):
+            if os.path.isfile(os.path.join(output_dir, obj)):
+                task_name = str((obj.split("_"))[-1:]).split(".")[0].replace("['", "")
+                datasend(os.path.join(output_dir, obj), task_name)
+            if os.path.isdir(os.path.join(output_dir, obj)):
+                for file in os.listdir(os.path.join(output_dir, obj)):
+                    task_name = str((file.split("_"))[-1:]).split(".")[0].replace("['", "")
+                    datasend(os.path.join(output_dir, obj, file), task_name)
+
+    except Exception as e:
+        print("problem in data sender send full folder:{}".format(str(e)))
+
 # # Can sent Dir/ File
 # datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")
 # datasend("/home/test/HH", "/home/elk/Temp/New")
-

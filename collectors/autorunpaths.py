@@ -22,7 +22,7 @@ class AutoRunPathsCollector(Collector):
                 fp.write('\n'.join(AUTO_PATHS_MODIFY))
 
         except Exception as e:
-            print("problem in autorunpath collector - collect:{}".format(e))
+            print("problem in autorunpath collector - collect:{}".format(str(e)))
 
 
     '''
@@ -35,7 +35,7 @@ class AutoRunPathsCollector(Collector):
                 for f in listdir(dir):
                     AUTO_PATHS_MODIFY.append("{}{}".format(dir, f))
         except Exception as e:
-            print("problem in get_files_in_dir in autorunpaths - collector:{}".format(e))
+            print("problem in get_files_in_dir in autorunpaths - collector:{}".format(str(e)))
 
     '''
     this func get user profiles auto run files
@@ -51,7 +51,7 @@ class AutoRunPathsCollector(Collector):
                         AUTO_PATHS_MODIFY.append(user_file)
                     AUTO_PATHS_MODIFY.remove(file)
         except Exception as e:
-            print("problem in get_file_per_user in autorunpaths - collector:{}".format(e))
+            print("problem in get_file_per_user in autorunpaths - collector:{}".format(str(e)))
 
     '''
     this func maps the users home directory list
@@ -65,7 +65,7 @@ class AutoRunPathsCollector(Collector):
                     users_homes.append("/home/{}".format(f))
             return users_homes
         except Exception as e:
-            print("problem in users list in autorunpath -collector:{}".format(e))
+            print("problem in users list in autorunpath -collector:{}".format(str(e)))
 
 
 
