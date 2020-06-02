@@ -10,7 +10,7 @@ class RKHunterParser(Parser):
     @staticmethod
     def parse(input_path):
         rkhunter_output = []
-        with open(input_path,'rb') as avoutput:
+        with open(input_path,'r') as avoutput:
             # Moving line by line and exporting the important
             for line in avoutput.readlines():
                 try:
@@ -35,6 +35,6 @@ class RKHunterParser(Parser):
                         else:
                             continue
                 except Exception as e:
-                    raise Exception("Rkhunter praser problem " + e)
+                    continue
             avoutput.close()
             return rkhunter_output

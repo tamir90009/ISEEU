@@ -4,7 +4,7 @@ import json
 import os
 import socket
 
-DEST = "/home/elk/Temp/output"
+DEST = "/tmp"
 
 
 
@@ -23,6 +23,6 @@ class RKHunterAnalyzer(Analyzer):
                         to_json[i] = path
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-            datasend("./{}_rkhunter.json".format(socket.gethostname()))
+            datasend(os.path.join(dest_path, "{}_rkhunter.json".format(socket.gethostname())),'rkhunter')
         except Exception as e:
-            raise Exception("problem in rkhunter analyzer - analyze :", e)
+            raise Exception("problem in rkhunter analyzer - analyze :" + str(e))

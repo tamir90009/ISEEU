@@ -12,7 +12,7 @@ class CHKRootkitParser(Parser):
     def parse(input_path):
         try:
             chkroot_output = []
-            with open(input_path,'rb') as f:
+            with open(input_path,'r') as f:
                 for line in f.readlines():
                     try:
                         # If starting with checking...
@@ -46,4 +46,4 @@ class CHKRootkitParser(Parser):
             f.close()
             return chkroot_output
         except Exception as e:
-            raise Exception("Cant parse Chkrootkit " + e)
+            raise Exception("Cant parse Chkrootkit " + str(e))

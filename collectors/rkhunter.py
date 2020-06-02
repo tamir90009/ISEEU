@@ -13,8 +13,9 @@ class RKHunterCollector(Collector):
                 if "not found" in str(err):
                     raise Exception("rkhunter not installed " + err)
             if out:
-                with open("{}.json".format(dst_path), "w") as fp:
-                    fp.write('\n'.join(out.decode('utf-8')))
+                with open("{}".format(dst_path), "w") as fp:
+                    for line in out.decode('utf-8').splitlines():
+                        fp.write(line + '\n')
         except Exception as e:
-            raise Exception("cant run rkhunter " + e)
+            raise Exception("cant run rkhunter " + str(e))
 

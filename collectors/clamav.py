@@ -7,13 +7,14 @@ class ClamAVCollector(Collector):
     @staticmethod
     def collect(dst_path):
         try:
-            p = sub.Popen([r"clamscan -r /home/test/Downloads"] ,stdout=sub.PIPE ,stderr=sub.PIPE ,stdin=sub.PIPE ,shell=True)
+            p = sub.Popen([r'clamscan -r /home/test/Downloads/test'] ,stdout=sub.PIPE ,stderr=sub.PIPE ,stdin=sub.PIPE ,shell=True)
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):
-                    raise Exception("Chip not installed " + err)
+                    raise Exception("Chip not installed " + str(err))
             if out:
-                with open("{}.json".format(dst_path), "w") as fp:
-                    fp.write('\n'.join(out.decode('utf-8')))
+                with open("{}".format(dst_path), "w") as fp:
+                    for line in out.decode('utf-8').splitlines():
+                        fp.write(line + '\n')
         except Exception as e:
-            raise Exception("Cant run ClamScan " + e)
+            raise Exception("Cant run ClamScan " + str(e))

@@ -5,7 +5,7 @@ import os
 
 def configs():
     try:
-        with open('delivery.conf', 'r') as conf:
+        with open('additionalscripts/delivery.conf', 'r') as conf:
             config = json.load(conf)
             return config
     except Exception as e:
@@ -52,9 +52,10 @@ def datasend(localpath, task_name):
             sftp.close()
         # File transport
         elif os.path.isfile(localpath):
-            sftp = transport.open_sftp_client()
+            #sftp = transport.open_sftp_client()
             try:
                 remote_file = os.path.join(remote_path, os.path.basename(localpath))
+                sftp.mkdir(remote_path, ignore_existing=True)
                 sftp.put(localpath, remote_file)
             except Exception as e:
                 raise Exception("error while sending file " + e)
@@ -65,7 +66,4 @@ def datasend(localpath, task_name):
         raise Exception("Error with setting transport " + e)
 
 
-# Can sent Dir/ File
-datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")
-datasend("/home/test/HH", "/home/elk/Temp/New")
 

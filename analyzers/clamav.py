@@ -6,7 +6,7 @@ import os
 import socket
 
 
-DEST = r'/temp'
+DEST = r'/tmp'
 
 class ClamAVAnalyzer(Analyzer):
 
@@ -22,6 +22,6 @@ class ClamAVAnalyzer(Analyzer):
                         to_json[i] = path
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-            datasend("./{}_clamav.json".format(socket.gethostname()))
+            datasend(os.path.join(dest_path, "{}_clamav.json".format(socket.gethostname())),'clamav')
         except Exception as e:
-            raise Exception("problem in clamav analyzer - analyze :", e)
+            raise Exception("problem in clamav analyzer - analyze :" +  str(e))

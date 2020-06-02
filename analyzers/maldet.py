@@ -4,7 +4,7 @@ import json
 import os
 import socket
 
-DEST = "/home/elk/Temp/output"
+DEST = "/tmp"
 
 
 class MalDetAnalyzer(Analyzer):
@@ -21,6 +21,6 @@ class MalDetAnalyzer(Analyzer):
                         to_json[i] = path
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-            datasend("./{}_maldet.json".format(socket.gethostname()))
+            datasend(os.path.join(dest_path, "{}_maldet.json".format(socket.gethostname())),'maldet')
         except Exception as e:
-            raise Exception("problem in maldet analyzer - analyze :", e)
+            raise Exception("problem in maldet analyzer - analyze :" + str(e))

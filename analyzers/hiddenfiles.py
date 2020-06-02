@@ -6,10 +6,10 @@ import socket
 
 DEST = r'/temp'
 try:
-    File = open(r'exclude.txt','r')
+    File = open(r'collectors/exclude.txt','r')
     exclude = File.read().replace(r"\n","").replace(r'/home/test',r'/home/{0}'.format(os.getlogin()))
 except Exception as e:
-    raise Exception("Exclude file not exist " + e)
+    raise Exception("Exclude file not exist " + str(e))
 
 
 class HiddenFilesAnalyzer(Analyzer):
@@ -17,9 +17,7 @@ class HiddenFilesAnalyzer(Analyzer):
     @staticmethod
     def analyze(paths, dest_path=DEST):
         try:
-
-
-            with open(os.path.join(dest_path, "{}_hidden_files.json".format(socket.gethostname())), "w") as fp:
+            with open(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
                 i = 0
                 for hidden_file in paths:
@@ -27,7 +25,6 @@ class HiddenFilesAnalyzer(Analyzer):
                         to_json[i] = hidden_file
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
-            datasend("./{}_hidden_files.json".format(socket.gethostname()))
-
+            datasend(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())),'hiddenfiles')
         except Exception as e:
-            print("problem in hidden files analyzer - analyze :", e)
+            raise Exception("problem in hidden files analyzer - analyze :" + str(e))

@@ -4,7 +4,7 @@ import json
 import os
 import socket
 
-DEST = r'/temp'
+DEST = r'/tmp'
 
 class CHKRootkitAnalyzer(Analyzer):
 
@@ -22,6 +22,6 @@ class CHKRootkitAnalyzer(Analyzer):
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
 
-            datasend("./{}_chkrootkit.json".format(socket.gethostname()))
+            datasend(os.path.join(dest_path, "{}_chkrootkit.json".format(socket.gethostname())),'chkrootkit')
         except Exception as e:
-            raise  Exception("problem in chkrootkit analyzer - analyze :", e)
+            raise Exception("problem in chkrootkit analyzer - analyze :" + str(e))

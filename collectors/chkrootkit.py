@@ -13,8 +13,9 @@ class CHKRootkitCollector(Collector):
                 if "not found" in str(err):
                     raise Exception("ckrootkit not installed " + err)
             if out:
-                with open("{}.json".format(dst_path), "w") as fp:
-                    fp.write('\n'.join(out.decode('utf-8')))
+                with open("{}".format(dst_path), "w") as fp:
+                    for line in out.decode('utf-8').splitlines():
+                        fp.write(line + '\n')
         except Exception as e:
-            raise Exception("Cant run chkrootkit " + e)
+            raise Exception("Cant run chkrootkit " + str(e))
 
