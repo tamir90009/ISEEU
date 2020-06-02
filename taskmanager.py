@@ -54,17 +54,21 @@ class TaskManager(object):
             parsed_data = task_parser.parse(output_path + "/" + task_name)
         except Exception as e:
             raise Exception("%s parser - %s" % (task_name, str(e)))
+
         # analyze
         try:
             task_analyzer_module = importlib.import_module("analyzers." + task_name.lower())
+            print('1')
         except ModuleNotFoundError:
             raise Exception("Couldn't find analyzer name %s" % task_name)
         try:
             task_analyzer = getattr(task_analyzer_module, task_name + "Analyzer")
+            print('2')
         except AttributeError:
             raise Exception("Couldn't find %sAnalyzer in module %s" % (task_name, task_name.lower()))
         try:
             task_analyzer.analyze(parsed_data, to_datasender_path)
+            print('3')
         except Exception as e:
             raise Exception("%s analyzer - %s" % (task_name, str(e)))
         # senddata
@@ -109,13 +113,13 @@ class TaskManager(object):
                 except Exception as e:
                     print(f"\033[91m" + task + ": " + str(e) + f"\033[0m")
                     failed.append(task)
-
+            results_later = {}
             for task in later:
-                    results[task] = executor.submit(self.__execute_task, task, output_path)
+                    results_later[task] = executor.submit(self.__execute_task, task, output_path)
 
-            for task in results:
+            for task in results_later:
                 try:
-                    results[task].result()
+                    results_later[task].result()
                 except KeyboardInterrupt:
                     exit()
                 except Exception as e:
