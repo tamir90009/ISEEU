@@ -21,7 +21,7 @@ class BinaryListCollector(Collector):
                 fp.write('\n'.join(bin_dir_list))
 
         except Exception as e:
-            print("problem in binarylist - collector :", e)
+            print("problem in binarylist - collector :"+str(e))
 
 
     '''
@@ -37,6 +37,6 @@ class BinaryListCollector(Collector):
                 bins.append(os.path.join(dir, f))
             return bins
         except Exception as e:
-            print("problem in get_files_in_dir in binarylist - collector:", e)
+            print("problem in get_files_in_dir in binarylist - collector:" + str(e))
 
 pp=BinaryListCollector.collect("/tmp/binarylist")

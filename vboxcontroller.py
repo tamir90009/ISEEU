@@ -14,7 +14,12 @@ class VBoxController(object):
     lock = Lock()
     @staticmethod
     def start(vmname, start_type="headless"):
-        # start_type options are headless(default) or gui
+        """
+        start a virtualbox machine with or without GUI
+        :param  vmname: virtual machine name to start
+                start_type: options are headless(default) or gui
+        :return:
+        """
         try:
             subprocess.check_output(["vboxmanage", "startvm", vmname, "--type", start_type])
         except Exception as e:
@@ -22,6 +27,11 @@ class VBoxController(object):
 
     @staticmethod
     def stop(vmname):
+        """
+        stop a virtualbox machine
+        :param  vmname: virtual machine name to stop
+        :return:
+        """
         try:
             subprocess.check_output(["vboxmanage", "controlvm", vmname, "poweroff"])
         except Exception as e:
@@ -29,6 +39,12 @@ class VBoxController(object):
 
     @staticmethod
     def import_machine_from_ova(vmname, vm_path):
+        """
+        import a virtualbox machine from an ova format
+        :param  vmname: name to give the virtual machine
+                vm_path: path of the ova
+        :return:
+        """
         try:
             subprocess.check_output(["vboxmanage", "import", vm_path, "--vsys", "0", "--vmname", vmname])
         except Exception as e:
@@ -36,7 +52,13 @@ class VBoxController(object):
 
     @staticmethod
     def convert_raw_to_vbox(raw_path, output_file, hd_format="VDI"):
-        # hd_format options are VDI(defualt), VMDK or VHD
+        """
+        convert raw image file to virtualbox known format like vdi
+        :param  raw_path: image path
+                output_file: where to dump the new image
+                hd_format: options are VDI(defualt), VMDK or VHD
+        :return:
+        """
         try:
             subprocess.check_output(["vboxmanage", "convertfromraw", raw_path, output_file, "--format", hd_format])
         except Exception as e:
@@ -44,6 +66,11 @@ class VBoxController(object):
 
     @staticmethod
     def get_vm_home_path(vmname):
+        """
+        find the path of the machine files
+        :param  vmname: image name
+        :return:
+        """
         try:
             output = subprocess.check_output(["vboxmanage", "showvminfo", vmname])
             re_m = re.findall("Config file:\s*(.*)\n", output.decode("utf-8"))
@@ -56,18 +83,33 @@ class VBoxController(object):
 
     @staticmethod
     def get_drive_name(vmname, home_path):
+        """
+        find the name of the machine harddrive
+        :param  vmname: image name
+                home_path: virtual machine files path
+        :return:
+        """
         try:
             with open(home_path + "/" + vmname + ".vbox", "r") as f:
                 data = f.read()
                 drive_name = re.findall("location=\"(.*)\" format", data)
                 if not drive_name:
                     raise Exception("regex not good")
+                if os.path.exists(drive_name[0]):
+                    return drive_name[0]
                 return home_path + "/" + drive_name[0]
         except Exception as e:
             raise Exception("Fail to get vm drive name %s" % (str(e)))
 
     def mount_files_from_machine(self, vmname, mount_path=None, read_only=False):
-        # mount methodology came from https://www.cyrill-gremaud.ch/mount-virtualbox-image-drive-on-ubuntu-vdi/
+        """
+        mount a machine hard drive in the host
+        mount methodology came from https://www.cyrill-gremaud.ch/mount-virtualbox-image-drive-on-ubuntu-vdi/
+        :param  vmname: image name
+                mount_path: where to mount at the host
+                read_only: mount permissions
+        :return:
+        """
         if not mount_path:
             mount_path = "/mnt/" + vmname
         self.lock.acquire()
@@ -116,14 +158,19 @@ class VBoxController(object):
         self.mounted_devices[mount_path] = current_nbd
 
     def umount_files_from_machine(self, vmname, mount_path=None):
+        """
+        unmount a machine hard drive from the host
+        :param  vmname: image name
+                mount_path: where to mount at the host
+        :return:
+        """
         if not mount_path:
             mount_path = "/mnt/" + vmname
-        if mount_path not in self.mounted_devices:
-            raise Exception("%s not mounted" % mount_path)
-        try:
-            subprocess.check_output(["umount", mount_path])
-        except Exception as e:
-            raise Exception("Fail to umount %s %s" % (mount_path, str(e)))
+        if mount_path in self.mounted_devices:
+            try:
+                subprocess.check_output(["umount", mount_path])
+            except Exception as e:
+                raise Exception("Fail to umount %s %s" % (mount_path, str(e)))
         try:
             subprocess.check_output(["qemu-nbd", "-d", self.mounted_devices[mount_path]])
         except Exception as e:
@@ -144,8 +191,18 @@ class VBoxController(object):
 
 
     @staticmethod
-    def disk_image_to_machine(vmname, hard_drive_path, raw=True, os_type="Debian", memory=1024, new_hard_drive_format="VDI"):
-        # create machine methodology came from https://networking.ringofsaturn.com/Unix/Create_Virtual_Machine_VBoxManage.php
+    def disk_image_to_machine(vmname, hard_drive_path, raw=True, os_type="Ubuntu", memory=1024, new_hard_drive_format="VDI"):
+        """
+        create a machine from a harddisk image
+        create machine methodology came from https://networking.ringofsaturn.com/Unix/Create_Virtual_Machine_VBoxManage.php
+        :param  vmname: name to give the virtual machine
+                hard_drive_path: image path
+                raw: raw image or virtualbox known format
+                os_type: machine os type
+                memory: how much ram give the machine
+                new_hard_drive_format: if raw image was given to which format convert it
+        :return:
+        """
         try:
             output = subprocess.check_output(["vboxmanage", "createvm", "--name", vmname, "--ostype", os_type, "--register"])
             if raw:
@@ -162,6 +219,11 @@ class VBoxController(object):
             raise Exception("VBoxController there was a problem to import new machine %s %s" % (vmname, str(e)))
     @staticmethod
     def close_all():
+        """
+        help function for debug
+        close all the nbd's in case of crash
+        :return:
+        """
         for i in VBoxController.free_nbd:
             try:
                 subprocess.check_output(["qemu-nbd", "-d", i])

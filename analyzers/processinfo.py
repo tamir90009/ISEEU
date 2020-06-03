@@ -5,6 +5,7 @@ import json
 import re
 import os
 import socket
+from additionalscripts.datasend import datasend
 
 ANALYTIC_PATH = "analytices"
 DEST = '/tmp'
@@ -20,15 +21,12 @@ class ProcessInfoAnalyzer(Analyzer):
     def analyze(process_data, dest_path=DEST, analytic_folder_path=ANALYTIC_PATH):
 
         try:
-            with open(os.path.join(dest_path, "{}_process_info.json".format(socket.gethostname())), "w") as fp:
-                #to_json = {}
+            with open(os.path.join(dest_path, "{}_processinfo.json".format(socket.gethostname())), "w") as fp:
                 for pid in process_data:
                     suspicious = ProcessInfoAnalyzer.run_analytic_on_pid(process_data, analytic_folder_path, pid)
                     process_data[pid].update({"suspicious": suspicious})
                     fp.write(json.dumps(process_data[pid]) + '\n')
-                    # to_json[pid] = process_data[pid]
-                #json.dump(to_json, fp, indent=4)
-                # TODO:call func that send it to file server and give it the json path
+                datasend(os.path.join(dest_path, "{}_processinfo.json".format(socket.gethostname())),"processinfo")
 
         except Exception as e:
             raise Exception("problem in reading analytic  info - analyzer :{}".format(str(e)))
@@ -105,6 +103,6 @@ class ProcessInfoAnalyzer(Analyzer):
             return True
 
         except Exception as e:
-            raise Exception("problem in reading analytic  AND operator - analyzer :{} ,{}".format(str(e)),process_info)
+            raise Exception("problem in reading analytic  AND operator - analyzer :{} ,{}".format(str(e)), process_info)
 
 

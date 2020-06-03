@@ -24,4 +24,5 @@ class Analyzer(object):
     @staticmethod
     def write_json(data, output_path):
         with open(output_path, "w") as output_file:
-            json.dump(data, output_file)
+            for i in data:
+                output_file.write(json.dumps(i) + '\n')
