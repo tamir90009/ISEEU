@@ -32,7 +32,8 @@ class FileMetaDataParser(Parser):
                                                             'access_time': time.asctime(time.localtime(cur_dict['atime'])),
                                                             'modified_time': time.asctime(time.localtime(cur_dict['mtime'])),
                                                             'information_change_time': time.asctime(time.localtime(cur_dict['ctime'])),
-                                                            'size': cur_dict['size'], 'attributes': cur_dict['attr']}
+                                                            'size': cur_dict['size'], 'attributes': cur_dict['attr'],
+                                                            'sha1': cur_dict['sha1']}
                 except Exception as e:
                     raise Exception("problem in parse the data for: {} - parser: {}".format(i, str(e)))
         return data

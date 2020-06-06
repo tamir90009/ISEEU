@@ -6,9 +6,10 @@ from additionalscripts.softwareinstaller import softwareinstaller
 
 def install():
     try:
+        software_installer = softwareinstaller()
         try:
-            for apt in ['net-tools','clamav','clamav-daemon','rkhunter','chkrootkit']:
-                softwareinstaller.get_apt(apt)
+            for apt in ['net-tools','clamav clamav-daemon','rkhunter -Y','chkrootkit']:
+                software_installer.apt_install(apt)
         except Exception as e:
             raise Exception("error with get_apt " + str(e))
         if not os.path.exists('maldetect-current.tar.gz'):
@@ -29,10 +30,10 @@ def install():
             raise Exception("problem while running ls" + str(err))
         for file in out.decode('utf-8').splitlines():
             if file.startswith('maldetect-') and 'tar.gz' not in file:
-                sub.Popen('mv {0}/* .'.format(file), stdin=sub.PIPE,
+                sub.Popen('mv {0}/* /tmp'.format(file), stdin=sub.PIPE,
                           shell=True)
                 time.sleep(5)
-                c = sub.Popen('./{0}/install.sh'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
+                c = sub.Popen('/tmp/install.sh'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
                               , shell=True)
                 out,err = c.communicate()
                 if err:

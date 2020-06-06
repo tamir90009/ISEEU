@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import pwd
 import glob
+import hashlib
 
 class FileMetaDataCollector(Collector):
 
@@ -32,6 +33,7 @@ class FileMetaDataCollector(Collector):
                     data["ctime"] = st.st_ctime
                     data["size"] = st.st_size
                     data["attr"] = get_attr(file)
+                    data["sha1"] = hashlib.sha1(open(file, 'rb').read()).hexdigest()
                 except Exception as e:
                     raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
                 os.makedirs(dst_path, exist_ok=True)
