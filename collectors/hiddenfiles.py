@@ -26,7 +26,7 @@ class HiddenFilesCollector(Collector):
                         else:
                             hidden_files[root].append(filename)
             # Returning the hidden files values
-            with open("{}.json".format(dst_path), "w") as fp:
+            with open("{}".format(dst_path), "w") as fp:
                 fp.write('\n'.join(hidden_files))
         except Exception as e:
             raise Exception("Error: Uknown Path " + str(e))
