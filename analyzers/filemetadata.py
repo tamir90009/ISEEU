@@ -18,7 +18,7 @@ class FileMetaDataAnalyzer(Analyzer):
             analyzed_data = attr_check(files_meta_data)
             #os.makedirs('{}/files_meta_data'.format(dst_path), exist_ok=True)
             #with open('{}/files_meta_data/{}_{}.json'.format(dst_path, socket.gethostname(), subject), 'w') as jf:
-            with open(os.path.join(dst_path, '{}_metadata.json'.format(socket.gethostname())), 'w') as jf:
+            with open(os.path.join(dst_path, '{}_metadata.json'.format(socket.gethostname())), 'w+') as jf:
                 for subject in analyzed_data.keys():
                     for line in analyzed_data[subject]:
                         analyzed_data[subject][line]['source'] = subject

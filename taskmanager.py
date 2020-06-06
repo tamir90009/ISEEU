@@ -100,6 +100,7 @@ class TaskManager(object):
             for task, last in self._tasks:
                 if last:
                     later.append(task)
+                    continue
                 results[task] = executor.submit(self.__execute_task, task, output_path)
 
             for task in results:
