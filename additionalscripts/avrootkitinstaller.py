@@ -8,7 +8,11 @@ def install():
     software_installer = softwareinstaller()
     try:
         for apt in ['net-tools','clamav','clamav-daemon','rkhunter','chkrootkit']:
-            software_installer.apt_install(apt)
+            if apt == 'rkhunter':
+                sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
+                  shell=True)
+            else:
+                software_installer.apt_install(apt)
     except Exception as e:
         raise Exception("error with get_apt " + str(e))
     if not os.path.exists('/tmp/maldetect-current.tar.gz'):
