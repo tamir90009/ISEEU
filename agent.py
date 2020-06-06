@@ -11,7 +11,7 @@ from additionalscripts.write_process_analytic import AnalyticWriter
 def argparse_func():
     parser = argparse.ArgumentParser(description='ISEEU main agent')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-esi', '--elastic_ip', help='elastic search ip:port')
+    group.add_argument('-esi', '--elastic_info', help='elastic search ip:port')
     parser.add_argument('-esp', '--elastic_path', help='elastic path to throw data to', required=False)
     parser.add_argument('-esup', '--elastic_username_password', help='elastic search username:password', required=False)
     parser.add_argument('-op', '--output_path', help='output path', required=False)
@@ -80,25 +80,23 @@ def print_error_and_exit(msg, error=''):
     exit(1)
 
 def write_elastic_conf(args):
-    if ':' in args.elastic:
-        es_ip, es_port = args.elastic_ip.split(':')
+    if ':' in args.elastic_info:
+        es_ip, es_port = args.elastic_info.split(':')
     else:
-        es_ip = args.elastic
+        es_ip = args.elastic_info
         es_port = '9200'
     if not args.elastic_path:
         print_error_and_exit('elastic path is missing')
-        exit(1)
     remote_path = args.elastic_path
     if not args.elastic_username_password:
         print_error_and_exit('elastic username and password is missing')
-        exit(1)
     if ':' in args.elastic_username_password:
         user_name, password = args.elastic_username_password.split(':')
     else:
         print_error_and_exit('elastic username and password need to be insert like username:pass')
     try:
         elastic_json = {'ip': es_ip, 'port': es_port, 'user': user_name, 'pass': password, 'remote': remote_path}
-        with open('delivery.conf', 'w') as fp:
+        with open('additionalscripts/delivery.conf', 'w') as fp:
             json.dump(elastic_json, fp)
     except Exception as e:
         raise e
@@ -106,6 +104,8 @@ def write_elastic_conf(args):
 
 def main():
     args = argparse_func()
+    # change working directory to current directory
+    os.chdir(os.path.dirname(os.path.realpath(__file__)))
     if args.install:
         print_error_and_exit('whatt????')
         #TODO: check how to install things.
@@ -128,23 +128,24 @@ def main():
     else:
         task_manager = TaskManager()
         if args.run_all:
-            tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo']
+            # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo']
+            tasks = ['LibraryPath', 'LDPreload']
             for task in tasks:
                 task_manager.add_task(task)
-            task_manager.add_task('FileMetaData', True)
+            # task_manager.add_task('FileMetaData', True)
 
         if args.run_specific:
             for task in args.run_specific.replace(' ', '').split(','):
                 task_manager.add_task(task)
             
-        if args.elastic_ip:
+        if args.elastic_info:
             write_elastic_conf(args)
 
         else:
             print_error_and_exit('elastic info is missing')
 
         if args.output_path:
-            task_manager.execute_all_tasks(args.output_path, args.threads)
+            task_manager.execute_all_tasks(args.output_path, int(args.threads_number))
 
         else:
             print_error_and_exit('output path is missing')

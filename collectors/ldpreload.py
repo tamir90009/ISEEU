@@ -8,6 +8,7 @@ class LDPreloadCollector(Collector):
     def compil_syscall_detect(script_path, output_path):
         try:
             cmd = subprocess.check_output(["gcc", "-o", output_path, script_path])
+
         except Exception as e:
             raise Exception("there was an error compiling" % script_path)
 
