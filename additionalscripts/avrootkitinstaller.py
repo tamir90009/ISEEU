@@ -7,7 +7,7 @@ from additionalscripts.softwareinstaller import softwareinstaller
 def install():
     software_installer = softwareinstaller()
     try:
-        for apt in ['net-tools','clamav','clamav-daemon','rkhunter','chkrootkit']:
+        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit']:
             if apt == 'rkhunter':
                 sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
                   shell=True)
@@ -42,5 +42,10 @@ def install():
 
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
+    try:
+        software_installer.pip_install('pretty_cron')
+    except Exception as e:
+        raise Exception("error with pip install pretty_cron " + str(e))
+
 
 install()
