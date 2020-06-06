@@ -36,7 +36,7 @@ def install():
                               , shell=True)
                 out,err = c.communicate()
                 if err:
-                    raise Exception("While instaling maldet")
+                    raise Exception("error While instaling maldet" + str(err))
 
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
