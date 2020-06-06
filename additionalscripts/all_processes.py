@@ -1,3 +1,5 @@
+import io
+
 from additionalscripts.process_info import Process
 import subprocess
 
@@ -231,12 +233,19 @@ class AllProcesses(object):
         try:
             parsed_command = command.split(" ")
             cmd = subprocess.check_output(parsed_command, stderr=subprocess.STDOUT, timeout=10)
-            output_divided = cmd.decode('utf-8').splitlines()
-            return output_divided[1:]
+
         except KeyError as error:
             raise error
+        except subprocess.CalledProcessError:
+            print('callprocess')
+        except subprocess.TimeoutExpired:
+            print('timeout')
+            print('cmd - ',cmd)
+            pass
         except Exception as e:
             raise e
+        output_divided = cmd.decode('utf-8').splitlines()
+        return output_divided[1:]
 
     """
     Check if the file or directory at `path` can
