@@ -12,7 +12,7 @@ def main():
     #task_manager.add_task("ProcessInfo")
     #task_manager.add_task("CHKRootkit")
     #task_manager.add_task(("HiddenFiles"))
-    task_manager.add_task(("RKHunter"))
+    #task_manager.add_task(("RKHunter"))
     #task_manager.add_task("MalDet")
     #task_manager.add_task("ClamAV")
     #task_manager.add_task("SystemInfo")

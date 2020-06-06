@@ -1,32 +1,32 @@
 import time
 import subprocess as sub
 import os
-from Softwareinstaller import softwareinstaller
+from additionalscripts.softwareinstaller import softwareinstaller
 
 
 def install():
     try:
         try:
-            softwareinstaller.get_apt('clamav')
-            softwareinstaller.get_apt('clamav-daemon')
-            softwareinstaller.get_apt('rkhunter')
-            softwareinstaller.get_apt('tkrootkit')
+            for apt in ['net-tools','clamav','clamav-daemon','rkhunter','chkrootkit']:
+                softwareinstaller.get_apt(apt)
         except Exception as e:
-            raise ("error with get_apt " + e)
+            raise Exception("error with get_apt " + str(e))
         if not os.path.exists('maldetect-current.tar.gz'):
             try:
                 sub.Popen('wget "http://www.rfxn.com/downloads/maldetect-current.tar.gz"',stdin=sub.PIPE,shell=True)
             except Exception as e:
-                raise Exception("Problem getting maldet " + e)
+                raise Exception("Problem getting maldet " + str(e))
         time.sleep(5)
         try:
             sub.Popen('tar zxvf maldetect-current.tar.gz', stdin=sub.PIPE, shell=True)
         except Exception as e:
-            raise Exception("problem while extracting mal det " + e)
+            raise Exception("problem while extracting mal det " + str(e))
         time.sleep(5)
         p = sub.Popen('ls', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
                       shell=True)
         out, err = p.communicate()
+        if err:
+            raise Exception("problem while running ls" + str(err))
         for file in out.decode('utf-8').splitlines():
             if file.startswith('maldetect-') and 'tar.gz' not in file:
                 sub.Popen('mv {0}/* .'.format(file), stdin=sub.PIPE,
@@ -35,9 +35,11 @@ def install():
                 c = sub.Popen('./{0}/install.sh'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
                               , shell=True)
                 out,err = c.communicate()
+                if err:
+                    raise Exception("While instaling maldet")
 
     except Exception as e:
-        raise ("error while trying to install maldetect " + e)
+        raise Exception("error while trying to install maldetect " + str(e))
 
 
 install()
