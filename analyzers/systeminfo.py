@@ -37,7 +37,7 @@ class SystemInfoAnalyzer(Analyzer):
             with open(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), "w") as fp:
                 system_info = dict((k, system_data[k]) for k in ('architecture', 'host_name', 'kernel_version', 'distribution'))
                 fp.write(json.dumps(system_info)+'\n')
-            datasend(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), 'system_info')
+            datasend(os.path.join(dest_path, "{}_systeminfo.json".format(socket.gethostname())), 'systeminfo')
             with open(os.path.join(dest_path, "{}_groups.json".format(socket.gethostname())), "w") as fp:
                 for group in system_data['groups']:
                     fp.write(json.dumps(group) + '\n')

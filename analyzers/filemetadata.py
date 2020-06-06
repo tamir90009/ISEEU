@@ -23,7 +23,7 @@ class FileMetaDataAnalyzer(Analyzer):
                     for line in analyzed_data[subject]:
                         analyzed_data[subject][line]['source'] = subject
                         jf.write(json.dumps(analyzed_data[subject][line]) + '\n')
-            datasend(os.path.join(dst_path, '{}_metadata.json'.format(socket.gethostname())), 'files_metadata')
+            datasend(os.path.join(dst_path, '{}_metadata.json'.format(socket.gethostname())), 'metadata')
         except Exception as e:
             raise Exception("problem in writing analytic data of file_meta_data - analyzer :{}".format(str(e)))
 

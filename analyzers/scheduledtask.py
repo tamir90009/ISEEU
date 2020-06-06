@@ -18,6 +18,6 @@ class ScheduledTaskAnalyzer(Analyzer):
             with open(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'w') as jf:
                 for line in scheduled_task_data:
                     jf.write(json.dumps(scheduled_task_data[line]) + '\n')
-            datasend(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'scheduled_task')
+            datasend(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'scheduledtasks')
         except Exception as e:
             raise Exception("problem in writing analytic data of scheduled_task_data - analyzer: {}".format(str(e)))
