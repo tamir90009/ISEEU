@@ -1,3 +1,5 @@
+import io
+
 from additionalscripts.process_info import Process
 import subprocess
 
@@ -230,11 +232,14 @@ class AllProcesses(object):
     def command_exec(command):
         try:
             parsed_command = command.split(" ")
-            cmd = subprocess.check_output(parsed_command, stderr=subprocess.STDOUT, timeout=10)
+            cmd = subprocess.check_output(parsed_command, stderr=subprocess.STDOUT, timeout=30)
             output_divided = cmd.decode('utf-8').splitlines()
             return output_divided[1:]
         except KeyError as error:
             raise error
+        except subprocess.TimeoutExpired as e:
+            print(str(e))
+            return []
         except Exception as e:
             raise e
 
