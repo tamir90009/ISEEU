@@ -28,3 +28,12 @@ class HiddenFilesAnalyzer(Analyzer):
             datasend(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())),'hiddenfiles')
         except Exception as e:
             raise Exception("problem in hidden files analyzer - analyze :" + str(e))
+        try:
+            dst_path_meta_data = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
+            os.makedirs(dst_path_meta_data, exist_ok=True)
+            for f in paths:
+                if f not in exclude:
+                    with open('{}/HiddenFiles.txt'.format(dst_path_meta_data), "a+") as meta_data_file:
+                        meta_data_file.write('{}\n'.format(f))
+        except Exception as e:
+            raise Exception("problem in writing the data to file- analyzer: {}".format(str(e)))

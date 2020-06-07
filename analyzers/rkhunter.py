@@ -26,3 +26,14 @@ class RKHunterAnalyzer(Analyzer):
             datasend(os.path.join(dest_path, "{}_rkhunter.json".format(socket.gethostname())),'rkhunter')
         except Exception as e:
             raise Exception("problem in rkhunter analyzer - analyze :" + str(e))
+        try:
+            dst_path_meta_data = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
+            os.makedirs(dst_path_meta_data, exist_ok=True)
+            for f in paths:
+                try:
+                    with open('{}/rkhunter.txt'.format(dst_path_meta_data), "a+") as meta_data_file:
+                        meta_data_file.write('{}\n'.format(f["path"]))
+                except:
+                    pass
+        except Exception as e:
+            raise Exception("Error in rkhunter analyzer:metadata function " + str(e))
