@@ -18,7 +18,7 @@ class RKHunterAnalyzer(Analyzer):
                 to_json = {}
                 i = 0
                 for path in paths:
-                    if not ('not found' in path['status'].lower() or path['status'].lower() == 'ok'
+                    if not ('not found' in path['status'].lower() or 'ok' in path['status'].lower()
                             or 'none' in path['status'].lower() or 'checking' in path['status'].lower()):
                         to_json[i] = path
                         fp.write(json.dumps(to_json[i]) + '\n')
