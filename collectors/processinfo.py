@@ -15,7 +15,8 @@ class ProcessInfoCollector(Collector):
             all_process = AllProcesses()
             process_list = all_process.collect_all_info()
             for pid in process_list.keys():
-                to_json[pid] = process_list.get(pid).__dict__
+                if pid:
+                    to_json[pid] = process_list.get(pid).__dict__
             with open("{}.json".format(dst_path), "w") as fp:
                 json.dump(to_json, fp, indent=4)
 

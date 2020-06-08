@@ -31,7 +31,6 @@ class AllProcesses(object):
         self.netstat_reader()
         self.parse_pid_env()
         self.parse_lsof_command()
-        #self.print_object()
         return self.get_all_process()
 
     '''
@@ -198,7 +197,11 @@ class AllProcesses(object):
                 # ignore command warnings
                 if 'lsof:' not in row and 'Output information may be incomplete.' not in row \
                         and not row.startswith('COMMAND'):
-                    pid = int(row.split(None, LSOF_COLUMNS)[1])
+                    pid = ""
+                    try:
+                        pid = int(row.split(None, LSOF_COLUMNS)[1])
+                    except Exception as e:
+                        raise Exception("problem in parse lsof command - all_process  :{}".format(str(e)))
                     split_row = row.split(None, LSOF_COLUMNS)
                     split_row_len = len(split_row)
                     fd = [split_row[split_row_len - 6], split_row[split_row_len - 5], split_row[split_row_len - 4],
@@ -208,7 +211,7 @@ class AllProcesses(object):
         except KeyError as error:
             raise error
         except Exception as e:
-            raise e
+            raise Exception("problem in parse  lsof  command :{}".format(str(e)))
 
 
 
@@ -251,7 +254,7 @@ class AllProcesses(object):
     @staticmethod
     def is_accessible(path, mode='r'):
         try:
-            with open(path,mode) as f:
+            with open(path, mode) as f:
                 f.read()
         except IOError:
             return False

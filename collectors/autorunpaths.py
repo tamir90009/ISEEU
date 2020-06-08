@@ -1,5 +1,6 @@
 from collectors.collector import Collector
 from os import listdir
+import os
 
 AUTO_PATHS_MODIFY = ["/boot/grub/grub.cfg", "/etc/X11/xinit/xinitrc", "~/.bashrc", "/etc/bash.bashrc", "~/.bash_profile"]
 AUTO_PATHS_DIRS = ["/etc/init.d/"]
@@ -33,7 +34,7 @@ class AutoRunPathsCollector(Collector):
         try:
             for dir in AUTO_PATHS_DIRS:
                 for f in listdir(dir):
-                    AUTO_PATHS_MODIFY.append("{}{}".format(dir, f))
+                    AUTO_PATHS_MODIFY.append(os.path.join(dir, f))
         except Exception as e:
             print("problem in get_files_in_dir in autorunpaths - collector:{}".format(str(e)))
 
@@ -62,7 +63,7 @@ class AutoRunPathsCollector(Collector):
             users_homes = []
             for f in listdir("/home"):
                 if f not in users_homes:
-                    users_homes.append("/home/{}".format(f))
+                    users_homes.append(os.path.join("/home", f))
             return users_homes
         except Exception as e:
             print("problem in users list in autorunpath -collector:{}".format(str(e)))
