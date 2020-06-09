@@ -2,6 +2,7 @@ import argparse
 import json
 import os
 import re
+from additionalscripts.softwareinstaller import softwareinstaller
 from additionalscripts.offlineautomation import run_agent_on_machine
 from vboxcontroller import VBoxController
 from additionalscripts import offlineautomation
@@ -21,7 +22,7 @@ def argparse_func():
     group.add_argument('-ct', '--crontab', help='add to crontab', default=False)
     parser.add_argument('-ctf', '--crontab_flags', help='crontab flags (have to come with -ct before)', required=False)
     group.add_argument('-vm', '--vmname', help='vmname to run agent on')
-    parser.add_argument('-i', '--image', help='HD image to run agent on', required=False)
+    parser.add_argument('-i', '--image', help='run agent on image', required=False)
     parser.add_argument('-in', '--image_name', help='name to name the vm', required=False)
     parser.add_argument('-ip', '--image_path', help='HD image to run agent on path', required=False)
     parser.add_argument('-ir', '--image_format', help='image format raw', action='store_true', required=False)
@@ -65,6 +66,15 @@ def argparse_func():
 
 def on_machine(args):
     try:
+        try:
+            image_requirments = [args.image_name, args.image_path, args.image_format, args.image_ram, args.image_os,
+                                args.image_flags, args.image_agent_path]
+            for image_requirment in image_requirments:
+                if not image_requirment and not image_requirment == '':
+                    raise Exception()
+        except:
+            raise Exception('To run on image image_name, image_path, image_format, image_ram, image_os,'
+                            'image_flags and image_agent_path are needed')
         VBoxController.disk_image_to_machine(vmname=args.image_name, hard_drive_path=args.image_path,
                                              raw=args.image_format, os_type=args.image_os, memory=args.image_ram)
         pattern = re.compile('-o\s(?P<output_path>(\'.*\'|(\/|\w|\d|\s|\_|\-|\.)*))\s-')
@@ -109,10 +119,14 @@ def main():
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
     if args.install_pip:
-        print_error_and_exit('whatt????')
+        to_install = args.install_pip.split(',')
+        for i in to_install:
+            softwareinstaller.pip_install(i)
         #TODO: check how to install things.
     if args.install_apt:
-        print_error_and_exit('whatt????')
+        to_install = args.install_apt.split(',')
+        for i in to_install:
+            softwareinstaller.apt_install(i)
         # TODO: check how to install things.
 
     if args.crontab:
