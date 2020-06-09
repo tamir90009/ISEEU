@@ -3,7 +3,6 @@ import re
 
 PATHPATTERN = r'(\/[A-z]{0,}\/{0,1}?){1,}'
 
-
 class ClamAVParser(Parser):
 
     @staticmethod

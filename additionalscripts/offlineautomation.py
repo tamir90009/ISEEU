@@ -1,4 +1,3 @@
-from crontab import CronTab
 from vboxcontroller import VBoxController
 import os
 from shutil import copyfile, copytree
@@ -7,6 +6,7 @@ from time import sleep
 
 
 def add_to_cron(args, hour=8, minute=0):
+    from crontab import CronTab
     try:
         username = os.getenv("USER")
         cron = CronTab(user=username)

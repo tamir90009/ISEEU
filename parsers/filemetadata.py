@@ -21,18 +21,18 @@ class FileMetaDataParser(Parser):
             except Exception as e:
                 raise Exception("no file of meta data in the dst_path- parser: {}".format(str(e)))
                 continue
-
+            data[subject] = {}
             for i in f_list:
                 try:
                     cur_dict = eval(i)
-                    data[subject] = {}
                     data[subject][cur_dict['file_path']] = {'file': cur_dict['file_path'],
                                                             'permissions': cur_dict['permissions'],
                                                             'owner': pwd.getpwuid(cur_dict['owner']).pw_name,
                                                             'access_time': time.asctime(time.localtime(cur_dict['atime'])),
                                                             'modified_time': time.asctime(time.localtime(cur_dict['mtime'])),
                                                             'information_change_time': time.asctime(time.localtime(cur_dict['ctime'])),
-                                                            'size': cur_dict['size'], 'attributes': cur_dict['attr']}
+                                                            'size': cur_dict['size'], 'attributes': cur_dict['attr'],
+                                                            'sha1': cur_dict['sha1']}
                 except Exception as e:
                     raise Exception("problem in parse the data for: {} - parser: {}".format(i, str(e)))
         return data

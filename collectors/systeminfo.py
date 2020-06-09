@@ -53,10 +53,15 @@ class SystemInfoCollector(Collector):
     @staticmethod
     def get_distribution():
         try:
-            cmd = subprocess.check_output(["lsb_release", "-a"], stderr=subprocess.STDOUT, timeout=10)
+            cmd = subprocess.check_output(["lsb_release", "-a"], stderr=subprocess.STDOUT, timeout=30)
             output_divided = cmd.decode('utf-8').splitlines()
             system_dist = str(output_divided[2]).split("\t")[1:]
             return system_dist
+        except KeyError as error:
+            raise error
+        except subprocess.TimeoutExpired as e:
+            print(str(e))
+            return ""
         except subprocess.CalledProcessError as e:
             raise Exception(e.output)
         except Exception as m:

@@ -7,7 +7,7 @@ class ClamAVCollector(Collector):
     @staticmethod
     def collect(dst_path):
         try:
-            p = sub.Popen([r'clamscan -r /home/test/Downloads/test'] ,stdout=sub.PIPE ,stderr=sub.PIPE ,stdin=sub.PIPE ,shell=True)
+            p = sub.Popen([r'clamscan -r /home'] ,stdout=sub.PIPE ,stderr=sub.PIPE ,stdin=sub.PIPE ,shell=True)
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):

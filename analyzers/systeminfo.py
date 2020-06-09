@@ -62,7 +62,6 @@ class SystemInfoAnalyzer(Analyzer):
     def check_if_os_default(system_data, object , field):
         try:
             for obj in system_data[object]:
-                # print(user['user_name'])
                 object_id = next((i for i, object in enumerate(system_data[object]) if
                                 object[field] == obj[field]), None)
                 if obj[field] in OS_WHITELIST:

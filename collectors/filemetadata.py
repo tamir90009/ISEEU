@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import pwd
 import glob
+import hashlib
 
 class FileMetaDataCollector(Collector):
 
@@ -21,22 +22,29 @@ class FileMetaDataCollector(Collector):
             files_list = list(set(map(lambda x: x[:-1], files_list)))
             subject = tf.split("/")[-1][:-4]
             for file in files_list:
-                data = {}
-                try:
-                    st = os.stat(file)
-                    data["file_path"] = file
-                    data["permissions"] = get_permissions(file)
-                    data["owner"] = st.st_uid
-                    data["atime"] = st.st_atime
-                    data["mtime"] = st.st_mtime
-                    data["ctime"] = st.st_ctime
-                    data["size"] = st.st_size
-                    data["attr"] = get_attr(file)
-                except Exception as e:
-                    raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
-                os.makedirs(dst_path, exist_ok=True)
-                with open('{}/{}'.format(dst_path, subject), "a+") as current_file:
-                    current_file.write('{}\n'.format(data))
+                file = file.strip('\"')
+                if os.path.isfile(file):
+                    data = {}
+                    try:
+                        st = os.stat(file)
+                        data["file_path"] = file
+                        data["permissions"] = get_permissions(file)
+                        data["owner"] = st.st_uid
+                        data["atime"] = st.st_atime
+                        data["mtime"] = st.st_mtime
+                        data["ctime"] = st.st_ctime
+                        data["size"] = st.st_size
+                        data["attr"] = ''
+                        if not os.path.islink(file):
+                            data["attr"] = get_attr(file)
+                        data["sha1"] = hashlib.sha1(open(file, 'rb').read()).hexdigest()
+                    except Exception as e:
+                        print("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
+                    os.makedirs(dst_path, exist_ok=True)
+                    with open('{}/{}'.format(dst_path, subject), "a+") as current_file:
+                        current_file.write('{}\n'.format(data))
+                else:
+                    print('file not found: %s' % file)
 
 
 def get_permissions(file_path):
