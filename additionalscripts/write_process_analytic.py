@@ -100,7 +100,7 @@ class AnalyticWriter(object):
     def write_analytic_json(self,dst_path = ANALYTICS_PATH):
         try:
             with open(os.path.join(dst_path,self._analytic_name),"w") as fp:
-                to_json  = self.__dict__
+                to_json = self.__dict__
                 json.dump(to_json, fp, indent=4)
         except Exception as e:
             raise Exception("problem in dumping new analytic to file :{}.".format(str(e)))

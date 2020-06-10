@@ -8,6 +8,7 @@ from vboxcontroller import VBoxController
 from additionalscripts import offlineautomation
 from taskmanager import TaskManager
 from additionalscripts.write_process_analytic import AnalyticWriter
+from additionalscripts.dependenciesinstaller import install
 
 def argparse_func():
     parser = argparse.ArgumentParser(description='ISEEU main agent')
@@ -30,8 +31,9 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
+    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', required=False)
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
-    parser.add_argument('-ina', '--install_apt', help='installation need to be done', required=False)
+    parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
 
     # analytics args
     group.add_argument('-na', '--new_analytic', help='add analytic', action='store_true', required=False)
@@ -61,7 +63,11 @@ def argparse_func():
     parser.add_argument('-o', '--operator', default='AND', help='write  an operator that will be in the logic between the fields \
              - optional values are AND,OR the default is AND for multiple multiple fields and NONE for a single fields in the analytic')
 
-    return parser.parse_args()
+    try:
+        return parser.parse_args()
+    except:
+        parser.print_help()
+        raise
 
 
 def on_machine(args):
@@ -122,12 +128,12 @@ def main():
         to_install = args.install_pip.split(',')
         for i in to_install:
             softwareinstaller.pip_install(i)
-        #TODO: check how to install things.
     if args.install_apt:
         to_install = args.install_apt.split(',')
         for i in to_install:
             softwareinstaller.apt_install(i)
-        # TODO: check how to install things.
+    if args.install_all:
+        install()
 
     if args.crontab:
         try:
@@ -152,10 +158,10 @@ def main():
             # tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
             #          'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
             # tasks = ['LibraryPath', 'LDPreload']
-            tasks = ['ScheduledTask', 'ProcessInfo']
+            tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
-            # task_manager.add_task('FileMetaData', True)
+            task_manager.add_task('FileMetaData', True)
             # task_manager.add_task('ClamAV', True)
 
 

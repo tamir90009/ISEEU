@@ -200,8 +200,8 @@ class AllProcesses(object):
                     pid = ""
                     try:
                         pid = int(row.split(None, LSOF_COLUMNS)[1])
-                    except Exception as e:
-                        raise Exception("problem in parse lsof command - all_process  :{}".format(str(e)))
+                    except:
+                        pass
                     split_row = row.split(None, LSOF_COLUMNS)
                     split_row_len = len(split_row)
                     fd = [split_row[split_row_len - 6], split_row[split_row_len - 5], split_row[split_row_len - 4],
