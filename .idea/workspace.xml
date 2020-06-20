@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="25dcd379-f4be-45b7-9c15-a4863edd79fb" name="Default Changelist" comment="binarylist +autorun paths analyzers - write output to metadata and es">
-      <change beforePath="$PROJECT_DIR$/.idea/ISEEU.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/ISEEU.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/additionalscripts/all_processes.py" beforeDir="false" afterPath="$PROJECT_DIR$/additionalscripts/all_processes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/analyzers/systeminfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/analyzers/systeminfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectors/autorunpaths.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/autorunpaths.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectors/processinfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/processinfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/collectors/systeminfo.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/systeminfo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsers/autorunpaths.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsers/autorunpaths.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/parsers/binarylist.py" beforeDir="false" afterPath="$PROJECT_DIR$/parsers/binarylist.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collectors/filemetadata.py" beforeDir="false" afterPath="$PROJECT_DIR$/collectors/filemetadata.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +75,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/agent.py" />
-      <option name="PARAMETERS" value="-esi 193.106.55.141:2241 -esp /home/elk/logstash/files -esup elk:bartar@401@cs -op /tmp/test33 -tn 2 -ra" />
+      <option name="PARAMETERS" value="-esi 193.106.55.141:2241 -esp $PROJECT_DIR$/../../../elk/logstash/files -esup elk:bartar@401@cs -op /tmp/test33 -tn 2 -ra" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
@@ -199,8 +190,8 @@
     </configuration>
     <list>
       <item itemvalue="Python.agent" />
-      <item itemvalue="Python.autorunpaths" />
       <item itemvalue="Python.autorunpaths (1)" />
+      <item itemvalue="Python.autorunpaths" />
       <item itemvalue="Python.binarylist" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.write_process_analytic" />
