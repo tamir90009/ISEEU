@@ -32,7 +32,9 @@ class FileMetaDataCollector(Collector):
                     data["mtime"] = st.st_mtime
                     data["ctime"] = st.st_ctime
                     data["size"] = st.st_size
-                    data["attr"] = get_attr(file)
+                    attr = get_attr(file)
+                    if attr:
+                        data["attr"] = attr
                     data["sha1"] = hashlib.sha1(open(file, 'rb').read()).hexdigest()
                 except Exception as e:
                     raise Exception("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
@@ -66,7 +68,9 @@ def get_attr(file_path):
                                 stdout=subprocess.PIPE)
         file_attr = task.stdout.read()
         return file_attr.decode().split(' ')[0]
-    except Exception as e:
-        raise Exception("problem in getting the attributes for the file:{} - collector: {}".format(file_path, str(e)))
-    return ''
+    except:
+        return ''
+    #except Exception as e:
+    #    raise Exception("problem in getting the attributes for the file:{} - collector: {}".format(file_path, str(e)))
+
 
