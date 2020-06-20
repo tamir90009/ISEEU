@@ -69,10 +69,8 @@ def get_attr(file_path):
     this func gets the attributes of file using lsattr command and returns it
     '''
     try:
-        task = subprocess.Popen("lsattr -R {}".format(file_path),
-                                shell=True,
-                                stdout=subprocess.PIPE)
-        file_attr = task.stdout.read()
+        file_attr = subprocess.check_output("lsattr -R {}".format(file_path), shell=True)
+        # file_attr = task.stdout.read()
         return file_attr.decode().split(' ')[0]
     except:
         return ''
