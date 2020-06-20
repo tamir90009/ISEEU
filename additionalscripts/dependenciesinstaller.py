@@ -7,10 +7,10 @@ from additionalscripts.softwareinstaller import softwareinstaller
 def install():
     # software_installer = softwareinstaller()
     try:
-        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit']:
+        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip']:
             if apt == 'rkhunter':
-                sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
-                  shell=True)
+                sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE,
+                          stderr=sub.PIPE, shell=True)
             else:
                 softwareinstaller.apt_install(apt)
     except Exception as e:
@@ -38,12 +38,14 @@ def install():
                               , shell=True)
                 out,err = c.communicate()
                 if out:
+
                     print(out)
 
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
     try:
-        softwareinstaller.pip_install('pretty_cron')
+        for pip in ['pretty_cron','paramiko']:
+            softwareinstaller.pip_install(pip)
     except Exception as e:
         raise Exception("error with pip install pretty_cron " + str(e))
 

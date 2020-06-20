@@ -33,9 +33,9 @@ def insert_agent_to_vm(vm_name, agent_folder_path=None, agent_flags=None,mount_p
     try:
         if controller is None:
             controller = VBoxController()
-        controller.mount_files_from_machine(vm_name, mount_path)
         if mount_path is None:
             mount_path = os.path.join("/mnt", vm_name)
+        controller.mount_files_from_machine(vm_name, mount_path)
         dst_path_by_host = os.path.join(mount_path, path_in_machine)
         initd_file_name = "agent-automation"
         # copytree(agent_folder_path, dst_path_by_host)
