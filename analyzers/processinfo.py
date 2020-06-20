@@ -25,8 +25,12 @@ class ProcessInfoAnalyzer(Analyzer):
                 for pid in process_data:
                     suspicious = ProcessInfoAnalyzer.run_analytic_on_pid(process_data, analytic_folder_path, pid)
                     process_data[pid].update({"suspicious": suspicious})
+                    for key in process_data[pid]:
+                        if key.startswith('_'):
+                            process_data[pid][key[1:]] = process_data[pid][key]
+                            del process_data[pid][key]
                     fp.write(json.dumps(process_data[pid]) + '\n')
-                datasend(os.path.join(dest_path, "{}_processinfo.json".format(socket.gethostname())),"processinfo")
+                datasend(os.path.join(dest_path, "{}_processinfo.json".format(socket.gethostname())), "processinfo")
 
         except Exception as e:
             raise Exception("problem in reading analytic  info - analyzer :{}".format(str(e)))

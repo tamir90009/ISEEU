@@ -30,8 +30,8 @@ class MySFTPClient(paramiko.SFTPClient):
         try:
             super(MySFTPClient, self).mkdir(path, mode=mode)
         except Exception as e:
+            # print('---------------' + str(e))
             pass
-
 
 def datasend(localpath, task_name):
     try:

@@ -5,14 +5,14 @@ from additionalscripts.softwareinstaller import softwareinstaller
 
 
 def install():
-    software_installer = softwareinstaller()
+    # software_installer = softwareinstaller()
     try:
         for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit']:
             if apt == 'rkhunter':
                 sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE,
                   shell=True)
             else:
-                software_installer.apt_install(apt)
+                softwareinstaller.apt_install(apt)
     except Exception as e:
         raise Exception("error with get_apt " + str(e))
     if not os.path.exists('/tmp/maldetect-current.tar.gz'):
@@ -43,9 +43,8 @@ def install():
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
     try:
-        software_installer.pip_install('pretty_cron')
+        softwareinstaller.pip_install('pretty_cron')
     except Exception as e:
         raise Exception("error with pip install pretty_cron " + str(e))
 
 
-install()

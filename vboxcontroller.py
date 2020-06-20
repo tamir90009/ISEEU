@@ -21,6 +21,7 @@ class VBoxController(object):
         :return:
         """
         try:
+            VBoxController.check_vm_name_exist(vmname)
             subprocess.check_output(["vboxmanage", "startvm", vmname, "--type", start_type])
         except Exception as e:
             raise Exception("VBoxController failed starting the machine %s %s" % (vmname, str(e)))
@@ -33,6 +34,7 @@ class VBoxController(object):
         :return:
         """
         try:
+            VBoxController.check_vm_name_exist(vmname)
             subprocess.check_output(["vboxmanage", "controlvm", vmname, "poweroff"])
         except Exception as e:
             raise Exception("VBoxController failed stopping the machine %s %s" % (vmname, str(e)))
@@ -72,6 +74,7 @@ class VBoxController(object):
         :return:
         """
         try:
+            VBoxController.check_vm_name_exist(vmname)
             output = subprocess.check_output(["vboxmanage", "showvminfo", vmname])
             re_m = re.findall("Config file:\s*(.*)\n", output.decode("utf-8"))
             if re_m:
@@ -110,6 +113,7 @@ class VBoxController(object):
                 read_only: mount permissions
         :return:
         """
+        VBoxController.check_vm_name_exist(vmname)
         if not mount_path:
             mount_path = "/mnt/" + vmname
         self.lock.acquire()
@@ -164,6 +168,7 @@ class VBoxController(object):
                 mount_path: where to mount at the host
         :return:
         """
+        VBoxController.check_vm_name_exist(vmname)
         if not mount_path:
             mount_path = "/mnt/" + vmname
         if mount_path in self.mounted_devices:
@@ -189,6 +194,12 @@ class VBoxController(object):
         except Exception as e:
             raise e
 
+    @staticmethod
+    def check_vm_name_exist(vmname):
+        output = subprocess.check_output(["vboxmanage", "list", "vms"])
+        vmnames = output.split()[::2]
+        if vmname in vmnames:
+            raise Exception('there is already virtual machine with the same name as %s' % vmname)
 
     @staticmethod
     def disk_image_to_machine(vmname, hard_drive_path, raw=True, os_type="Ubuntu", memory=1024, new_hard_drive_format="VDI"):
@@ -203,6 +214,10 @@ class VBoxController(object):
                 new_hard_drive_format: if raw image was given to which format convert it
         :return:
         """
+        if not os.path.isfile(hard_drive_path):
+            raise Exception("VBoxController: %s is not a file" % hard_drive_path)
+
+        VBoxController.check_vm_name_exist(vmname)
         try:
             output = subprocess.check_output(["vboxmanage", "createvm", "--name", vmname, "--ostype", os_type, "--register"])
             if raw:

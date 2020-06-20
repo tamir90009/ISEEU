@@ -2,11 +2,13 @@ import argparse
 import json
 import os
 import re
+from additionalscripts.softwareinstaller import softwareinstaller
 from additionalscripts.offlineautomation import run_agent_on_machine
 from vboxcontroller import VBoxController
 from additionalscripts import offlineautomation
 from taskmanager import TaskManager
 from additionalscripts.write_process_analytic import AnalyticWriter
+from additionalscripts.dependenciesinstaller import install
 
 def argparse_func():
     parser = argparse.ArgumentParser(description='ISEEU main agent')
@@ -21,7 +23,7 @@ def argparse_func():
     group.add_argument('-ct', '--crontab', help='add to crontab', default=False)
     parser.add_argument('-ctf', '--crontab_flags', help='crontab flags (have to come with -ct before)', required=False)
     group.add_argument('-vm', '--vmname', help='vmname to run agent on')
-    parser.add_argument('-i', '--image', help='HD image to run agent on', required=False)
+    parser.add_argument('-i', '--image', help='run agent on image', required=False)
     parser.add_argument('-in', '--image_name', help='name to name the vm', required=False)
     parser.add_argument('-ip', '--image_path', help='HD image to run agent on path', required=False)
     parser.add_argument('-ir', '--image_format', help='image format raw', action='store_true', required=False)
@@ -29,7 +31,9 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
-    parser.add_argument('-inp', '--install', help='installation need to be done', required=False)
+    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', required=False)
+    parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
+    parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
 
     # analytics args
     group.add_argument('-na', '--new_analytic', help='add analytic', action='store_true', required=False)
@@ -59,11 +63,24 @@ def argparse_func():
     parser.add_argument('-o', '--operator', default='AND', help='write  an operator that will be in the logic between the fields \
              - optional values are AND,OR the default is AND for multiple multiple fields and NONE for a single fields in the analytic')
 
-    return parser.parse_args()
+    try:
+        return parser.parse_args()
+    except:
+        parser.print_help()
+        raise
 
 
 def on_machine(args):
     try:
+        try:
+            image_requirments = [args.image_name, args.image_path, args.image_format, args.image_ram, args.image_os,
+                                args.image_flags, args.image_agent_path]
+            for image_requirment in image_requirments:
+                if not image_requirment and not image_requirment == '':
+                    raise Exception()
+        except:
+            raise Exception('To run on image image_name, image_path, image_format, image_ram, image_os,'
+                            'image_flags and image_agent_path are needed')
         VBoxController.disk_image_to_machine(vmname=args.image_name, hard_drive_path=args.image_path,
                                              raw=args.image_format, os_type=args.image_os, memory=args.image_ram)
         pattern = re.compile('-o\s(?P<output_path>(\'.*\'|(\/|\w|\d|\s|\_|\-|\.)*))\s-')
@@ -106,9 +123,17 @@ def main():
     args = argparse_func()
     # change working directory to current directory
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
-    if args.install:
-        print_error_and_exit('whatt????')
-        #TODO: check how to install things.
+
+    if args.install_pip:
+        to_install = args.install_pip.split(',')
+        for i in to_install:
+            softwareinstaller.pip_install(i)
+    if args.install_apt:
+        to_install = args.install_apt.split(',')
+        for i in to_install:
+            softwareinstaller.apt_install(i)
+    if args.install_all:
+        install()
 
     if args.crontab:
         try:
@@ -128,11 +153,17 @@ def main():
     else:
         task_manager = TaskManager()
         if args.run_all:
-            # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo']
-            tasks = ['LibraryPath', 'LDPreload']
+            # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths',
+            #          'ProcessInfo', 'LDPreload', '']
+            # tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
+            #          'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
+            # tasks = ['LibraryPath', 'LDPreload']
+            tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
-            # task_manager.add_task('FileMetaData', True)
+            task_manager.add_task('FileMetaData', True)
+            # task_manager.add_task('ClamAV', True)
+
 
         if args.run_specific:
             for task in args.run_specific.replace(' ', '').split(','):
