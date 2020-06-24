@@ -31,7 +31,7 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
-    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', required=False)
+    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', required=False, action="store_true")
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
     parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
 
@@ -155,14 +155,14 @@ def main():
         if args.run_all:
             # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths',
             #          'ProcessInfo', 'LDPreload', '']
-            # tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
-            #          'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
+            tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
+                      'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
             # tasks = ['LibraryPath', 'LDPreload']
-            tasks = ['AutoRunPaths', 'ProcessInfo']
+            #tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
             task_manager.add_task('FileMetaData', True)
-            # task_manager.add_task('ClamAV', True)
+            task_manager.add_task('ClamAV', True)
 
 
         if args.run_specific:

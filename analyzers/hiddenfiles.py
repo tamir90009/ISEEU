@@ -5,17 +5,19 @@ import os
 import socket
 
 DEST = r'/temp'
-try:
-    File = open(r'collectors/exclude.txt','r')
-    exclude = File.read().replace(r"\n","").replace(r'/home/test',r'/home/{0}'.format(os.getlogin()))
-except Exception as e:
-    raise Exception("Exclude file not exist " + str(e))
+
 
 
 class HiddenFilesAnalyzer(Analyzer):
 
     @staticmethod
     def analyze(paths, dest_path=DEST):
+        try:
+            File = open(r'collectors/exclude.txt', 'r')
+            exclude = File.read().replace(r"\n", "").replace(r'/home/test', r'/home/{0}'.format(os.getlogin()))
+        except Exception as e:
+            raise Exception("Exclude file not exist " + str(e))
+
         try:
             with open(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
