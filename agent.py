@@ -155,14 +155,14 @@ def main():
         if args.run_all:
             # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths',
             #          'ProcessInfo', 'LDPreload', '']
-            tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
-                      'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
-            # tasks = ['LibraryPath', 'LDPreload']
+            #tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
+            #          'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
+            tasks = ['HiddenFiles']
             #tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
-            task_manager.add_task('FileMetaData', True)
-            task_manager.add_task('ClamAV', True)
+            #task_manager.add_task('FileMetaData', True)
+            #task_manager.add_task('ClamAV', True)
 
 
         if args.run_specific:
