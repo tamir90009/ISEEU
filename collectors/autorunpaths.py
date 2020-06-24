@@ -70,4 +70,3 @@ class AutoRunPathsCollector(Collector):
 
 
 
-#pp=AutoRunPathsCollector.collect("/tmp/autopaths")

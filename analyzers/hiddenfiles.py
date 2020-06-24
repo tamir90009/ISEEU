@@ -9,7 +9,8 @@ try:
     File = open(r'collectors/exclude.txt','r')
     exclude = File.read().replace(r"\n","").replace(r'/home/test',r'/home/{0}'.format(os.getlogin()))
 except Exception as e:
-    raise Exception("Exclude file not exist " + str(e))
+    exclude = ''
+    print("Exclude file not exist " + str(e))
 
 
 class HiddenFilesAnalyzer(Analyzer):

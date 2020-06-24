@@ -12,7 +12,8 @@ class LogCollector(Collector):
     @staticmethod
     def collect(dst_path):
         try:
-            os.mkdir(dst_path)
+            if not os.path.exists(dst_path):
+                os.mkdir(dst_path)
             shutil.copyfile('/var/log/auth.log', '{}/auth.log'.format(dst_path))
             shutil.copyfile('/var/log/syslog', '{}/syslog'.format(dst_path))
         except Exception as e:
