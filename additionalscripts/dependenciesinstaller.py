@@ -34,7 +34,7 @@ def install():
     try:
         for file in out.decode('utf-8').splitlines():
             if 'maldetect-' in file and 'tar.gz' not in file:
-                c = sub.Popen('/tmp/{0}/install.sh'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
+                c = sub.Popen('/tmp/{0}/install.sh'.format(file), cwd=r'/tmp/{0}/'.format(file), stdin=sub.PIPE, stdout=sub.PIPE, stderr=sub.PIPE
                               , shell=True)
                 out,err = c.communicate()
                 if out:

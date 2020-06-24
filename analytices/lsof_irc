@@ -14,7 +14,7 @@
     "_time": null,
     "_cmdline": null,
     "_env": null,
-    "_list_of_file_descript": ":(666[0-9]|7000)",
+    "_list_of_file_descript": " (\\:666[0-9]|\\:7000)",
     "_networking_unix": null,
     "_networking_internet": null,
     "_operator": "AND"
