@@ -22,7 +22,7 @@ def argparse_func():
     group.add_argument('-ct', '--crontab', help='add to crontab', default=False)
     parser.add_argument('-ctf', '--crontab_flags', help='crontab flags (have to come with -ct before)', required=False)
     group.add_argument('-vm', '--vmname', help='vmname to run agent on')
-    parser.add_argument('-i', '--image', help='run agent on image', action='store_true', required=False)
+    group.add_argument('-i', '--image', help='run agent on image', action='store_true', required=False)
     parser.add_argument('-ovp', '--ova_path', help='ova/ovf path to import', required=False)
     parser.add_argument('-in', '--image_name', help='name to name the vm', required=False)
     parser.add_argument('-ip', '--image_path', help='HD image to run agent on path', required=False)
@@ -31,7 +31,7 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags_path', help='flags to run the agent with at the machine file path', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
-    parser.add_argument('-ind','--image_network_disable',help="disable network adapter in vm", required=False)
+    parser.add_argument('-ind','--image_network_disable', help="disable network adapter in vm", action='store_true' ,required=False)
     parser.add_argument('-ina', '--install_all', help='installation of all dependecied', action='store_true', required=False)
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
     parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
@@ -73,17 +73,15 @@ def argparse_func():
 
 def on_hd_machine(args):
     try:
-        from additionalscripts.offlineautomation import run_agent_on_machine
-        try:
-            image_requirments = [args.image_name, args.image_path, args.image_ram, args.image_os,
-                                args.image_flags_path, args.image_agent_path]
-            for image_requirment in image_requirments:
-                if not image_requirment and not image_requirment == '':
-                    raise Exception()
-        except:
-            raise Exception('To run on image image_name, image_path, image_format, image_ram, image_os,'
-                            'image_flags and image_agent_path are needed')
-        image_flags = open(args.image_flags, 'r').read()
+        image_requirments = [args.image_name, args.image_path, args.image_ram, args.image_os,
+                             args.image_flags_path, args.image_agent_path]
+        for image_requirment in image_requirments:
+            if not image_requirment and not image_requirment == '':
+                raise Exception()
+    except:
+        raise Exception('To run on image image_name, image_path, image_format, image_ram, image_os,'
+                        'image_flags and image_agent_path are needed')
+    try:
         VBoxController.disk_image_to_machine(vmname=args.image_name, hard_drive_path=args.image_path,
                                              raw=args.image_format, os_type=args.image_os, memory=args.image_ram)
     except Exception as e:
@@ -91,6 +89,7 @@ def on_hd_machine(args):
 
 def on_machine(args):
     try:
+        from additionalscripts.offlineautomation import run_agent_on_machine
         if args.ova_path:
             on_ova_machine(args)
         else:
@@ -100,10 +99,10 @@ def on_machine(args):
             raise Exception('didn\'t find image flags file')
         image_flags = open(args.image_flags_path).read()
         output_path = pattern.search(image_flags).group('output_path')
-        run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
-                            agent_flags=image_flags, path_in_machine=args.image_agent_path)
         if args.image_network_disable:
             VBoxController.disable_network_adapter(vmname=args.image_name)
+        run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
+                            agent_flags=image_flags, path_in_machine=args.image_agent_path)
     except Exception as e:
         raise e
 
