@@ -116,14 +116,13 @@ class VBoxController(object):
         VBoxController.check_vm_name_exist(vmname)
         if not mount_path:
             mount_path = "/mnt/" + vmname
-        self.lock.acquire()
-        if mount_path in self.mounted_devices:
-            raise Exception("something already mounted in %s" % mount_path)
-        if not self.free_nbd:
-            raise Exception("can't mount new images, please umount some images first %s" % mount_path)
-        current_nbd = random.choice(self.free_nbd)
-        self.free_nbd.remove(current_nbd)
-        self.lock.release()
+        with self.lock:
+            if mount_path in self.mounted_devices:
+                raise Exception("something already mounted in %s" % mount_path)
+            if not self.free_nbd:
+                raise Exception("can't mount new images, please umount some images first %s" % mount_path)
+            current_nbd = random.choice(self.free_nbd)
+            self.free_nbd.remove(current_nbd)
         try:
             vdi_home_path = self.get_vm_home_path(vmname)
             vdi_path = self.get_drive_name(vmname, vdi_home_path)
@@ -176,16 +175,17 @@ class VBoxController(object):
                 subprocess.check_output(["umount", mount_path])
             except Exception as e:
                 raise Exception("Fail to umount %s %s" % (mount_path, str(e)))
-        try:
-            subprocess.check_output(["qemu-nbd", "-d", self.mounted_devices[mount_path]])
-        except Exception as e:
-            raise Exception("Fail to umount qemu-nbd %s %s" % (mount_path, str(e)))
-        self.lock.acquire()
-        self.free_nbd.append(self.mounted_devices[mount_path])
-        del self.mounted_devices[mount_path]
-        self.lock.release()
+        if self.mounted_devices.get(mount_path, None):
+            try:
+                subprocess.check_output(["qemu-nbd", "-d", self.mounted_devices[mount_path]])
+            except Exception as e:
+                raise Exception("Fail to umount qemu-nbd %s %s" % (mount_path, str(e)))
+            with self.lock:
+                self.free_nbd.append(self.mounted_devices[mount_path])
+                del self.mounted_devices[mount_path]
         if not self.mounted_devices:
             try:
+                sleep(5)
                 subprocess.check_output(["modprobe", "-r", "nbd"])
             except Exception as e:
                 raise Exception("Fail to modprobe -r nbd %s" % (str(e)))
@@ -243,7 +243,7 @@ class VBoxController(object):
             try:
                 subprocess.check_output(["qemu-nbd", "-d", i])
             except Exception as e:
-                raise Exception("Fail to umount qemu-nbd %s %s" % (str(e)))
+                raise Exception("Fail to umount qemu-nbd %s" % (str(e)))
         try:
             subprocess.check_output(["modprobe", "-r", "nbd"])
         except Exception as e:

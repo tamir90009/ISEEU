@@ -36,23 +36,19 @@ def insert_agent_to_vm(vm_name, agent_folder_path=None, agent_flags=None,mount_p
         if mount_path is None:
             mount_path = os.path.join("/mnt", vm_name)
         controller.mount_files_from_machine(vm_name, mount_path)
-        dst_path_by_host = os.path.join(mount_path, path_in_machine)
+        dst_path_by_host = mount_path + path_in_machine
         initd_file_name = "agent-automation"
-        # copytree(agent_folder_path, dst_path_by_host)
-        initd_path = os.path.join(mount_path, "/etc/init.d")
+        copytree(agent_folder_path, dst_path_by_host)
+        initd_path = mount_path + "/etc/init.d"
         initd_full_path = os.path.join(initd_path, initd_file_name)
-        edit_service(path_in_machine + "/agent", agent_flags)
+        edit_service(path_in_machine + "/agent.py", agent_flags)
         copyfile("additionalscripts/agent-automation", initd_full_path)
         subprocess.check_output(["chmod", "755", initd_full_path])
         subprocess.check_output(["chown", "root", initd_full_path])
-        os.symlink(os.path.join("/etc/init.d", initd_file_name),
-                   os.path.join(mount_path, "/etc/rc2.d/S01" + initd_file_name))
-        os.symlink(os.path.join("/etc/init.d", initd_file_name),
-                   os.path.join(mount_path, "/etc/rc3.d/S01" + initd_file_name))
-        os.symlink(os.path.join("/etc/init.d", initd_file_name),
-                   os.path.join(mount_path, "/etc/rc4.d/S01" + initd_file_name))
-        os.symlink(os.path.join("/etc/init.d" + initd_file_name),
-                   os.path.join(mount_path, "/etc/rc5.d/S01" + initd_file_name))
+        os.symlink(os.path.join("/etc/init.d", initd_file_name), mount_path + "/etc/rc2.d/S01" + initd_file_name)
+        os.symlink(os.path.join("/etc/init.d", initd_file_name), mount_path + "/etc/rc3.d/S01" + initd_file_name)
+        os.symlink(os.path.join("/etc/init.d", initd_file_name), mount_path + "/etc/rc4.d/S01" + initd_file_name)
+        os.symlink(os.path.join("/etc/init.d", initd_file_name), mount_path + "/etc/rc5.d/S01" + initd_file_name)
     finally:
         controller.umount_files_from_machine(vm_name, mount_path)
 
@@ -61,9 +57,10 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
     try:
         if controller is None:
             controller = VBoxController()
+        # no need insert_agent_to_vm doing that's
         # controller.mount_files_from_machine(vm_name, mount_path)
-        # if mount_path is None:
-        #     mount_path = "/mnt/" + vm_name
+        if mount_path is None:
+            mount_path = "/mnt/" + vm_name
         insert_agent_to_vm(vm_name, agent_folder_path, agent_flags, controller=controller,
                            path_in_machine=path_in_machine)
         controller.start(vm_name)
@@ -77,7 +74,7 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                 if counter % 5 == 0:
                     controller.umount_files_from_machine(vm_name, mount_path)
                     sleep(2)
-                    controller.mount_files_from_machine(vm_name, mount_path)
+                    controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
                 open(mount_path + output_path + "finish")
                 flag = False
             except:
@@ -85,8 +82,8 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                 counter += 1
 
         #add the output agent path to be copy to the machine
-        #copytree(agent_folder_path, output_path).
-        # send_folder_to_Sender(output_path)
+        copytree(agent_folder_path, output_path)
+        send_folder_to_Sender(output_path)
         controller.stop(vm_name)
 
         raise Exception("all good")
