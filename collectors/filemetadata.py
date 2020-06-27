@@ -36,9 +36,7 @@ class FileMetaDataCollector(Collector):
                         data["size"] = st.st_size
                         data["attr"] = ''
                         if not os.path.islink(file):
-                            attr = get_attr(file)
-                            if attr:
-                                data["attr"] = attr
+                            data["attr"] = get_attr(file)
                         data["sha1"] = hashlib.sha1(open(file, 'rb').read()).hexdigest()
                     except Exception as e:
                         print("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
@@ -55,12 +53,16 @@ def get_permissions(file_path):
     '''
     try:
         task = subprocess.Popen("ls -l {}".format(file_path),
-                                shell=True,
-                                stdout=subprocess.PIPE)
-        file_attr = task.stdout.read()
+                                stdin=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                shell=True)
+        #file_attr = task.stdout.read()
+        file_attr, err = task.communicate()
+
         return file_attr.decode()[1:10]
     except Exception as e:
-        raise Exception("problem in getting the permissions for the file:{} - collector: {}".format(file_path, str(e)))
+        print("problem in getting the permissions for the file:{} - collector: {}".format(file_path, str(e)))
     return ''
 
 
@@ -69,12 +71,15 @@ def get_attr(file_path):
     this func gets the attributes of file using lsattr command and returns it
     '''
     try:
-        file_attr = subprocess.check_output("lsattr -R {}".format(file_path), shell=True)
-        # file_attr = task.stdout.read()
+        task = subprocess.Popen(["lsattr -R {}".format(file_path)],
+                                stdin=subprocess.PIPE,
+                                stderr=subprocess.PIPE,
+                                stdout=subprocess.PIPE,
+                                shell=True)
+        #file_attr = task.stdout.read()
+        file_attr, err = task.communicate()
         return file_attr.decode().split(' ')[0]
-    except:
-        return ''
-    #except Exception as e:
-    #    raise Exception("problem in getting the attributes for the file:{} - collector: {}".format(file_path, str(e)))
-
+    except Exception as e:
+        print("problem in getting the attributes for the file:{} - collector: {}".format(file_path, str(e)))
+    return ''
 

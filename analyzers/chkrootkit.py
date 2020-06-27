@@ -34,4 +34,4 @@ class CHKRootkitAnalyzer(Analyzer):
                 except:
                     pass
         except Exception as e:
-            raise Exception("problem in writing the data to file- analyzer: {}".format(str(e)))
+            raise Exception("problem in writing the data to file chkrootkit- analyzer: {}".format(str(e)))

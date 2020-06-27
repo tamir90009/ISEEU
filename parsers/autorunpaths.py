@@ -21,4 +21,4 @@ class AutoRunPathsParser(Parser):
             raise Exception("problem in parse autorun paths  :{}".format(str(e)))
 
 
-#pp=AutoRunPathsParser().parse('/tmp/autopaths')
+

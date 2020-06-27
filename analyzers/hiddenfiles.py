@@ -13,14 +13,14 @@ class HiddenFilesAnalyzer(Analyzer):
     @staticmethod
     def analyze(paths, dest_path=DEST):
         try:
-            exclude = ""
             with open(r'collectors/exclude.txt', 'r') as File:
                 ukn = 'UNKNOWN'
                 username = os.environ.get('USER', os.environ.get('USERNAME', ukn))
                 if username == ukn and hasattr(os, 'getlogin') and username != 'root':
                     exclude = File.read().replace(r"\n", "").replace(r'/home/test', r'/home/{0}'.format(os.getlogin()))
         except Exception as e:
-            raise Exception("Exclude file not exist " + str(e))
+            exclude = ''
+            print("Exclude file not exist " + str(e))
 
         try:
             with open(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())), "w") as fp:
