@@ -30,6 +30,7 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
+    parser.add_argument('-ind','--image_network_disable',help="disable network adapter in vm", required=False)
     parser.add_argument('-ina', '--install_all', help='installation of all dependecied', action='store_true', required=False)
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
     parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
@@ -86,8 +87,10 @@ def on_machine(args):
                                              raw=args.image_format, os_type=args.image_os, memory=args.image_ram)
         pattern = re.compile('-op\s(?P<output_path>(\'.*\'|(\/|\w|\d|\s|\_|\.)*))\s-')
         output_path = pattern.search(image_flags).group('output_path')
-        run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
-                             agent_flags=image_flags, path_in_machine=args.image_agent_path)
+        #run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
+        #                     agent_flags=image_flags, path_in_machine=args.image_agent_path)
+        if args.image_network_disable:
+            VBoxController.disable_network_adapter(vmname=args.image_name)
     except Exception as e:
         raise e
 
