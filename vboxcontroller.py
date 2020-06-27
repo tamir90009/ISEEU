@@ -244,8 +244,7 @@ class VBoxController(object):
                                      "--controller", "IntelAhci", "--bootable", "on"])
             subprocess.check_output(["vboxmanage", "storageattach", vmname, "--storagectl", "'SATA Controller'", "--port", "0",
                                      "--device", "0", "--type", "hdd", "--medium", hard_drive_path])
-            subprocess.check_output(["vboxmanage", "registervm", vmname, "--name", "'SATA Controller'", "--add", "sata",
-                                     "--controller", "IntelAhci", "--bootable", "on"])
+
         except Exception as e:
             raise Exception("VBoxController there was a problem to import new machine %s %s" % (vmname, str(e)))
     @staticmethod
