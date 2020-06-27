@@ -3,9 +3,7 @@ import json
 import os
 import re
 from additionalscripts.softwareinstaller import softwareinstaller
-from additionalscripts.offlineautomation import run_agent_on_machine
 from vboxcontroller import VBoxController
-from additionalscripts import offlineautomation
 from taskmanager import TaskManager
 from additionalscripts.write_process_analytic import AnalyticWriter
 from additionalscripts.dependenciesinstaller import install
@@ -13,7 +11,8 @@ from additionalscripts.dependenciesinstaller import install
 def argparse_func():
     parser = argparse.ArgumentParser(description='ISEEU main agent')
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-esi', '--elastic_info', help='elastic search ip:port')
+    group.add_argument('-L', '--run_local', action='store_true', help='run agent on local machine')
+    parser.add_argument('-esi', '--elastic_info', help='elastic search ip:port', required=False)
     parser.add_argument('-esp', '--elastic_path', help='elastic path to throw data to', required=False)
     parser.add_argument('-esup', '--elastic_username_password', help='elastic search username:password', required=False)
     parser.add_argument('-op', '--output_path', help='output path', required=False)
@@ -22,8 +21,8 @@ def argparse_func():
     parser.add_argument('-rs', '--run_specific', help='run specific tasks (use \',\' as delimeter)', required=False)
     group.add_argument('-ct', '--crontab', help='add to crontab', default=False)
     parser.add_argument('-ctf', '--crontab_flags', help='crontab flags (have to come with -ct before)', required=False)
-    group.add_argument('-vm', '--vmname', help='vmname to run agent on')
-    parser.add_argument('-i', '--image', help='run agent on image', required=False)
+    group.add_argument('-vm', '--vmname', help='vmname to run agent on', required=False)
+    group.add_argument('-i', '--image', help='run agent on image', action='store_true', required=False)
     parser.add_argument('-in', '--image_name', help='name to name the vm', required=False)
     parser.add_argument('-ip', '--image_path', help='HD image to run agent on path', required=False)
     parser.add_argument('-ir', '--image_format', help='image format raw', action='store_true', required=False)
@@ -31,7 +30,8 @@ def argparse_func():
     parser.add_argument('-im', '--image_ram', help='ram to give the machine', default=1024, required=False)
     parser.add_argument('-if', '--image_flags', help='flags to run the agent with at the machine', required=False)
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
-    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', required=False, action="store_true")
+    parser.add_argument('-ind','--image_network_disable',help="disable network adapter in vm", required=False)
+    parser.add_argument('-ina', '--install_all', help='installation of all dependecied', action='store_true', required=False)
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
     parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
 
@@ -72,8 +72,9 @@ def argparse_func():
 
 def on_machine(args):
     try:
+        from additionalscripts.offlineautomation import run_agent_on_machine
         try:
-            image_requirments = [args.image_name, args.image_path, args.image_format, args.image_ram, args.image_os,
+            image_requirments = [args.image_name, args.image_path, args.image_ram, args.image_os,
                                 args.image_flags, args.image_agent_path]
             for image_requirment in image_requirments:
                 if not image_requirment and not image_requirment == '':
@@ -81,13 +82,15 @@ def on_machine(args):
         except:
             raise Exception('To run on image image_name, image_path, image_format, image_ram, image_os,'
                             'image_flags and image_agent_path are needed')
+        image_flags = open(args.image_flags, 'r').read()
         VBoxController.disk_image_to_machine(vmname=args.image_name, hard_drive_path=args.image_path,
                                              raw=args.image_format, os_type=args.image_os, memory=args.image_ram)
-        pattern = re.compile('-o\s(?P<output_path>(\'.*\'|(\/|\w|\d|\s|\_|\-|\.)*))\s-')
-        output_path = pattern.search(args.image_flags).group('output_path')
-        run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
-                             agent_flags=args.image_flags, agent_main_file='agent.py',
-                             path_in_machine=args.image_agent_path)
+        pattern = re.compile('-op\s(?P<output_path>(\'.*\'|(\/|\w|\d|\s|\_|\.)*))\s-')
+        output_path = pattern.search(image_flags).group('output_path')
+        #run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
+        #                     agent_flags=image_flags, path_in_machine=args.image_agent_path)
+        if args.image_network_disable:
+            VBoxController.disable_network_adapter(vmname=args.image_name)
     except Exception as e:
         raise e
 
@@ -137,6 +140,7 @@ def main():
 
     if args.crontab:
         try:
+            from additionalscripts import offlineautomation
             offlineautomation.add_to_cron(args.crontab_flags)
         except Exception as e:
             print_error_and_exit("error occurred while add to cron: ", e)
@@ -148,6 +152,11 @@ def main():
         except Exception as e:
             raise e
 
+    if args.elastic_info:
+        write_elastic_conf(args)
+    else:
+        print_error_and_exit('elastic info is missing')
+
     if args.image:
         on_machine(args)
     else:
@@ -155,25 +164,19 @@ def main():
         if args.run_all:
             # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths',
             #          'ProcessInfo', 'LDPreload', '']
-            #tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
-            #          'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
-            tasks = ['HiddenFiles']
-            #tasks = ['AutoRunPaths', 'ProcessInfo']
+            tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
+                     'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
+            # tasks = ['LibraryPath', 'LDPreload']
+            # tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
-            #task_manager.add_task('FileMetaData', True)
-            #task_manager.add_task('ClamAV', True)
+            task_manager.add_task('FileMetaData', True)
+            # task_manager.add_task('ClamAV', True)
 
 
         if args.run_specific:
             for task in args.run_specific.replace(' ', '').split(','):
                 task_manager.add_task(task)
-            
-        if args.elastic_info:
-            write_elastic_conf(args)
-
-        else:
-            print_error_and_exit('elastic info is missing')
 
         if args.output_path:
             task_manager.execute_all_tasks(args.output_path, int(args.threads_number))
