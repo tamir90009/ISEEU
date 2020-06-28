@@ -7,7 +7,8 @@ from additionalscripts.softwareinstaller import softwareinstaller
 def install():
     # software_installer = softwareinstaller()
     try:
-        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip']:
+        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip', 'qemu-kvm', 'qemu',
+                    'virt-manager', 'virt-viewer', 'libvirt-bin']:
             if apt == 'rkhunter':
                 sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE,
                           stderr=sub.PIPE, shell=True)

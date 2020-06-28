@@ -152,8 +152,10 @@ class VBoxController(object):
                 raise e
         try:
             if read_only:
+                subprocess.check_output(["partx", "-a", current_nbd])
                 subprocess.check_output(["mount", "-o", "ro,noload", partition_to_mount[0], mount_path])
             else:
+                subprocess.check_output(["partx", "-a", current_nbd])
                 subprocess.check_output(["mount", partition_to_mount[0], mount_path])
         except Exception as e:
             raise Exception("fail to mount %s to %s %s" % (partition_to_mount[0], mount_path, str(e)))
