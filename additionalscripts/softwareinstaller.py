@@ -12,4 +12,8 @@ class softwareinstaller(object):
 
     @staticmethod
     def pip_install(module_name):
-        subprocess.call(["pip3", "install", module_name])
+        try:
+            subprocess.call(["pip3", "install", module_name])
+            subprocess.call(["pip", "install", module_name])
+        except Exception as e:
+            print("Error with pip install: " + str(e))

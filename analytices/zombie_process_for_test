@@ -17,5 +17,5 @@
     "_list_of_file_descript": null,
     "_networking_unix": null,
     "_networking_internet": null,
-    "_operator": "OR"
+    "_operator": "AND"
 }

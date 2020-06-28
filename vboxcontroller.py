@@ -202,6 +202,20 @@ class VBoxController(object):
             raise Exception('there is already virtual machine with the same name as %s' % vmname)
 
     @staticmethod
+    def disable_network_adapter(vmname):
+        """
+        start a virtualbox machine with or without GUI
+        :param  vmname: virtual machine name to start
+                start_type: options are headless(default) or gui
+        :return:
+        """
+        try:
+            VBoxController.check_vm_name_exist(vmname)
+            subprocess.check_output(["vboxmanage", "modifyvm",vmname,"--nic1","none"])
+        except Exception as e:
+            raise Exception("VBoxController failed starting the machine %s %s" % (vmname, str(e)))
+
+    @staticmethod
     def disk_image_to_machine(vmname, hard_drive_path, raw=True, os_type="Ubuntu", memory=1024, new_hard_drive_format="VDI"):
         """
         create a machine from a harddisk image
@@ -230,6 +244,7 @@ class VBoxController(object):
                                      "--controller", "IntelAhci", "--bootable", "on"])
             subprocess.check_output(["vboxmanage", "storageattach", vmname, "--storagectl", "'SATA Controller'", "--port", "0",
                                      "--device", "0", "--type", "hdd", "--medium", hard_drive_path])
+
         except Exception as e:
             raise Exception("VBoxController there was a problem to import new machine %s %s" % (vmname, str(e)))
     @staticmethod
