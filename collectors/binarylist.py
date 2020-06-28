@@ -39,4 +39,3 @@ class BinaryListCollector(Collector):
         except Exception as e:
             print("problem in get_files_in_dir in binarylist - collector:" + str(e))
 
-pp=BinaryListCollector.collect("/tmp/binarylist")

@@ -5,17 +5,23 @@ import os
 import socket
 
 DEST = r'/temp'
-try:
-    File = open(r'collectors/exclude.txt','r')
-    exclude = File.read().replace(r"\n","").replace(r'/home/test',r'/home/{0}'.format(os.getlogin()))
-except Exception as e:
-    raise Exception("Exclude file not exist " + str(e))
+
 
 
 class HiddenFilesAnalyzer(Analyzer):
 
     @staticmethod
     def analyze(paths, dest_path=DEST):
+        try:
+            exclude = ''
+            with open(r'collectors/exclude.txt', 'r') as File:
+                ukn = 'UNKNOWN'
+                username = os.environ.get('USER', os.environ.get('USERNAME', ukn))
+                if username == ukn and hasattr(os, 'getlogin') and username != 'root':
+                    exclude = File.read().replace(r"\n", "").replace(r'/home/test', r'/home/{0}'.format(os.getlogin()))
+        except Exception as e:
+            print("Exclude file not exist " + str(e))
+
         try:
             with open(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())), "w") as fp:
                 to_json = {}
@@ -28,3 +34,12 @@ class HiddenFilesAnalyzer(Analyzer):
             datasend(os.path.join(dest_path, "{}_hiddenfiles.json".format(socket.gethostname())),'hiddenfiles')
         except Exception as e:
             raise Exception("problem in hidden files analyzer - analyze :" + str(e))
+        try:
+            dst_path_meta_data = "{}/MetaData".format("/".join(dest_path.split('/')[:-1]))
+            os.makedirs(dst_path_meta_data, exist_ok=True)
+            for f in paths:
+                if f not in exclude:
+                    with open('{}/HiddenFiles.txt'.format(dst_path_meta_data), "a+") as meta_data_file:
+                        meta_data_file.write('{}\n'.format(f))
+        except Exception as e:
+            raise Exception("problem in writing the data to file- analyzer: {}".format(str(e)))

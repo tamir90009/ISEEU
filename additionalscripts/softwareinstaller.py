@@ -1,13 +1,19 @@
 import subprocess
 
 class softwareinstaller(object):
-
-    def install(self, software_path):
+    @staticmethod
+    def install(software_path):
         raise NotImplemented
 
-    def apt_install(self, package_name):
+    @staticmethod
+    def apt_install(package_name):
         #todo: check errors
-        subprocess.call(["sudo", "apt-get","--assume-yes","install", package_name])
+        subprocess.call(["apt-get", "--assume-yes", "install", package_name])
 
-    def pip_install(self, module_name):
-        subprocess.call(["sudo", "pip3", "install", module_name])
+    @staticmethod
+    def pip_install(module_name):
+        try:
+            subprocess.call(["pip3", "install", module_name])
+            subprocess.call(["pip", "install", module_name])
+        except Exception as e:
+            print("Error with pip install: " + str(e))

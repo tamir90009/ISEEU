@@ -12,7 +12,7 @@ class AutoRunPathsParser(Parser):
     def parse(input_path):
         try:
             data = []
-            with open("{}.json".format(input_path),'r') as fp:
+            with open("{}.json".format(input_path), 'r') as fp:
                 data = fp.readlines()
             paths = [x.strip() for x in data]
             return paths
@@ -21,4 +21,4 @@ class AutoRunPathsParser(Parser):
             raise Exception("problem in parse autorun paths  :{}".format(str(e)))
 
 
-#pp=AutoRunPathsParser().parse('/tmp/autopaths')
+

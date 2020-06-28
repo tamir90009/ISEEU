@@ -1,12 +1,12 @@
-from crontab import CronTab
 from vboxcontroller import VBoxController
 import os
 from shutil import copyfile, copytree
 import subprocess
 from time import sleep
-
+from additionalscripts.datasend import send_folder_to_Sender
 
 def add_to_cron(args, hour=8, minute=0):
+    from crontab import CronTab
     try:
         username = os.getenv("USER")
         cron = CronTab(user=username)
@@ -33,9 +33,9 @@ def insert_agent_to_vm(vm_name, agent_folder_path=None, agent_flags=None,mount_p
     try:
         if controller is None:
             controller = VBoxController()
-        controller.mount_files_from_machine(vm_name, mount_path)
         if mount_path is None:
             mount_path = os.path.join("/mnt", vm_name)
+        controller.mount_files_from_machine(vm_name, mount_path)
         dst_path_by_host = os.path.join(mount_path, path_in_machine)
         initd_file_name = "agent-automation"
         # copytree(agent_folder_path, dst_path_by_host)
@@ -85,8 +85,10 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                 counter += 1
 
         #add the output agent path to be copy to the machine
-        #copytree(agent_folder_path, dst_path_by_host).
+        #copytree(agent_folder_path, output_path).
+        # send_folder_to_Sender(output_path)
         controller.stop(vm_name)
+
         raise Exception("all good")
     except Exception as e:
         controller.umount_files_from_machine(vm_name, mount_path)
