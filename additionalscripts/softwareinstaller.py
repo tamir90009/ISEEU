@@ -9,7 +9,8 @@ class softwareinstaller(object):
     @staticmethod
     def apt_install(package_name):
         #todo: check errors
-        subprocess.call(["apt-get", "--assume-yes", "install", package_name])
+        p = subprocess.Popen(["apt", "--assume-yes", "install", package_name])
+        p.wait()
 
     @staticmethod
     def pip_install(module_name):
