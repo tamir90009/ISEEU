@@ -7,7 +7,7 @@ class MalDetCollector(Collector):
     @staticmethod
     def collect(dst_path):
         try:
-            p = sub.Popen(['maldet -a /home --log'], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE, shell=True)
+            p = sub.Popen(['maldet --scan-all /home --log'], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE, shell=True)
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):

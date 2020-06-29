@@ -10,7 +10,7 @@ class MalDetParser(Parser):
                 if "{hit}" in line:
                     event = line.split("malware hit ")
                     mal = event[1].split(" ")[0]
-                    path = event[1].split(" ")[-1]
+                    path = event[1].split(" ")[-1][: -1]
                     # print("mal: {0}, path:{1}".format(mal,path))
                     maldet_output.append({'mal': mal, 'path': path, 'status': 'found'})
             output.close()

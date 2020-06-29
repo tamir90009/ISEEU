@@ -16,7 +16,7 @@ class ClamAVParser(Parser):
                         status = status[1:]
                     path_exist = re.search(PATHPATTERN, line)
                     if path_exist:
-                        clamav_output.append({'path': path, 'status': status})
+                        clamav_output.append({'path': path, 'status': status[:-1]})
                 except:
                     continue
         avoutput.close()

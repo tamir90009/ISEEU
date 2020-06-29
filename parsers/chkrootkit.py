@@ -32,7 +32,7 @@ class CHKRootkitParser(Parser):
                             spaces = re.findall(CHKROOTKITPAT2, status)
                             number_of_spaces = len(spaces[0])
                             status = status[number_of_spaces:]
-                            chkroot_output.append({'search': search, 'status': status})
+                            chkroot_output.append({'search': search, 'status': status[:-1]})
                         # if start with ! get the process information:
                         elif str(line).startswith('!'):
                             process_details = re.findall(CHKROOTKITPAT3, line)[1:]
