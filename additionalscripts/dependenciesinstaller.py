@@ -45,7 +45,7 @@ def install():
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
     try:
-        for pip in ['pretty_cron','paramiko']:
+        for pip in ['pretty-cron','paramiko']:
             softwareinstaller.pip_install(pip)
     except Exception as e:
         raise Exception("error with pip install pretty_cron " + str(e))

@@ -13,6 +13,7 @@ class HiddenFilesAnalyzer(Analyzer):
     @staticmethod
     def analyze(paths, dest_path=DEST):
         try:
+            exclude = ''
             with open(r'collectors/exclude.txt', 'r') as File:
                 ukn = 'UNKNOWN'
                 username = os.environ.get('USER', os.environ.get('USERNAME', ukn))
