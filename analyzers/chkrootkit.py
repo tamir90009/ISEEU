@@ -19,7 +19,7 @@ class CHKRootkitAnalyzer(Analyzer):
                     if not ('not found' in path['status'].lower() or 'ok' in path['status'].lower()
                             or 'none' in path['status'].lower() or 'checking' in path['status'].lower()):
                         to_json[i] = path
-                        fp.write(json.dumps(to_json[i]) + '\n')
+                        fp.write(json.dumps(to_json[i])+ '\n')
                         i += 1
             datasend(os.path.join(dest_path, "{}_chkrootkit.json".format(socket.gethostname())),'chkrootkit')
         except Exception as e:

@@ -42,13 +42,13 @@ def datasend(localpath, task_name):
         sftp = MySFTPClient.from_transport(transport)
         remote_path = os.path.join(conf["remote"], task_name)
         # Directory transport:
-        # if os.path.isdir(localpath):
-        #     try:
-        #         sftp.mkdir(remote_path, ignore_existing=True)
-        #         sftp.put_dir(localpath, remote_path)
-        #     except Exception as e:
-        #         raise Exception("error while sending a dir " + e)
-        #     sftp.close()
+        if os.path.isdir(localpath):
+             try:
+                 sftp.mkdir(remote_path, ignore_existing=True)
+                 sftp.put_dir(localpath, remote_path)
+             except Exception as e:
+                 raise Exception("error while sending a dir " + e)
+             sftp.close()
         # File transport
         if os.path.isfile(localpath):
             # sftp = transport.open_sftp_client()
@@ -88,4 +88,3 @@ def send_folder_to_Sender(output_dir):
 
 # # Can sent Dir/ File
 # datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")
-# datasend("/home/test/HH", "/home/elk/Temp/New")
