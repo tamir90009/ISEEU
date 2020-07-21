@@ -1,4 +1,6 @@
 import subprocess
+from time import sleep
+
 
 class softwareinstaller(object):
     @staticmethod
@@ -10,6 +12,7 @@ class softwareinstaller(object):
         #todo: check errors
         p = subprocess.Popen(["apt", "--assume-yes", "install", package_name])
         p.wait()
+        sleep(3)
 
     @staticmethod
     def pip_install(module_name):

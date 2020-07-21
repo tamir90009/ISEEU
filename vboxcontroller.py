@@ -134,7 +134,10 @@ class VBoxController(object):
             except Exception as e:
                 raise Exception("Fail to start modprobe %s" % (str(e)))
         try:
-            subprocess.check_output(["qemu-nbd", "-c", current_nbd, vdi_path])
+            if read_only:
+                subprocess.check_output(["qemu-nbd", "-r", "-c", current_nbd, vdi_path])
+            else:
+                subprocess.check_output(["qemu-nbd", "-c", current_nbd, vdi_path])
         except Exception as e:
             raise Exception("Fail with qemu-nbd %s" % (str(e)))
         sleep(2)
@@ -152,10 +155,10 @@ class VBoxController(object):
                 raise e
         try:
             if read_only:
-                subprocess.check_output(["partx", "-a", current_nbd])
+                # subprocess.check_output(["partx", "-a", current_nbd])
                 subprocess.check_output(["mount", "-o", "ro,noload", partition_to_mount[0], mount_path])
             else:
-                subprocess.check_output(["partx", "-a", current_nbd])
+                # subprocess.check_output(["partx", "-a", current_nbd])
                 subprocess.check_output(["mount", partition_to_mount[0], mount_path])
         except Exception as e:
             raise Exception("fail to mount %s to %s %s" % (partition_to_mount[0], mount_path, str(e)))

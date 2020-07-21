@@ -65,6 +65,7 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                            path_in_machine=path_in_machine)
         controller.start(vm_name)
         sleep(10)
+        sleep(10)
         controller.mount_files_from_machine(vm_name, mount_path=mount_path, read_only=True)
         sleep(10)
         flag = True
@@ -75,14 +76,14 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
                     controller.umount_files_from_machine(vm_name, mount_path)
                     sleep(2)
                     controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
-                open(mount_path + output_path + "finish")
+                open(mount_path + output_path + "/finish")
                 flag = False
             except:
                 sleep(10)
                 counter += 1
 
         #add the output agent path to be copy to the machine
-        copytree(agent_folder_path, output_path)
+        copytree(mount_path + output_path, output_path)
         send_folder_to_Sender(output_path)
         controller.stop(vm_name)
 
