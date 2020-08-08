@@ -4,11 +4,20 @@ import os
 from additionalscripts.softwareinstaller import softwareinstaller
 
 
+
+def install_offline(profile):
+    archive_path = os.path.join('additionalscripts/archives', profile)
+    softwareinstaller.dpkg_install(archive_path)
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/paramiko-2.7.1')
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/pretty-cron-1.2.0')
+
+
 def install():
     # software_installer = softwareinstaller()
     try:
-        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip', 'qemu-kvm', 'qemu',
-                    'virt-manager', 'virt-viewer', 'libvirt-bin']:
+        # for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip', 'qemu-kvm', 'qemu',
+        #             'virt-manager', 'virt-viewer', 'libvirt-bin']:
+        for apt in ['net-tools', 'clamav', 'clamav-daemon', 'rkhunter', 'chkrootkit', 'python3-pip']:
             if apt == 'rkhunter':
                 sub.Popen('apt-get -y --no-install-recommends install rkhunter', stdin=sub.PIPE, stdout=sub.PIPE,
                           stderr=sub.PIPE, shell=True)
@@ -45,7 +54,7 @@ def install():
     except Exception as e:
         raise Exception("error while trying to install maldetect " + str(e))
     try:
-        for pip in ['pretty-cron','paramiko']:
+        for pip in ['pretty-cron', 'paramiko']:
             softwareinstaller.pip_install(pip)
     except Exception as e:
         raise Exception("error with pip install pretty_cron " + str(e))

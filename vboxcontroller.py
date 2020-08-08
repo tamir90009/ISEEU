@@ -209,14 +209,14 @@ class VBoxController(object):
     @staticmethod
     def disable_network_adapter(vmname):
         """
-        start a virtualbox machine with or without GUI
+        delete nic1 of virtualbox machine
         :param  vmname: virtual machine name to start
                 start_type: options are headless(default) or gui
         :return:
         """
         try:
             VBoxController.check_vm_name_exist(vmname)
-            subprocess.check_output(["vboxmanage", "modifyvm",vmname,"--nic1","none"])
+            subprocess.check_output(["vboxmanage", "modifyvm", vmname, "--nic1", "none"])
         except Exception as e:
             raise Exception("VBoxController failed starting the machine %s %s" % (vmname, str(e)))
 

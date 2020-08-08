@@ -12,7 +12,7 @@ case "$1" in
   start)
     echo "Starting agent-automation"
     # run application you want to start
-     python3 /agent/agent.py -L -ina -esi 193.106.55.141:2241 -esp /home/elk/logstash/files -esup elk:bartar@401@cs -op /tmp/test -tn 3 -ra
+     python3 /agent/agent.py -L -io -esi 193.106.55.141:2241 -esp /home/elk/logstash/files -esup elk:bartar@401@cs -op /tmp/test -tn 3 -ra
 
 #    echo "bye" > /home/hello22.txt
     ;;

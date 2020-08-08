@@ -1,6 +1,6 @@
 import subprocess
 from time import sleep
-
+import os
 
 class softwareinstaller(object):
     @staticmethod
@@ -24,13 +24,13 @@ class softwareinstaller(object):
     @staticmethod
     def dpkg_install(package_folder_path):
         try:
-            subprocess.call(["dpkg","-i",os.path.join(package_folder_path,'*')])
+            subprocess.call(["dpkg", "-i", os.path.join(package_folder_path, '*')])
         except Exception as e:
             print("Error with dpkg install: " + str(e))
 
     @staticmethod
     def pmanual_install(pmodule_path):
         try:
-            subprocess.call(["python3",os.path.join(pmodule_path,'setup.py'),'install'])
+            subprocess.call(["python3", os.path.join(pmodule_path, 'setup.py'), 'install'])
         except Exception as e:
             print("Error with python module: " + str(e))

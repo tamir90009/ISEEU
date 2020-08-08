@@ -6,7 +6,7 @@ from additionalscripts.softwareinstaller import softwareinstaller
 from vboxcontroller import VBoxController
 from taskmanager import TaskManager
 from additionalscripts.write_process_analytic import AnalyticWriter
-from additionalscripts.dependenciesinstaller import install
+from additionalscripts.dependenciesinstaller import install, install_offline
 
 def argparse_func():
     parser = argparse.ArgumentParser(description='ISEEU main agent')
@@ -33,6 +33,9 @@ def argparse_func():
     parser.add_argument('-iap', '--image_agent_path', help='path in the vm to copy the agent to', required=False)
     parser.add_argument('-ind','--image_network_disable', help="disable network adapter in vm", action='store_true' ,required=False)
     parser.add_argument('-ina', '--install_all', help='installation of all dependecied', action='store_true', required=False)
+    parser.add_argument('-io', '--install_offline', help='offline installation of all dependecied', action='store_true', required=False)
+    parser.add_argument('-iop', '--install_offline_profile', help='offline installation profile', default='ubuntu-18.04', required=False)
+
     parser.add_argument('-inp', '--install_pip', help='installation need to be done', required=False)
     parser.add_argument('-inap', '--install_apt', help='installation need to be done', required=False)
 
@@ -152,6 +155,8 @@ def main():
             softwareinstaller.apt_install(i)
     if args.install_all:
         install()
+    if args.install_offline:
+        install_offline(args.install_offline_profile)
 
     if args.crontab:
         try:
