@@ -17,6 +17,10 @@ class ScheduledTaskAnalyzer(Analyzer):
         try:
             with open(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'w') as jf:
                 for line in scheduled_task_data:
+                    if '/tmp' in line or '/run' in line:
+                        scheduled_task_data[line]['suspicious']=True
+                    else:
+                        scheduled_task_data[line]['suspicious'] = False
                     jf.write(json.dumps(scheduled_task_data[line]) + '\n')
             datasend(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'scheduledtasks')
         except Exception as e:

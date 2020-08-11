@@ -28,6 +28,8 @@ class HiddenFilesAnalyzer(Analyzer):
                 i = 0
                 for hidden_file in paths:
                     if hidden_file not in exclude:
+                        if '/tmp' in hidden_file or '/run' in hidden_file:
+                            hidden_file = hidden_file + '(suspicious)'
                         to_json[i] = hidden_file
                         fp.write(json.dumps(to_json[i]) + '\n')
                         i += 1
