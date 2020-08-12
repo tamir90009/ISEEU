@@ -17,7 +17,8 @@ class ScheduledTaskAnalyzer(Analyzer):
         try:
             with open(os.path.join(dst_path, '{}_scheduledtasks.json'.format(socket.gethostname())), 'w') as jf:
                 for line in scheduled_task_data:
-                    if '/tmp' in line or '/run' in line:
+                    t=scheduled_task_data[line]['command']
+                    if '/tmp' in scheduled_task_data[line]['command'] or '/run' in scheduled_task_data[line]['command']:
                         scheduled_task_data[line]['suspicious']=True
                     else:
                         scheduled_task_data[line]['suspicious'] = False

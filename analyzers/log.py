@@ -3,6 +3,7 @@ import json
 import re
 import socket
 import os
+import re
 from additionalscripts.datasend import datasend
 
 DEST = '/tmp'
@@ -40,7 +41,7 @@ class LogAnalyzer(Analyzer):
         suspicious_message = ['COMMAND=/usr/sbin/useradd', 'COMMAND=/usr/bin/passwd', 'password changed for',
                            'COMMAND=/usr/sbin/usermod -a -G sudo', 'COMMAND=/usr/sbin/usermod -aG sudo',
                            "add \'\w+\' to group 'sudo'", "add \'\w+\' to shadow group 'sudo'",
-                           'COMMAND=/usr/bin/crontab -e']
+                           'COMMAND=/usr/bin/crontab -e', 'new user:', 'COMMAND=/bin/chmod 777']
         logs = auth_log_data
         for ln in auth_log_data.keys():
             ln = int(ln)
@@ -60,7 +61,10 @@ class LogAnalyzer(Analyzer):
                     continue
                 else:
                     for message in suspicious_message:
-                        if message in logs[ln]['log_message']:
+                        if re.findall(message, logs[ln]['log_message']) == []:
+                            logs[ln]['suspicious'] = False
+                        else:
+                        #if message in logs[ln]['log_message']:
                             logs[ln]['suspicious'] = True
                             continue
                     continue
