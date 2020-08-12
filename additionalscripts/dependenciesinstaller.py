@@ -5,9 +5,19 @@ from additionalscripts.softwareinstaller import softwareinstaller
 
 
 
+# def free_dpkg_lock():
+#     lsof_out = sub.check_output(['lsof', '/var/lib/dpkg/lock'])
+#     pid =
+#     sub.check_output(['kill', pid])
+#     time.sleep(2)
+#     sub.check_output(['kill', '-9',pid])
+
+
+
 def install_offline(profile):
     archive_path = os.path.join('additionalscripts/archives', profile)
     softwareinstaller.dpkg_install(archive_path)
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/setuptools-49.3.1')
     softwareinstaller.pmanual_install('additionalscripts/python_packages/paramiko-2.7.1')
     softwareinstaller.pmanual_install('additionalscripts/python_packages/pretty-cron-1.2.0')
 
