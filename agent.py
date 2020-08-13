@@ -110,7 +110,7 @@ def on_machine(args):
         raise e
 
 def on_ova_machine(args):
-    # VBoxController.import_machine_from_ova(args.image_name, args.ova_path)
+    VBoxController.import_machine_from_ova(args.image_name, args.ova_path)
     pass
 
 def print_error_and_exit(msg, error=''):

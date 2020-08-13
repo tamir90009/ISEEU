@@ -24,13 +24,26 @@ class softwareinstaller(object):
     @staticmethod
     def dpkg_install(package_folder_path):
         try:
-            subprocess.call(["dpkg", "-i", os.path.join(package_folder_path, '*')])
+            current_cwd = os.getcwd()
+            os.chdir(package_folder_path)
+            p = subprocess.Popen(["dpkg -i *"], shell=True)
+            p.wait()
+            sleep(3)
+            os.chdir(current_cwd)
         except Exception as e:
             print("Error with dpkg install: " + str(e))
 
     @staticmethod
     def pmanual_install(pmodule_path):
+        import pip
         try:
-            subprocess.call(["python3", os.path.join(pmodule_path, 'setup.py'), 'install'])
+            # current_cwd = os.getcwd()
+            # os.chdir(pmodule_path)
+            # p = subprocess.Popen(["python3", 'setup.py', 'install'])
+            # p.wait()
+            # sleep(3)
+            # os.chdir(current_cwd)
+            pip.main(['install', pmodule_path])
+            sleep(3)
         except Exception as e:
             print("Error with python module: " + str(e))

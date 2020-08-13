@@ -1,25 +1,50 @@
+import importlib
 import time
 import subprocess as sub
 import os
 from additionalscripts.softwareinstaller import softwareinstaller
+import site
 
 
 
-# def free_dpkg_lock():
-#     lsof_out = sub.check_output(['lsof', '/var/lib/dpkg/lock'])
-#     pid =
-#     sub.check_output(['kill', pid])
-#     time.sleep(2)
-#     sub.check_output(['kill', '-9',pid])
+def free_dpkg_lock():
+    try:
+        lsof_out = sub.check_output(['lsof', '/var/lib/dpkg/lock'])
+        pid = lsof_out.decode('ascii').split('\n')[-2].split()[1]
+        if pid.isdigit():
+            sub.check_output(['kill', pid])
+            time.sleep(2)
+            sub.check_output(['kill', '-9',pid])
+        else:
+            raise Exception('free_dpkg_lock parsing is not good in case - \n %s' % lsof_out.decode('ascii'))
+    except Exception as e:
+        print(e)
 
+
+def wait_for_module(module_name):
+    installed = False
+    while not installed:
+        try:
+            importlib.import_module(module_name)
+        except:
+            print('%s - not yet' % module_name)
+            print(importlib.reload(site))
+            time.sleep(10)
 
 
 def install_offline(profile):
+    free_dpkg_lock()
     archive_path = os.path.join('additionalscripts/archives', profile)
     softwareinstaller.dpkg_install(archive_path)
     softwareinstaller.pmanual_install('additionalscripts/python_packages/setuptools-49.3.1')
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/pycparser-2.20')
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/cffi-1.14.1')
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/bcrypt-3.1.7')
+    softwareinstaller.pmanual_install('additionalscripts/python_packages/cryptography-3.0')
     softwareinstaller.pmanual_install('additionalscripts/python_packages/paramiko-2.7.1')
+    # wait_for_module('paramiko')
     softwareinstaller.pmanual_install('additionalscripts/python_packages/pretty-cron-1.2.0')
+    # wait_for_module('pretty-cron')
 
 
 def install():

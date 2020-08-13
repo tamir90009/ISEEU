@@ -57,8 +57,6 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
     try:
         if controller is None:
             controller = VBoxController()
-        # no need insert_agent_to_vm doing that's
-        # controller.mount_files_from_machine(vm_name, mount_path)
         if mount_path is None:
             mount_path = "/mnt/" + vm_name
         insert_agent_to_vm(vm_name, agent_folder_path, agent_flags, controller=controller,
@@ -73,15 +71,21 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
         while flag:
             try:
                 if counter % 5 == 0:
-                    controller.umount_files_from_machine(vm_name, mount_path)
-                    sleep(2)
-                    controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
+                    try:
+                        controller.umount_files_from_machine(vm_name, mount_path)
+                    finally:
+                        sleep(2)
+                        controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
                 open(mount_path + output_path + "/finish")
                 flag = False
             except:
                 sleep(10)
                 counter += 1
 
+        sleep(10)
+        controller.umount_files_from_machine(vm_name, mount_path)
+        sleep(2)
+        controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
         #add the output agent path to be copy to the machine
         copytree(mount_path + output_path, output_path)
         send_folder_to_Sender(output_path)

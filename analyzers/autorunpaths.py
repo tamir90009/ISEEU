@@ -55,7 +55,7 @@ class AutoRunPathsAnalyzer(Analyzer):
 
 
         except Exception as e:
-            print("problem in autorunpaths analyzer - analyze :", str(e))
+            raise("problem in autorunpaths analyzer - analyze :", str(e))
 
     @staticmethod
     def write_to_files(paths, dest_path, name):
@@ -69,4 +69,4 @@ class AutoRunPathsAnalyzer(Analyzer):
                     i += 1
 
         except Exception as e:
-            print("problem in autorunpaths analyzer- write to files :{} , dest path was :{}".format(str(e), dest_path))
+            raise("problem in autorunpaths analyzer- write to files :{} , dest path was :{}".format(str(e), dest_path))

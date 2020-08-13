@@ -191,7 +191,7 @@ class VBoxController(object):
         if not self.mounted_devices:
             try:
                 sleep(5)
-                subprocess.check_output(["modprobe", "-r", "nbd"])
+                # subprocess.check_output(["modprobe", "-r", "nbd"])
             except Exception as e:
                 raise Exception("Fail to modprobe -r nbd %s" % (str(e)))
         try:
