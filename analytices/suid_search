@@ -12,7 +12,7 @@
     "_stat": null,
     "_start": null,
     "_time": null,
-    "_cmdline": ".*\+u=s.*",
+    "_cmdline": ".*+u=s.*",
     "_env": null,
     "_list_of_file_descript": null,
     "_networking_unix": null,
