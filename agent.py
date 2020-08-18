@@ -186,7 +186,7 @@ def main():
             for task in tasks:
                 task_manager.add_task(task)
             task_manager.add_task('FileMetaData', True)
-            # task_manager.add_task('ClamAV', True)
+            task_manager.add_task('ClamAV', True)
 
 
         if args.run_specific:
