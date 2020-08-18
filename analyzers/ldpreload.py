@@ -13,4 +13,4 @@ class LDPreloadAnalyzer(Analyzer):
                 output_list.append({'file': i, "suspicious": True})
         host_name = socket.gethostname()
         LDPreloadAnalyzer.write_json(output_list, os.path.join(output_path, "%s_ldpreload" % host_name))
-        datasend(os.path.join(output_path, "%s_ldpreload" % host_name), 'ldpreload')
+        datasend(os.path.join(output_path, "%s_ldpreload.json" % host_name), 'ldpreload')
