@@ -1,13 +1,14 @@
 import subprocess as sub
 from collectors.collector import Collector
-
+from os import listdir
 
 class MalDetCollector(Collector):
 
     @staticmethod
     def collect(dst_path):
         try:
-            p = sub.Popen(['maldet --scan-all /home --log'], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE, shell=True)
+            p = sub.Popen(['maldet --scan-all /home/*/Downloads --log'], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE,
+                          shell=True)
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):

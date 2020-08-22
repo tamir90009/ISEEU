@@ -39,12 +39,13 @@ class FileMetaDataCollector(Collector):
                             data["attr"] = get_attr(file)
                         data["sha1"] = hashlib.sha1(open(file, 'rb').read()).hexdigest()
                     except Exception as e:
-                        print("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
+                        #print("problem in getting the metadata for the file :{} - collector: {}".format(file, str(e)))
+                        pass
                     os.makedirs(dst_path, exist_ok=True)
                     with open('{}/{}'.format(dst_path, subject), "a+") as current_file:
                         current_file.write('{}\n'.format(data))
-                else:
-                    print('file not found: %s' % file)
+                #else:
+                    #print('file not found: %s' % file)
 
 
 def get_permissions(file_path):

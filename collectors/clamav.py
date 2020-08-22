@@ -1,5 +1,6 @@
 import subprocess as sub
 from collectors.collector import Collector
+from os import listdir
 import json
 import time
 class ClamAVCollector(Collector):
@@ -8,7 +9,7 @@ class ClamAVCollector(Collector):
     def collect(dst_path):
         try:
             #time.sleep(10)
-            p = sub.Popen([r'clamscan -r /home'] ,stdout=sub.PIPE ,stderr=sub.PIPE ,stdin=sub.PIPE ,shell=True)
+            p = sub.Popen([r'clamscan -r /home/*/Downloads'], stdout=sub.PIPE, stderr=sub.PIPE, stdin=sub.PIPE, shell=True)
             out, err = p.communicate()
             if err:
                 if "not found" in str(err):
