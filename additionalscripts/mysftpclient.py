@@ -1,3 +1,5 @@
+import paramiko
+
 class MySFTPClient(paramiko.SFTPClient):
     def put_dir(self, source, target):
         ''' Uploads the contents of the source directory to the target path. The

@@ -180,12 +180,13 @@ def main():
             # tasks = ['FileMetaData', 'Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths',
             #          'ProcessInfo', 'LDPreload', '']
             tasks = ['Log', 'ScheduledTask', 'BinaryList', 'LibraryPath', 'AutoRunPaths', 'ProcessInfo', 'CHKRootkit',
-                     'HiddenFiles', 'RKHunter', 'MalDet', 'SystemInfo', 'LDPreload']
+                     'HiddenFiles', 'RKHunter', 'SystemInfo', 'LDPreload']
             # tasks = ['LibraryPath', 'LDPreload']
             # tasks = ['AutoRunPaths', 'ProcessInfo']
             for task in tasks:
                 task_manager.add_task(task)
             task_manager.add_task('FileMetaData', True)
+            task_manager.add_task('MalDet', True)
             task_manager.add_task('ClamAV', True)
 
 
