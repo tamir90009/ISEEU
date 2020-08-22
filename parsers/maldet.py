@@ -1,5 +1,5 @@
 from parsers.parser import Parser
-
+import re
 
 class MalDetParser(Parser):
     @staticmethod
@@ -9,9 +9,9 @@ class MalDetParser(Parser):
             for line in output.readlines():
                 if "{hit}" in line:
                     event = line.split("malware hit ")
-                    mal = event[1].split(" ")[0]
-                    path = event[1].split(" ")[-1][: -1]
+                    regex = re.compile('(?P<mal>.*) found for (?P<path>.*)')
+                    founds = regex.search(event[1])
                     # print("mal: {0}, path:{1}".format(mal,path))
-                    maldet_output.append({'mal': mal, 'path': path, 'status': 'found'})
+                    maldet_output.append({'mal': founds.groupdict()['mal'], 'path': founds.groupdict()['path'], 'status': 'found'})
             output.close()
             return maldet_output
