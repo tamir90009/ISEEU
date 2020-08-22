@@ -11,7 +11,8 @@ class LibraryPathAnalyzer(Analyzer):
             return
         output_list = []
         for i in parsed_data:
-            output_list.append({"path": i, "suspicious": True})
+            if isinstance(i, str):
+                output_list.append({"path": i, "suspicious": True})
 
         host_name = socket.gethostname()
         LibraryPathAnalyzer.write_json(output_list, os.path.join(output_path, "%s_librarypath.json" % host_name))

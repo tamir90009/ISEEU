@@ -9,7 +9,7 @@ class LDPreloadAnalyzer(Analyzer):
     def analyze(parsed_data, output_path):
         output_list = []
         for i in parsed_data:
-            if not i:
+            if isinstance(i, str):
                 output_list.append({'file': i, "suspicious": True})
         host_name = socket.gethostname()
         LDPreloadAnalyzer.write_json(output_list, os.path.join(output_path, "%s_ldpreload.json" % host_name))
