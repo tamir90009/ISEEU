@@ -1,6 +1,6 @@
 import subprocess as sub
 from collectors.collector import Collector
-from os import listdir
+
 
 class MalDetCollector(Collector):
 

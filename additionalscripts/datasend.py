@@ -53,18 +53,18 @@ this function will not return value
 
 
 def send_folder_to_Sender(output_dir):
-    try:
-        for obj in os.listdir(output_dir):
+    for obj in os.listdir(output_dir):
+        try:
             if os.path.isfile(os.path.join(output_dir, obj)):
                 task_name = str((obj.split("_"))[-1:]).split(".")[0].replace("['", "")
                 datasend(os.path.join(output_dir, obj), task_name)
             if os.path.isdir(os.path.join(output_dir, obj)):
+                send_folder_to_Sender(os.listdir(os.path.join(output_dir, obj)))
                 for file in os.listdir(os.path.join(output_dir, obj)):
                     task_name = str((file.split("_"))[-1:]).split(".")[0].replace("['", "")
                     datasend(os.path.join(output_dir, obj, file), task_name)
-
-    except Exception as e:
-        print("problem in data sender send full folder:{}".format(str(e)))
+        except Exception as e:
+            print("problem in data sender send task:%s, error: %s" % (obj, str(e)))
 
 # # Can sent Dir/ File
 # datasend("/home/test/HH/bbbb/blop.txt", "/home/elk/Temp/New")

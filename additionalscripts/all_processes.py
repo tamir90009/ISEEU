@@ -106,12 +106,15 @@ class AllProcesses(object):
             output = self.command_exec("netstat -napl")
             second_part_flag = 0
             for row in output[1:]:
-                if "Active UNIX domain" in row or "Proto" in row:
-                    second_part_flag = 1
-                elif second_part_flag == 0:
-                    self.netstat_active_domain(row)
-                else:
-                    self.netstat_unix_domain(row)
+                try:
+                    if "Active UNIX domain" in row or "Proto" in row:
+                        second_part_flag = 1
+                    elif second_part_flag == 0:
+                        self.netstat_active_domain(row)
+                    else:
+                        self.netstat_unix_domain(row)
+                except:
+                    continue
         except KeyError as error:
             raise error
         except TypeError as tp:

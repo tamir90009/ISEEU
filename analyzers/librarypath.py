@@ -1,5 +1,5 @@
 import os
-from socket import socket
+import socket
 from analyzers.analyzer import Analyzer
 from additionalscripts.datasend import datasend
 

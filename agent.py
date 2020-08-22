@@ -102,8 +102,8 @@ def on_machine(args):
             raise Exception('didn\'t find image flags file')
         image_flags = open(args.image_flags_path).read()
         output_path = pattern.search(image_flags).group('output_path')
-        if args.image_network_disable:
-            VBoxController.disable_network_adapter(vmname=args.image_name)
+        # if args.image_network_disable:
+        #     VBoxController.disable_network_adapter(vmname=args.image_name)
         run_agent_on_machine(vm_name=args.image_name, output_path=output_path, agent_folder_path=os.getcwd(),
                             agent_flags=image_flags, path_in_machine=args.image_agent_path)
     except Exception as e:
@@ -188,6 +188,7 @@ def main():
             task_manager.add_task('FileMetaData', True)
             task_manager.add_task('MalDet', True)
             task_manager.add_task('ClamAV', True)
+            task_manager.add_task('MalDet', True)
 
 
         if args.run_specific:

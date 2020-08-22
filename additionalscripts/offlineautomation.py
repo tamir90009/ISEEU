@@ -88,7 +88,7 @@ def run_agent_on_machine(vm_name, output_path, agent_folder_path, agent_flags, m
         controller.mount_files_from_machine(vm_name, mount_path, read_only=True)
         #add the output agent path to be copy to the machine
         copytree(mount_path + output_path, output_path)
-        send_folder_to_Sender(output_path)
+        send_folder_to_Sender(os.path.join(output_path, 'to_datasender'))
         controller.stop(vm_name)
 
         raise Exception("all good")

@@ -1,4 +1,5 @@
 import paramiko
+import os
 
 class MySFTPClient(paramiko.SFTPClient):
     def put_dir(self, source, target):
