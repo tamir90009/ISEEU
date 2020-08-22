@@ -34,5 +34,7 @@ class FileMetaDataParser(Parser):
                                                             'size': cur_dict['size'], 'attributes': cur_dict['attr'],
                                                             'sha1': cur_dict['sha1']}
                 except Exception as e:
-                    raise Exception("problem in parse the data for: {} - parser: {}".format(i, str(e)))
+                    #raise Exception("problem in parse the data for: {} - parser: {}".format(i, str(e)))
+                    #print("problem in parse the data for: {} - parser: {}".format(i, str(e)))
+                    pass
         return data
